@@ -30,7 +30,9 @@ static void FileHandler::createFile(std::string fileAddress) {
         throw FileException("Cannot create - file with this name already exists.");
     }
 
-    // File will be created 
+    std::ofstream file(fileAddress);
+    file.close();
+
     openFile(fileAddress);
 }
 
@@ -50,23 +52,29 @@ static void FileHandler::openFile(std::string fileAddress) {
 
 static void FileHandler::closeFile() {
     if (isLoaded == false) {
-        throw FileException("Cannot close - no file loaded");
+        throw FileException("Cannot close file - no file loaded");
     }
-    // TODO: Copy temporary file content and the close file
+    // TODO: Clear temporary file.
+    isLoaded = false;
 }
 
 static void FileHandler::saveFile() {
     if (isLoaded == false) {
-        throw FileException("Cannot close - no file loaded");
+        throw FileException("Cannot save file - no file loaded");
     }
+    
+    // TODO: Copy temporary file content and the close file
+
     closeFile();
 }
 
 static void FileHandler::saveFileAs(std::string fileAddress) {
     if (isLoaded == false) {
-        throw FileException("Cannot close - no file loaded");
+        throw FileException("Cannot save file - no file loaded");
     }
-
+    
+    rename(filePath, fileAddress);
     filePath = fileAddress;
+
     saveFile();
 }
