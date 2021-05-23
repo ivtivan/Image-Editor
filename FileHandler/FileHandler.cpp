@@ -1,28 +1,51 @@
 #include "FileHandler.h"
 #include "../CustomExceptions/FileException/FileException.h"
+#include <fstream>
 
 bool FileHandler::isLoaded = false;
 
-static void FileHandler::createFile(std::string fileName) {
-    if (isLoaded == true) {
-        throw FileException("A file is already opened. Cannot opena new one.");
+static bool FileHandler::fileExists(std::string fileAddress) {
+    bool exists;
+    std::ifstream testExists;
+    testExists.open(fileAddress);
+    
+    // Checks if a file was opened.
+    if (testExists) {
+        exists = true;
     }
-
-    // TODO: Checks if such file exists
-
-    filePath = fileName;
-
-    closeFile();
+    else {
+        exists = false;
+    }
+    
+    testExists.close();
+    return exists;
 }
 
-static void FileHandler::openFile(std::string fileName) {
+static void FileHandler::createFile(std::string fileAddress) {
+    if (isLoaded == true) {
+        throw FileException("Cannot create - another file already loaded.");
+    }
+
+    if (fileExists(fileAddress)) {
+        throw FileException("Cannot create - file with this name already exists.");
+    }
+
+    // File will be created 
+    openFile(fileAddress);
+}
+
+static void FileHandler::openFile(std::string fileAddress) {
     if (isLoaded == true) {
         throw FileException("Cannot open - another file already loaded");
     }
 
-    filePath = fileName;
+    std::ofstream file(fileAddress);
+    isLoaded = true;
+    filePath = fileAddress;
 
-    closeFile();
+    // TODO: Copy file content to temporary file.
+
+    file.close();
 }
 
 static void FileHandler::closeFile() {
@@ -39,11 +62,11 @@ static void FileHandler::saveFile() {
     closeFile();
 }
 
-static void FileHandler::saveFileAs(std::string fileName) {
+static void FileHandler::saveFileAs(std::string fileAddress) {
     if (isLoaded == false) {
         throw FileException("Cannot close - no file loaded");
     }
 
-    filePath = fileName;
+    filePath = fileAddress;
     saveFile();
 }
