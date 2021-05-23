@@ -1,4 +1,6 @@
 #include "CommandInterpreter.h"
+#include "../CustomExceptions/ExitException/ExitException.h"
+#include "../FileHandler/FileHandler.h"
 
 void CommandInterpreter::toLower(std::string& str) {
     for (std::size_t i = 0; i < str.length(); ++i) {
@@ -78,23 +80,21 @@ void CommandInterpreter::formatCommand(std::string commandAndParameters, std::st
     toLower(commPar[0]);
 }
 
-void CommandInterpreter::callFunction(std::string commPar[], PersonHolder* pH, VehicleHolder* vH) {
-    if (commPar[0] == "open") {
-        // TODO: Calls function to open file.
+void CommandInterpreter::callFunction(std::string commPar[]) {
+    if (commPar[0] == "new") {
+        FileHandler::createFile(commPar[1]);
     }
-    else if (commPar[0] == "new") {
-        // TODO: Calls function to create an empty new file.
+    else if (commPar[0] == "open") {
+        FileHandler::createFile(commPar[1]);
     }
     else if (commPar[0] == "close") {
-        // TODO: Closes a file.
+        FileHandler::closeFile();
     }
     else if (commPar[0] == "save") {
-        // TODO: Saves open file.
-        // Throws an exception if no file is opened.
+        FileHandler::saveFile();
     }
     else if (commPar[0] == "saveas") {
-        // TODO: Saves open file under a new name.
-        // Throws an exception if no file is opened.
+        FileHandler::saveFileAs(commPar[1]);
     }
     else if (commPar[0] == "crop") {
         // TODO: Crops a file.
@@ -111,5 +111,5 @@ void CommandInterpreter::execute(std::string commandAndParameters) {
     std::string commPar[MAX_NUMBER_PARAMETERS + 1];
     formatCommand(commandAndParameters, commPar);
 
-    callFunction(commPar, pH, vH);
+    callFunction(commPar);
 }
