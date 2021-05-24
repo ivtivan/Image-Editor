@@ -1,5 +1,6 @@
 #include "FileHandler.h"
 #include "../CustomExceptions/FileException/FileException.h"
+#include "../ImageHolder/ImageHolder.h"
 #include <fstream>
 
 bool FileHandler::isLoaded = false;
@@ -43,9 +44,9 @@ static void FileHandler::openFile(std::string fileAddress) {
 
     std::ofstream file(fileAddress);
     isLoaded = true;
-    filePath = fileAddress;
+    this->filePath = fileAddress;
 
-    // TODO: Copy file content to temporary file.
+    ImageHoder::copyImagePixelsFrom(this->filePath);
 
     file.close();
 }

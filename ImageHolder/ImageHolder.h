@@ -6,7 +6,7 @@ class ImageHolder {
     private:
         static std::string imagePixels;
     public:
-        copyImagePixelsFrom(std::string file);
+        static void copyImagePixelsFrom(std::string file);
 
 }
 
