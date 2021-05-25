@@ -1,9 +1,9 @@
-#ifndef FILE_HANDLER_H
-#define FILE_HANDLER_H
+#ifndef FILE_CONTROLLER_H
+#define FILE_CONTROLLER_H
 
 #include <string>
 
-class FileHandler {
+class FileController {
     private:
         static bool isLoaded; // checks if a file is currently opened
         static std::string filePath; // stores the path of the last loaded file

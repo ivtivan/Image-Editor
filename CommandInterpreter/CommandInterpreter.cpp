@@ -1,6 +1,6 @@
 #include "CommandInterpreter.h"
 #include "../CustomExceptions/ExitException/ExitException.h"
-#include "../FileHandler/FileHandler.h"
+#include "../FileController/FileController.h"
 
 void CommandInterpreter::toLower(std::string& str) {
     for (std::size_t i = 0; i < str.length(); ++i) {
@@ -82,19 +82,19 @@ void CommandInterpreter::formatCommand(std::string commandAndParameters, std::st
 
 void CommandInterpreter::callFunction(std::string commPar[]) {
     if (commPar[0] == "new") {
-        FileHandler::createFile(commPar[1]);
+        FileController::createFile(commPar[1]);
     }
     else if (commPar[0] == "open") {
-        FileHandler::createFile(commPar[1]);
+        FileController::createFile(commPar[1]);
     }
     else if (commPar[0] == "close") {
-        FileHandler::closeFile();
+        FileController::closeFile();
     }
     else if (commPar[0] == "save") {
-        FileHandler::saveFile();
+        FileController::saveFile();
     }
     else if (commPar[0] == "saveas") {
-        FileHandler::saveFileAs(commPar[1]);
+        FileController::saveFileAs(commPar[1]);
     }
     else if (commPar[0] == "crop") {
         // TODO: Crops a file.

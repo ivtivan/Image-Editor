@@ -1,11 +1,11 @@
-#include "FileHandler.h"
+#include "FileController.h"
 #include "../CustomExceptions/FileException/FileException.h"
 #include "../ImageHolder/ImageHolder.h"
 #include <fstream>
 
-bool FileHandler::isLoaded = false;
+bool FileController::isLoaded = false;
 
-static bool FileHandler::fileExists(std::string fileAddress) {
+static bool FileController::fileExists(std::string fileAddress) {
     bool exists;
     std::ifstream testExists;
     testExists.open(fileAddress);
@@ -22,7 +22,7 @@ static bool FileHandler::fileExists(std::string fileAddress) {
     return exists;
 }
 
-static void FileHandler::createFile(std::string fileAddress) {
+static void FileController::createFile(std::string fileAddress) {
     if (this->isLoaded == true) {
         throw FileException("Cannot create - another file already loaded.");
     }
@@ -37,7 +37,7 @@ static void FileHandler::createFile(std::string fileAddress) {
     openFile(fileAddress);
 }
 
-static void FileHandler::openFile(std::string fileAddress) {
+static void FileController::openFile(std::string fileAddress) {
     if (this->isLoaded == true) {
         throw FileException("Cannot open - another file already loaded");
     }
@@ -47,7 +47,7 @@ static void FileHandler::openFile(std::string fileAddress) {
     this->filePath = fileAddress;
 
     try {
-        ImageHoder::copyImagePixelsFrom(this->filePath);
+        ImageHoder::storeImage(this->filePath);
     }
     catch (const FileException& e) {
         this->isLoaded = false;
@@ -57,7 +57,7 @@ static void FileHandler::openFile(std::string fileAddress) {
     file.close();
 }
 
-static void FileHandler::closeFile() {
+static void FileController::closeFile() {
     if (this->isLoaded == false) {
         throw FileException("Cannot close file - no file loaded");
     }
@@ -67,7 +67,7 @@ static void FileHandler::closeFile() {
     this->isLoaded = false;
 }
 
-static void FileHandler::saveFile() {
+static void FileController::saveFile() {
     if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
@@ -77,7 +77,7 @@ static void FileHandler::saveFile() {
     closeFile();
 }
 
-static void FileHandler::saveFileAs(std::string fileAddress) {
+static void FileController::saveFileAs(std::string fileAddress) {
     if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
