@@ -23,7 +23,7 @@ static bool FileHandler::fileExists(std::string fileAddress) {
 }
 
 static void FileHandler::createFile(std::string fileAddress) {
-    if (isLoaded == true) {
+    if (this->isLoaded == true) {
         throw FileException("Cannot create - another file already loaded.");
     }
 
@@ -38,44 +38,52 @@ static void FileHandler::createFile(std::string fileAddress) {
 }
 
 static void FileHandler::openFile(std::string fileAddress) {
-    if (isLoaded == true) {
+    if (this->isLoaded == true) {
         throw FileException("Cannot open - another file already loaded");
     }
 
     std::ofstream file(fileAddress);
-    isLoaded = true;
+    this->isLoaded = true;
     this->filePath = fileAddress;
 
-    ImageHoder::copyImagePixelsFrom(this->filePath);
+    try {
+        ImageHoder::copyImagePixelsFrom(this->filePath);
+    }
+    catch (const FileException& e) {
+        this->isLoaded = false;
+        throw e;
+    }
 
     file.close();
 }
 
 static void FileHandler::closeFile() {
-    if (isLoaded == false) {
+    if (this->isLoaded == false) {
         throw FileException("Cannot close file - no file loaded");
     }
-    // TODO: Clear temporary file.
-    isLoaded = false;
+    
+    ImageHoder::clear();
+
+    this->isLoaded = false;
 }
 
 static void FileHandler::saveFile() {
-    if (isLoaded == false) {
+    if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
     
-    // TODO: Copy temporary file content and the close file
+    ImageHolder::saveChangesTo(this->filePath);
 
     closeFile();
 }
 
 static void FileHandler::saveFileAs(std::string fileAddress) {
-    if (isLoaded == false) {
+    if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
     
-    rename(filePath, fileAddress);
-    filePath = fileAddress;
+    rename(this->filePath, fileAddress);
+    this->filePath = fileAddress;
 
     saveFile();
 }
