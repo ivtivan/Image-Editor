@@ -1,10 +1,26 @@
-#include "ImageHolder.h"
+#include "Image.h"
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
 
-bool ImageHolder::isLoaded = false;
+Image::Image() {
+    ;
+}
 
-void ImageHolder::determineFileType(std::string fileExtension) {
+Image::Image(const Image& image) : imageContent(image.imageContent),
+    type(image.type) {
+    ;
+}
+
+Image& Image::operator=(const Image& image) {
+    if (this == &other) {
+        return this;
+    }
+
+    this->imageContent = other.imageContent;
+    this->type = other.type;
+}
+
+void Image::determineFileType(std::string fileExtension) {
     if (fileExtension == "pbm") {
         return PBM;
     }
@@ -18,13 +34,13 @@ void ImageHolder::determineFileType(std::string fileExtension) {
     throw FileException("File type not valid.");
 }
 
-void ImageHolder::saveFileType(std::string filePath) {
+void Image::saveFileType(std::string filePath) {
     const std::size_t fileExtensionLength = 3;
     std::string fileExtension = substr(filePath.lenth() - 4, fileExtensionLength);
     this->type = determineFileType(fileExtension);
 }
 
-void ImageHolder::storeContent(std::string filePath) {
+void Image::storeContent(std::string filePath) {
     std::ifstream file(filePath);
 
     if (!file) {
@@ -40,34 +56,30 @@ void ImageHolder::storeContent(std::string filePath) {
     file.close();
 
     this->imageContent.assign(fileContent);
+
+    delete[] fileContent;
 }
 
-const bool ImageHolder::getIsLoaded() {
-    return this->isLoaded;
-}
-
-const fileType getFileType() {
+const fileType getFileType() const {
     return this->type;
 }
 
-std::string ImageHolder::getImageContent() {
+const std::string Image::getImageContent() const {
     return this->imageContent;
 }
 
-void ImageHolder::storeImage(std::string filePath) {
-    if (this->isLoaded == true) {
-        throw FileException("An image is already loaded.");
-    }
-
+void Image::storeImageFrom(std::string filePath) {
     determineFileType();
     storeContent();
-
-    this->isLoaded = true;
 }
 
-void ImageHolder::clear() {
-    if (this->isLoaded == false) {
-        throw FileException("No image was loaded.");
-    }
-    this->isLoaded = false;
+void Image::saveChangesTo(std::string filePath) const {
+    std::ofstream file(filePath);
+    file << imageContent << std::endl;
+
+    file.close();
+}
+
+Image* Image::operator*() {
+    return this;
 }

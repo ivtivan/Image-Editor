@@ -1,6 +1,7 @@
 #include "InputReader.h"
+#include "../Image/Image.h"
 
-void PVDatabase::printCommands() {
+void InputReader::printCommands() {
     std::cout << "------------------------------------\n";
     std::cout << "Commands supported:\n";
     std::cout << "open <file path>\n";
@@ -10,9 +11,8 @@ void PVDatabase::printCommands() {
     std::cout << std::endl;
 }
 
-void PVDatabase::readCommands() {
+void InputReader::readCommands() {
     std::string inputCommand;
-
     while (true) {
         std::cout << "Command: ";
         getline(std::cin, inputCommand);

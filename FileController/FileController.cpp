@@ -1,9 +1,12 @@
 #include "FileController.h"
 #include "../CustomExceptions/FileException/FileException.h"
-#include "../ImageHolder/ImageHolder.h"
 #include <fstream>
 
 bool FileController::isLoaded = false;
+
+Image* FileController::getImage() {
+    return *(this->image);
+}
 
 static bool FileController::fileExists(std::string fileAddress) {
     bool exists;
@@ -61,8 +64,6 @@ static void FileController::closeFile() {
     if (this->isLoaded == false) {
         throw FileException("Cannot close file - no file loaded");
     }
-    
-    ImageHoder::clear();
 
     this->isLoaded = false;
 }
@@ -72,7 +73,7 @@ static void FileController::saveFile() {
         throw FileException("Cannot save file - no file loaded");
     }
     
-    ImageHolder::saveChangesTo(this->filePath);
+    image.saveImageTo(this->filePath);
 
     closeFile();
 }
