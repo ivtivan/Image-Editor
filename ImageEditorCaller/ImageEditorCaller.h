@@ -1,22 +1,23 @@
 #ifndef IMAGE_EDITOR_CALLER_H
 #define IMAGE_EDITOR_CALLER_H
 
-#include "../../Image/Image.h"
-
-typedef void (*CropFunctionPointer)(Image*);
-typedef void (*ScaleFunctionPointer)(Image*);
-typedef void (*DitherFunctionPointer)(Image*);
+#include "../Image/Image.h"
+#include "../ImageEditors/PBMEditor/PBMEditor.h"
+#include "../ImageEditors/PGMEditor/PGMEditor.h"
+#include "../ImageEditors/PPMEditor/PPMEditor.h"
 
 // Calls the needed function
 class ImageEditorCaller {
     private:
-        static CropFunctionPointer cropFunctions[];
-        static ScaleFunctionPointer scaleFunctions[];
-        static DitherFunctionPointer ditherFunctions[];
+        PBMEditor pbmEditor;
+        PGMEditor pgmEditor;
+        PPMEditor ppmEditor;
     public:
-        static void cropImage(Image* image);
-        static void scaleImage(Image* image);
-        static void ditherImage(Image* image);
+        ImageEditorCaller();
+
+        void cropImage(Image* image);
+        void scaleImage(Image* image);
+        void ditherImage(Image* image);
 };
 
 #endif

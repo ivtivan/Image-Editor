@@ -1,39 +1,28 @@
 #include "ImageEditorCaller.h"
-#include "../CustomExceptions/FileException/FileException.cpp"
 #include "../ImageEditors/PBMEditor/PBMEditor.h"
 #include "../ImageEditors/PGMEditor/PGMEditor.h"
 #include "../ImageEditors/PPMEditor/PPMEditor.h"
 
-CropFunctionPointer ImageEditor::cropFunctions[] = {
-    &PBMEditor::cropImage, &PGMEditor::cropImage, &PPMEditor::cropImage};
-
-ScaleFunctionPointer ImageEditor::scaleFunctions[] = {
-    &PBMEditor::scaleImage, &PGMEditor::scaleImage, &PPMEditor::scaleImage};
-
-DitherFunctionPointer ImageEditor::ditherFunctions[] = {
-    &PBMEditor::ditherImage, &PGMEditor::ditherImage, &PPMEditor::ditherImage};
-
-void ImageEditor::cropImage(Image* image) {
-    if (Image::getIsLoaded() == false) {
-        throw FileException("Cannot edit image - no image was laoded.");
+void ImageEditorCaller::cropImage(Image* image) {
+    switch(image->getFileType()) {
+        case PBM: this->pbmEditor.cropImage(image); break;
+        case PGM: this->pbmEditor.cropImage(image); break;
+        case PPM: this->pbmEditor.cropImage(image); break;
     }
-
-    cropFunctions[image->getFileType()]();
-
 }
 
-void ImageEditor::scaleImage(Image* image) {
-    if (Image::getIsLoaded() == false) {
-        throw FileException("Cannot edit image - no image was laoded.");
+void ImageEditorCaller::scaleImage(Image* image) {
+    switch(image->getFileType()) {
+        case PBM: this->pbmEditor.scaleImage(image); break;
+        case PGM: this->pbmEditor.scaleImage(image); break;
+        case PPM: this->pbmEditor.scaleImage(image); break;
     }
-
-    scaleFunctions[image->getFileType()]();
 }
 
-void ImageEditor::ditherImage(Image* image) {
-    if (Image::getIsLoaded() == false) {
-        throw FileException("Cannot edit image - no image was laoded.");
+void ImageEditorCaller::ditherImage(Image* image) {
+    switch(image->getFileType()) {
+        case PBM: this->pbmEditor.ditherImage(image); break;
+        case PGM: this->pbmEditor.ditherImage(image); break;
+        case PPM: this->pbmEditor.ditherImage(image); break;
     }
-
-    ditherFunctions[image->getFileType()]();
 }

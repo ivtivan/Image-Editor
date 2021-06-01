@@ -1,5 +1,8 @@
 #include "InputReader.h"
 #include "../Image/Image.h"
+#include "../CustomExceptions/ExitException/ExitException.h"
+
+#include <iostream>
 
 void InputReader::printCommands() {
     std::cout << "------------------------------------\n";

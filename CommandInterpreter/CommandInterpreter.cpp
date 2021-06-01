@@ -82,19 +82,19 @@ void CommandInterpreter::formatCommand(std::string commandAndParameters, std::st
 
 void CommandInterpreter::callFunction(std::string commPar[]) {
     if (commPar[0] == "new") {
-        FileController::createFile(commPar[1]);
+        FileController::instance().createFile(commPar[1]);
     }
     else if (commPar[0] == "open") {
-        FileController::createFile(commPar[1]);
+        FileController::instance().createFile(commPar[1]);
     }
     else if (commPar[0] == "close") {
-        FileController::closeFile();
+        FileController::instance().closeFile();
     }
     else if (commPar[0] == "save") {
-        FileController::saveFile();
+        FileController::instance().saveFile();
     }
     else if (commPar[0] == "saveas") {
-        FileController::saveFileAs(commPar[1]);
+        FileController::instance().saveFileAs(commPar[1]);
     }
     else if (commPar[0] == "crop") {
         // TODO: Crops a file.

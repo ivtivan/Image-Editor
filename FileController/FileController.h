@@ -7,20 +7,26 @@
 
 class FileController {
     private:
-        static Image image; // image to which the file data is copied
-        static bool isLoaded; // checks if a file is currently opened
-        static std::string filePath; // stores the path of the last loaded file
+        Image image; // image to which the file data is copied
+        bool isLoaded; // checks if a file is currently opened
+        std::string filePath; // stores the path of the last loaded file
 
-        static bool fileExists(std::string fileAddress);
+        bool fileExists(std::string fileAddress);
+
+        FileController();
     public:
-        static Image* getImage(); // gets image to which the data is copied
+        FileController(const FileController&) = delete;
+        FileController& operator=(const FileController&) = delete;
 
-        static void createFile(std::string fileAddress);
-        static void openFile(std::string fileAddress);
-        static void closeFile();
+        static FileController& instance();
+        Image* getImage(); // gets image to which the data is copied
 
-        static void saveFile();
-        static void saveFileAs(std::string fileAddress);
+        void createFile(std::string fileAddress);
+        void openFile(std::string fileAddress);
+        void closeFile();
+
+        void saveFile();
+        void saveFileAs(std::string fileAddress);
 };
 
 #endif

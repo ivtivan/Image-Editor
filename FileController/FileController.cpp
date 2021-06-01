@@ -2,13 +2,20 @@
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
 
-bool FileController::isLoaded = false;
+FileController::FileController() : isLoaded(false) {
+    ;
+}
+
+FileController& FileController::instance() {
+    static FileController fc;
+    return fc;
+}
 
 Image* FileController::getImage() {
     return *(this->image);
 }
 
-static bool FileController::fileExists(std::string fileAddress) {
+bool FileController::fileExists(std::string fileAddress) {
     bool exists;
     std::ifstream testExists;
     testExists.open(fileAddress);
@@ -25,7 +32,7 @@ static bool FileController::fileExists(std::string fileAddress) {
     return exists;
 }
 
-static void FileController::createFile(std::string fileAddress) {
+void FileController::createFile(std::string fileAddress) {
     if (this->isLoaded == true) {
         throw FileException("Cannot create - another file already loaded.");
     }
@@ -40,7 +47,7 @@ static void FileController::createFile(std::string fileAddress) {
     openFile(fileAddress);
 }
 
-static void FileController::openFile(std::string fileAddress) {
+void FileController::openFile(std::string fileAddress) {
     if (this->isLoaded == true) {
         throw FileException("Cannot open - another file already loaded");
     }
@@ -50,7 +57,7 @@ static void FileController::openFile(std::string fileAddress) {
     this->filePath = fileAddress;
 
     try {
-        ImageHoder::storeImage(this->filePath);
+        this->image.storeImageFrom(this->filePath);
     }
     catch (const FileException& e) {
         this->isLoaded = false;
@@ -60,7 +67,7 @@ static void FileController::openFile(std::string fileAddress) {
     file.close();
 }
 
-static void FileController::closeFile() {
+void FileController::closeFile() {
     if (this->isLoaded == false) {
         throw FileException("Cannot close file - no file loaded");
     }
@@ -68,7 +75,7 @@ static void FileController::closeFile() {
     this->isLoaded = false;
 }
 
-static void FileController::saveFile() {
+void FileController::saveFile() {
     if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
@@ -78,12 +85,12 @@ static void FileController::saveFile() {
     closeFile();
 }
 
-static void FileController::saveFileAs(std::string fileAddress) {
+void FileController::saveFileAs(std::string fileAddress) {
     if (this->isLoaded == false) {
         throw FileException("Cannot save file - no file loaded");
     }
     
-    rename(this->filePath, fileAddress);
+    rename(this->filePath.c_str(), fileAddress.c_str());
     this->filePath = fileAddress;
 
     saveFile();
