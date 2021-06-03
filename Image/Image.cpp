@@ -22,6 +22,22 @@ Image& Image::operator=(const Image& image) {
     return *this;
 }
 
+const std::size_t Image::getRows() const {
+    return this->rows;
+}
+
+const std::size_t Image::getCols() const {
+    return this->cols;
+}
+
+void Image::setRows(std::size_t rows) {
+    this->rows = rows;
+}
+
+void Image::setCols(std::size_t cols) {
+    this->cols = cols;
+}
+
 const fileType Image::determineFileType(std::string fileExtension) {
     if (fileExtension == "pbm") {
         return PBM;

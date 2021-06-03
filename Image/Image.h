@@ -44,6 +44,12 @@ class Image {
         void storeImageFrom(std::string filePath);
         void saveImageTo(std::string filePath) const;
 
+        const std::size_t getRows() const;
+        const std::size_t getCols() const;
+
+        void setRows(std::size_t rows);
+        void setCols(std::size_t cols);
+
         Image* operator*();
         ~Image();
 
