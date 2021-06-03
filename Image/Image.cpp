@@ -38,8 +38,17 @@ void Image::setCols(std::size_t cols) {
     this->cols = cols;
 }
 
-Pixel** getPixels() {
+Pixel** Image::getPixels() {
     return this->pixels;
+}
+
+void Image::setPixels(Pixel** pixels) {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        delete[] this->pixels[i];
+    }
+    delete[] this->pixels;
+
+    this->pixels = pixels;
 }
 
 const fileType Image::determineFileType(std::string fileExtension) {

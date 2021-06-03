@@ -51,6 +51,8 @@ class Image {
         void setCols(std::size_t cols);
 
         Pixel** getPixels();
+        // does not change the values of row and cols
+        void setPixels(Pixel** pixels);
 
         Image* operator*();
         ~Image();
