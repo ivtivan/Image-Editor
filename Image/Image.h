@@ -46,6 +46,8 @@ class Image {
 
         Image* operator*();
         ~Image();
+
+        friend std::ostream& operator<<(std::ostream& os, Image image);
 };
 
 #endif

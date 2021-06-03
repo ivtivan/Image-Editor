@@ -52,7 +52,9 @@ std::ostream& operator<<(std::ostream& os, Pixel pixel) {
         for (std::size_t i = 1; i < MAX_VALUES_COUNT; ++i) {
             os << " " << pixel.value[i];
         }
-        os << " ";
     }
+    
+    os << " ";
+
     return os;
 }

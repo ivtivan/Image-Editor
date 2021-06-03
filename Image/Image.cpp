@@ -227,7 +227,7 @@ const std::string Image::getContent() const {
 
 void Image::saveImageTo(std::string filePath) const {
     std::ofstream file(filePath);
-    file << content << std::endl;
+    file << *this;
 
     file.close();
 }
@@ -242,4 +242,13 @@ Image::~Image() {
     }
 
     delete[] this->pixels;
+}
+
+std::ostream& operator<<(std::ostream& os, Image image) {
+    for (std::size_t i = 0; i < image.rows; ++i) {
+        for (std::size_t j = 0; j < image.cols; ++j) {
+            os << image.pixels[i][j];
+        }
+    }
+    return os;
 }
