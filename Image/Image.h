@@ -1,6 +1,7 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#include "../Pixel/Pixel.h"
 #include <string>
 
 enum fileType {
@@ -13,6 +14,7 @@ enum fileType {
 class Image {
     private:
         std::string content;
+        Pixel** pixels;
         fileType type;
 
         std::size_t cols;
@@ -22,6 +24,14 @@ class Image {
         const fileType determineFileType(std::string fileExtension);
         void storeFileType(std::string filePath);
         void storeContent(std::string filePath);
+
+        void allocatePixelArray();
+
+        void fillPBM();
+        void fillPGM();
+        void fillPPM();
+
+        void fillPixelArray();
     public:
         Image();
         Image(const Image& image);
@@ -35,6 +45,7 @@ class Image {
         void saveImageTo(std::string filePath) const;
 
         Image* operator*();
+        ~Image();
 };
 
 #endif
