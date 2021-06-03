@@ -38,6 +38,10 @@ void Image::setCols(std::size_t cols) {
     this->cols = cols;
 }
 
+Pixel** getPixels() {
+    return this->pixels;
+}
+
 const fileType Image::determineFileType(std::string fileExtension) {
     if (fileExtension == "pbm") {
         return PBM;
