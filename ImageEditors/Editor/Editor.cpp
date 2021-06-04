@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "../Dither/Dither.h"
 #include <cmath>
 
 void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
@@ -58,4 +59,9 @@ void Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCol
     }
 
     image->setPixels(destPixels, destRows, destCols);
+}
+
+void Editor::ditherImage(Image* image, std::string algorithmName) {
+    Dither dither(algorithmName);
+    dither.ditherImage(image);
 }
