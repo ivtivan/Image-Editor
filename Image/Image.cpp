@@ -30,25 +30,20 @@ const std::size_t Image::getCols() const {
     return this->cols;
 }
 
-void Image::setRows(std::size_t rows) {
-    this->rows = rows;
-}
-
-void Image::setCols(std::size_t cols) {
-    this->cols = cols;
-}
-
 Pixel** Image::getPixels() {
     return this->pixels;
 }
 
-void Image::setPixels(Pixel** pixels) {
+void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
     for (std::size_t i = 0; i < this->rows; ++i) {
         delete[] this->pixels[i];
     }
     delete[] this->pixels;
 
     this->pixels = pixels;
+
+    this->rows = rows;
+    this->cols = cols;
 }
 
 const fileType Image::determineFileType(std::string fileExtension) {

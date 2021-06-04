@@ -11,11 +11,11 @@ void ImageEditorCaller::cropImage(Image* image) {
     }
 }
 
-void ImageEditorCaller::scaleImage(Image* image) {
+void ImageEditorCaller::resizeImage(Image* image) {
     switch(image->getFileType()) {
-        case PBM: this->pbmEditor.scaleImage(image); break;
-        case PGM: this->pbmEditor.scaleImage(image); break;
-        case PPM: this->pbmEditor.scaleImage(image); break;
+        case PBM: this->pbmEditor.resizeImage(image); break;
+        case PGM: this->pbmEditor.resizeImage(image); break;
+        case PPM: this->pbmEditor.resizeImage(image); break;
     }
 }
 

@@ -47,12 +47,9 @@ class Image {
         const std::size_t getRows() const;
         const std::size_t getCols() const;
 
-        void setRows(std::size_t rows);
-        void setCols(std::size_t cols);
-
         Pixel** getPixels();
         // does not change the values of row and cols
-        void setPixels(Pixel** pixels);
+        void setPixels(Pixel** pixels, std::size_t rows, std::size_t cols);
 
         Image* operator*();
         ~Image();

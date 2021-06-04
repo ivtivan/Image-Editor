@@ -7,7 +7,7 @@ class PGMEditor {
     private:
     public:
         void cropImage(Image* image);
-        void scaleImage(Image* image);
+        void resizeImage(Image* image);
         void ditherImage(Image* image);
 };
 

@@ -24,7 +24,38 @@ void PBMEditor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::siz
         }
     }
 
-    image->setPixels(pixelHolder);
-    image->setRows(x2 - x1);
-    image->setCols(y2 - y1);
+    image->setPixels(pixelHolder, x2 - x1, y2 - y1);
+}
+
+// Algorithm from https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
+void PBMEditor::resizeImage(Image* image, std::size_t destRows, std::size_t destCols) {
+    std::size_t srcRows = image->getRows();
+    std::size_t srcCols = image->getCols();
+    std::size_t srcX, srcY; // coordinates of the source pixel
+
+    Pixel** destPixels = new Pixel*[destRows];
+    for (std::size_t i = 0; i < destRows; ++i) {
+        try {
+            destPixels[i] = new Pixel[destCols];
+        }
+        catch (const std::bad_alloc&) {
+            for (std::size_t j = 0; j < i; ++j) {
+                delete[] destPixels[j];
+            }
+            delete[] destPixels;
+        }
+    }
+
+    for (std::size_t i = 0; i < destRows; ++i) {
+        srcX =(int) std::round((double) srcRows * (double) i / (double)destRows); 
+        srcX = std::min(srcX, srcRows - 1);
+        for (std::size_t j = 0; j < destCols; ++j) {
+            srcY =(int) std::round((double) srcCols * (double) j / (double)destCols);
+            srcY = std::min(srcY, srcCols - 1);
+            
+            destPixels[i][j] = image->getPixels()[srcX][srcY];
+        }
+    }
+
+    image->setPixels(destPixels, destRows, destCols);
 }
