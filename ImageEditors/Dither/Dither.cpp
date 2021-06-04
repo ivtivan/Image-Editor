@@ -1,4 +1,5 @@
 #include "Dither.h"
+#include <cmath>
 
 Dither::Dither(std::string algorithmName) : algorithmName(algorithmName) {
 
@@ -149,7 +150,9 @@ void Dither::setUp8Bayer() {
 }
 
 void Dither::setUpDither(Image* image) {
-    eMatrixesCols = image->getCols();
+    this->threshold = (double)image->getPixels[0][0]->getMaxValue() / 2.0;
+    this->pixelsMaxValue = image->getPixels()[i][j]->getMaxValue();
+    this->eMatrixesCols = image->getCols();
 
     if (this->algorithmName == "FS") {
         setUpFS();
@@ -186,9 +189,22 @@ void Dither::setUpDither(Image* image) {
 void Dither::ditherImage(Image* image) {
     setUpDither();
 
+    double pixelValue;
+    Pixel* pixel;
+    double difference;
     for (std::size_t i = 0; i < image->getRows(); ++i) {
         for (std::size_t j = 0; j < image->getCols(); ++j) {
-
+            pixel = image->getPixels()[i][j];
+            pixelValue = pixel->getValue();
+            difference = this->threshold + pixel->getDitherValue() - pixelValue;
+            if (difference > EPS) {
+                pixel->setValue(this->pixelsMaxValue);
+                // TODO:incremetn ditherValue of nearby pixels
+            }
+            else {
+                pixel->setValue(this->pixelsMinValue);
+                // TODO:incremetn ditherValue of nearby pixels
+            }
         }
     }
 }

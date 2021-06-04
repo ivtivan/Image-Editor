@@ -1,14 +1,16 @@
 #ifndef DITHER_H
 #define DITHER_H
 #include "../../Image/Image.h"
+#include "../../Pixel/Pixel.h"
 
 class Dither {
     private:
-        std::string algorithmName;
-
         const std::size_t MAX_DISTRIBUTION_MATRIX_ROWS = 3;
         const std::size_t MAX_DISTRIBUTION_MATRIX_COLS = 5;
         const std::size_t MAX_ERROR_MATRIX_ROWS = 3;
+        const double EPS = 1.0 / (1 << 30);
+
+        std::string algorithmName;
 
         std::size_t dMatrixRows;
         std::size_t dMatrixCols;
@@ -20,6 +22,10 @@ class Dither {
         int* errorMatrix[MAX_ERROR_MATRIX_ROWS];
         std::size_t eMatrixRows;
         std::size_t eMatrixesCols;
+
+        double threshold;
+        unsigned int pixelsMaxValue;
+        const unsigned int pixelsMinValue = 0;
 
         void setUpDistributionMatrix(std::size_t dMatrixRows, std::size_t dMatrixCols, std::size_t pos);
         void setUpErrorMatrix(std::size_t eMatrixRows);
