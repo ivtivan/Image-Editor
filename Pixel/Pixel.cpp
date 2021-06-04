@@ -54,6 +54,10 @@ void Pixel::incrementDitherValue(const double incr) {
     this->ditherValue += incr;
 }
 
+void Pixel::resetDitherValue() {
+    this->ditherValue = 0.0;
+}
+
 const unsigned int Pixel::getMaxValue() const {
     return this->maxValue;
 }
@@ -64,7 +68,7 @@ const double Pixel::getValue() const {
     }
 
     // Formula from https://tannerhelland.com/2011/10/01/grayscale-image-algorithm-vb6.html
-    return (double)value[0] * 0.3 + (double)value[1] * 0.59 + (double)value[2] * 0.11)
+    return (double)value[0] * 0.3 + (double)value[1] * 0.59 + (double)value[2] * 0.11;
 }
 
 const double Pixel::getDitherValue() const {

@@ -11,33 +11,17 @@ void Dither::setUpDistributionMatrix(std::size_t dMatrixRows, std::size_t dMatri
     this->pos = pos;
 }
 
-void Dither::setUpErrorMatrix(std::size_t eMatrixRows) {
-    this->eMatrixRows = eMatrixRows;
-    this->errorMatrix[0] = new int[this->eMatrixCols];
-
-    if (this->eMatrixRows == 2) {
-        try {
-            this->errorMatrix[1] = new int[this->eMatrixCols];
-        }
-        catch(const bad_alloc&) {
-            delete[] errorMatrix[0];
-        }
-    }
-}
-
 void Dither::setUpFS() {
-    setUpErrorMatrix(2);
     setUpDistributionMatrix(2, 3, 1);
 
     this->dMatrix[0][2] = 7;
     this->dMatrix[1][0] = 3;
     this->dMatrix[1][1] = 5;
     this->dMatrix[1][2] = 1;
-    this->errorDivisor = 16;
+    this->distributionDivisor = 16;
 }
 
 void Dither::setUpJJN() {
-    setUpErrorMatrix(2);
     setUpDistributionMatrix(3, 5, 2);
 
     this->dMatrix[0][3] = 7;
@@ -52,11 +36,10 @@ void Dither::setUpJJN() {
     this->dMatrix[2][2] = 5;
     this->dMatrix[2][3] = 3;
     this->dMatrix[2][4] = 1;
-    this->errorDivisor = 48;
+    this->distributionDivisor = 48;
 }
 
 void Dither::setUpStucki() {
-    setUpErrorMatrix(2);
     setUpDistributionMatrix(3, 5, 2);
     
     this->dMatrix[0][3] = 8;
@@ -71,11 +54,10 @@ void Dither::setUpStucki() {
     this->dMatrix[2][2] = 4;
     this->dMatrix[2][3] = 2;
     this->dMatrix[2][4] = 1;
-    this->errorDivisor = 42;
+    this->distributionDivisor = 42;
 }
 
 void Dither::setUpAtkinson() {
-    setUpErrorMatrix(2);
     setUpDistributionMatrix(3, 4, 1);
 
     this->dMatrix[0][2] = 1;
@@ -84,11 +66,10 @@ void Dither::setUpAtkinson() {
     this->dMatrix[1][1] = 1;
     this->dMatrix[1][2] = 1;
     this->dMatrix[2][1] = 1;
-    this->errorDivisor = 8;
+    this->distributionDivisor = 8;
 }
 
 void Dither::setUpBurkes() {
-    setUpErrorMatrix(1);
     setUpDistributionMatrix(2, 5, 2);
 
     this->dMatrix[0][3] = 8;
@@ -98,11 +79,10 @@ void Dither::setUpBurkes() {
     this->dMatrix[1][2] = 8;
     this->dMatrix[1][3] = 4;
     this->dMatrix[1][4] = 2;
-    this->errorDivisor = 32;
+    this->distributionDivisor = 32;
 }
 
 void Dither::setUpSierra() {
-    setUpErrorMatrix(2);
     setUpDistributionMatrix(3, 5, 2);
 
     this->dMatrix[0][3] = 5;
@@ -115,11 +95,10 @@ void Dither::setUpSierra() {
     this->dMatrix[2][1] = 2;
     this->dMatrix[2][2] = 3;
     this->dMatrix[2][3] = 2;
-    this->errorDivisor = 32;
+    this->distributionDivisor = 32;
 }
 
 void Dither::setUpTRSierra() {
-    setUpErrorMatrix(1);
     setUpDistributionMatrix(2, 5, 2);
     this->dMatrix[0][3] = 4;
     this->dMatrix[0][4] = 3;
@@ -128,17 +107,16 @@ void Dither::setUpTRSierra() {
     this->dMatrix[1][2] = 3;
     this->dMatrix[1][3] = 2;
     this->dMatrix[1][4] = 1;
-    this->errorDivisor = 16;
+    this->distributionDivisor = 16;
 }
 
 void Dither::setUpSieraLite() {
-    setUpErrorMatrix(1);
     setUpDistributionMatrix(2, 3, 1);
 
     this->dMatrix[0][2] = 2;
     this->dMatrix[1][0] = 1;
     this->dMatrix[1][1] = 1;
-    this->errorDivisor = 4;
+    this->distributionDivisor = 4;
 }
 
 void Dither::setUp4Bayer() {
@@ -150,9 +128,8 @@ void Dither::setUp8Bayer() {
 }
 
 void Dither::setUpDither(Image* image) {
-    this->threshold = (double)image->getPixels[0][0]->getMaxValue() / 2.0;
-    this->pixelsMaxValue = image->getPixels()[i][j]->getMaxValue();
-    this->eMatrixesCols = image->getCols();
+    this->threshold = (double)(image->getPixels()[0][0].getMaxValue()) / 2.0;
+    this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
 
     if (this->algorithmName == "FS") {
         setUpFS();
@@ -186,31 +163,38 @@ void Dither::setUpDither(Image* image) {
     }
 }
 
-void Dither::ditherImage(Image* image) {
-    setUpDither();
-
-    double pixelValue;
-    Pixel* pixel;
-    double difference;
-    for (std::size_t i = 0; i < image->getRows(); ++i) {
-        for (std::size_t j = 0; j < image->getCols(); ++j) {
-            pixel = image->getPixels()[i][j];
-            pixelValue = pixel->getValue();
-            difference = this->threshold + pixel->getDitherValue() - pixelValue;
-            if (difference > EPS) {
-                pixel->setValue(this->pixelsMaxValue);
-                // TODO:incremetn ditherValue of nearby pixels
-            }
-            else {
-                pixel->setValue(this->pixelsMinValue);
-                // TODO:incremetn ditherValue of nearby pixels
+void Dither::distributeDifference(Image* image, double diff, std::size_t x, std::size_t y) {
+    std::size_t endingRowIndex = std::min(x + dMatrixRows, image->getRows());
+    std::size_t beginningColIndex = std::max(0, (int)y - (int)pos);
+    std::size_t endingColIndex = std::min(beginningColIndex + dMatrixCols, image->getCols());
+    unsigned int distributionCoeficient;
+    for (std::size_t i = x; i < endingRowIndex; ++i) {
+        for (std::size_t j = beginningColIndex; j < endingColIndex; ++j) {
+            distributionCoeficient = dMatrix[i - x][j - beginningColIndex];
+            if (distributionCoeficient != 0) {
+                image->getPixels()[i][j].incrementDitherValue(diff * (double)distributionCoeficient / this->distributionDivisor);
             }
         }
     }
 }
 
-Dither::~Dither() {
-    for (std::size_t i = 0; i < MAX_ERROR_MATRIX_ROWS; ++i) {
-        delete[] this->errorMatrix[i];
+void Dither::ditherImage(Image* image) {
+    setUpDither(image);
+
+    double pixelValue;
+    double difference;
+    for (std::size_t i = 0; i < image->getRows(); ++i) {
+        for (std::size_t j = 0; j < image->getCols(); ++j) {
+            pixelValue = image->getPixels()[i][j].getValue();
+            difference = this->threshold + image->getPixels()[i][j].getDitherValue() - pixelValue;
+            if (difference > EPS) {
+                image->getPixels()[i][j].setValue(this->pixelsMaxValue);
+            }
+            else {
+                image->getPixels()[i][j].setValue(this->pixelsMinValue);
+            }
+            image->getPixels()[i][j].resetDitherValue();
+            distributeDifference(image, difference, i, j);
+        }
     }
 }

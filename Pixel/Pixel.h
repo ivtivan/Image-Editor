@@ -24,9 +24,10 @@ class Pixel {
         void setRGBValue(unsigned int value[MAX_VALUES_COUNT]);
 
         void incrementDitherValue(const double incr);
+        void resetDitherValue();
 
         const unsigned int getMaxValue() const;
-        const unsigned int getValue() const;
+        const double getValue() const;
         const double getDitherValue() const;
 
         friend std::ostream& operator<<(std::ostream& os, Pixel pixel);

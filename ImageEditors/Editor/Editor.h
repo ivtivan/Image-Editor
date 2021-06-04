@@ -1,9 +1,9 @@
-#ifndef PBM_EDITOR_H
-#define PBM_EDITOR_H
+#ifndef EDITOR_H
+#define EDITOR_H
 
 #include "../../Image/Image.h"
 
-class PBMEditor {
+class Editor {
     private:
     public:
         // x1 <= x2, y1 <= y2

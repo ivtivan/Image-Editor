@@ -1,7 +1,7 @@
-#include "PBMEditor.h"
+#include "Editor.h"
 #include <cmath>
 
-void PBMEditor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
+void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
     x2 = std::min(x2, image->getCols());
     y2 = std::min(y2, image->getCols());
 
@@ -28,7 +28,7 @@ void PBMEditor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::siz
 }
 
 // Algorithm from https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
-void PBMEditor::resizeImage(Image* image, std::size_t destRows, std::size_t destCols) {
+void Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCols) {
     std::size_t srcRows = image->getRows();
     std::size_t srcCols = image->getCols();
     std::size_t srcX, srcY; // coordinates of the source pixel
