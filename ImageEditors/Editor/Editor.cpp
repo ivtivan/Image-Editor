@@ -2,6 +2,15 @@
 #include "../Dither/Dither.h"
 #include <cmath>
 
+Editor::Editor() {
+    ;
+}
+
+Editor& Editor::instance() {
+    static Editor editor;
+    return editor;
+}
+
 void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
     x2 = std::min(x2, image->getCols());
     y2 = std::min(y2, image->getCols());
