@@ -14,7 +14,7 @@ class CommandInterpreter {
     #endif
 
     private:
-        static const std::size_t MAX_NUMBER_PARAMETERS = 1;
+        static const std::size_t MAX_NUMBER_PARAMETERS = 5;
 
         static void toLower(std::string& str);
         static void removeAdditionalSpaces(std::string& str);

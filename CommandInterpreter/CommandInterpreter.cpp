@@ -1,6 +1,7 @@
 #include "CommandInterpreter.h"
 #include "../CustomExceptions/ExitException/ExitException.h"
 #include "../FileController/FileController.h"
+#include "../ImageEditors/Editor/Editor.h"
 
 void CommandInterpreter::toLower(std::string& str) {
     for (std::size_t i = 0; i < str.length(); ++i) {
@@ -97,11 +98,23 @@ void CommandInterpreter::callFunction(std::string commPar[]) {
         FileController::instance().saveFileAs(commPar[1]);
     }
     else if (commPar[0] == "crop") {
-        // TODO: Crops a file.
-    }  
+        Image* image = FileController::instance().getImage();
+        std::size_t x1 = atoi(commPar[1].c_str());
+        std::size_t y1 = atoi(commPar[2].c_str());
+        std::size_t x2 = atoi(commPar[3].c_str());
+        std::size_t y2 = atoi(commPar[4].c_str());
+        Editor::instance().cropImage(image, x1, y1, x2, y2);
+    }
     else if (commPar[0] == "resize") {
-        // TODO: Resizes a file.
-    }      
+        Image* image = FileController::instance().getImage();
+        std::size_t rows = atoi(commPar[1].c_str());
+        std::size_t cols = atoi(commPar[2].c_str());
+        Editor::instance().resizeImage(image, rows, cols);
+    }
+    else if (commPar[0] == "dither") {
+        Image* image = FileController::instance().getImage();
+        Editor::instance().ditherImage(image, commPar[1]);
+    }     
     else if (commPar[0] == "exit") {
         throw ExitException("Exit command registered. Program will exit.");
     }
