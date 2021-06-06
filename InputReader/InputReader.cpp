@@ -19,8 +19,9 @@ void InputReader::readCommands() {
     while (true) {
         std::cout << "Command: ";
         getline(std::cin, inputCommand);
+        Command command(inputCommand);
         try {
-            CommandInterpreter::execute(inputCommand);
+            CommandInterpreter::execute(command);
         }
         catch (const ExitException& e) {
             std::cout << e.what() << std::endl;
