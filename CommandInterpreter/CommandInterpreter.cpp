@@ -33,7 +33,7 @@ void CommandInterpreter::execute(Command command) {
         std::size_t cols = atoi(command[2].c_str());
         Editor::instance().resizeImage(image, rows, cols);
     }
-    else if (command[0] == "dither") {
+    else if (command[0] == "DiffusionDither") {
         Image* image = FileController::instance().getImage();
         Editor::instance().ditherImage(image, command[1]);
     }     

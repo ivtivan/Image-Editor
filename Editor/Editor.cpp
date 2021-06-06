@@ -1,5 +1,5 @@
 #include "Editor.h"
-#include "../Dither/Dither.h"
+#include "../DiffusionDither/DiffusionDither.h"
 #include <cmath>
 
 Editor::Editor() {
@@ -71,6 +71,6 @@ void Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCol
 }
 
 void Editor::ditherImage(Image* image, std::string algorithmName) {
-    Dither dither(algorithmName);
-    dither.ditherImage(image);
+    DiffusionDither DiffusionDither(algorithmName);
+    DiffusionDither.ditherImage(image);
 }
