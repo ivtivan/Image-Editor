@@ -1,5 +1,15 @@
 #include "Editor.h"
-#include "../DiffusionDither/DiffusionDither.h"
+#include "../Dithers/DiffusionDithers/DitherAktinson/DitherAktinson.h"
+#include "../Dithers/DiffusionDithers/DitherBurkes/DitherBurkes.h"
+#include "../Dithers/DiffusionDithers/DitherFS/DitherFS.h"
+#include "../Dithers/DiffusionDithers/DitherJJN/DitherJJN.h"
+#include "../Dithers/DiffusionDithers/DitherLinear/DitherLinear.h"
+#include "../Dithers/DiffusionDithers/DitherSierra/DitherSierra.h"
+#include "../Dithers/DiffusionDithers/DitherSierraLite/DitherSierraLite.h"
+#include "../Dithers/DiffusionDithers/DitherTRSierra/DitherTRSierra.h"
+#include "../Dithers/DiffusionDithers/DitherStucki/DitherStucki.h"
+#include "../Dithers/NondiffusionDithers/Dither4Bayer/Dither4Bayer.h"
+#include "../Dithers/NondiffusionDithers/Dither8Bayer/Dither8Bayer.h"
 #include <cmath>
 
 Editor::Editor() {
@@ -71,6 +81,48 @@ void Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCol
 }
 
 void Editor::ditherImage(Image* image, std::string algorithmName) {
-    DiffusionDither DiffusionDither(algorithmName);
-    DiffusionDither.ditherImage(image);
+    if (algorithmName == "Linear") {
+        DitherLinear dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "Aktinson") {
+        DitherAktinson dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "Burkes") {
+        DitherBurkes dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "FS") {
+        DitherFS dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "JJN") {
+        DitherJJN dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "Sierra") {
+        DitherSierra dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "SierraLite") {
+        DitherSierraLite dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "TRSierra") {
+        DitherTRSierra dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "Stucki") {
+        DitherStucki dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "4Bayer") {
+        Dither4Bayer dither;
+        dither.ditherImage(image);
+    }
+    else if (algorithmName == "8Bayer") {
+        Dither8Bayer dither;
+        dither.ditherImage(image);
+    }
 }

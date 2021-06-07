@@ -1,7 +1,7 @@
 #include "CommandInterpreter.h"
 #include "../CustomExceptions/ExitException/ExitException.h"
 #include "../FileController/FileController.h"
-#include "../ImageEditors/Editor/Editor.h"
+#include "../Editor/Editor.h"
 
 void CommandInterpreter::execute(Command command) {
     if (command[0] == "new") {

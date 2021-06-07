@@ -5,7 +5,7 @@
 #include "../../../Pixel/Pixel.h"
 
 class NondiffusionDither {
-    private:
+    protected:
         static const std::size_t MAX_THRESHOLD_MATRIX_DIMENSION = 8;
         const double EPS = 1.0 / (1 << 30);
 
@@ -18,6 +18,7 @@ class NondiffusionDither {
         unsigned int pixelsMaxValue;
         const unsigned int pixelsMinValue = 0;
 
+        void setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]);
         void calculateMatrixthresholds();
         void setUpDither(Image* image);
     public:

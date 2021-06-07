@@ -1,7 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "../../Image/Image.h"
+#include "../Image/Image.h"
 
 class Editor {
     private:

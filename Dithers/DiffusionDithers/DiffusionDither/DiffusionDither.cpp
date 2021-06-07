@@ -1,10 +1,19 @@
 #include "DiffusionDither.h"
 #include <cmath>
 
-DiffusionDither(std::size_t dMatrixRows, std::size_t dMatrixCols, std::size_t pos) :
+DiffusionDither::DiffusionDither(std::size_t dMatrixRows, std::size_t dMatrixCols, std::size_t pos) :
     dMatrixRows(dMatrixRows), dMatrixCols(dMatrixCols), pos(pos) {
     ;
 }
+
+void DiffusionDither::setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS]) {
+    for (std::size_t i = 0; i < this->dMatrixRows; ++i) {
+        for (std::size_t j = 0; j < this->dMatrixCols; ++j) {
+            this->dMatrix[i][j] = src[i][j];
+        }
+    }
+}
+
 
 void DiffusionDither::setUpDither(Image* image) {
     this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
@@ -34,7 +43,7 @@ void DiffusionDither::ditherImage(Image* image) {
 
     std::size_t imageRows = image->getRows();
     std::size_t imageCols = image->getRows();
-    
+
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {
             pixelValue = image->getPixels()[i][j].getValue();

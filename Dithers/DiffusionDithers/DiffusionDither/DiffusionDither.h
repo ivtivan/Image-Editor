@@ -4,7 +4,7 @@
 #include "../../../Pixel/Pixel.h"
 
 class DiffusionDither {
-    private:
+    protected:
         static const std::size_t MAX_DISTRIBUTION_MATRIX_ROWS = 3;
         static const std::size_t MAX_DISTRIBUTION_MATRIX_COLS = 5;
         const double EPS = 1.0 / (1 << 30);
@@ -20,6 +20,7 @@ class DiffusionDither {
         unsigned int pixelsMaxValue;
         const unsigned int pixelsMinValue = 0;
 
+        void setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS]);
         void setUpDither(Image* image);
         void distributeDifference(Image* image, double diff, std::size_t x, std::size_t y);
     public:
