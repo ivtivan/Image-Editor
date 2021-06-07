@@ -44,9 +44,18 @@ void Pixel::setValue(const unsigned int value) {
     }
 }
 
-void Pixel::setRGBValue(unsigned int value[MAX_VALUES_COUNT]) {
+void Pixel::setValue(unsigned int value[MAX_VALUES_COUNT]) {
     for (std::size_t i = 0; i < MAX_VALUES_COUNT; ++i) {
         this->value[i] = value[i];
+    }
+}
+
+void Pixel::setValue(std::string value) {
+    std::stringstream colorReader;
+    std::size_t colorLength = 2;
+    for (std::size_t i = 0; i < MAX_VALUES_COUNT; ++i) {
+        colorReader << value.substr(i * colorLength, colorLength);
+        colorReader >> std::hex >> this->value[i];
     }
 }
 

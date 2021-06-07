@@ -32,19 +32,12 @@ bool FileController::fileExists(std::string fileAddress) {
     return exists;
 }
 
-void FileController::createFile(std::string fileAddress) {
+void FileController::createFile(std::size_t rows, std::size_t cols, std::string color) {
     if (this->isLoaded == true) {
         throw FileException("Cannot create - another file already loaded.");
     }
 
-    if (fileExists(fileAddress)) {
-        throw FileException("Cannot create - file with this name already exists.");
-    }
-
-    std::ofstream file(fileAddress);
-    file.close();
-
-    openFile(fileAddress);
+    this->image.setPixels(color, rows, cols);
 }
 
 void FileController::openFile(std::string fileAddress) {

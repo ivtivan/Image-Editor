@@ -14,10 +14,12 @@ CommandInterpreter& CommandInterpreter::instance() {
 
 void CommandInterpreter::execute(Command command) {
     if (command[0] == "new") {
-        FileController::instance().createFile(command[1]);
+        std::size_t rows = atoi(command[1].c_str());
+        std::size_t cols = atoi(command[2].c_str());
+        FileController::instance().createFile(rows, cols, command[3]);
     }
     else if (command[0] == "open") {
-        FileController::instance().createFile(command[1]);
+        FileController::instance().openFile(command[1]);
     }
     else if (command[0] == "close") {
         FileController::instance().closeFile();

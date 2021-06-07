@@ -32,6 +32,7 @@ class Image {
         void fillPPM();
 
         void fillPixelArray();
+        void colorPixels(std::string color);
     public:
         Image();
         Image(const Image& image);
@@ -50,6 +51,7 @@ class Image {
         Pixel** getPixels();
         // does not change the values of row and cols
         void setPixels(Pixel** pixels, std::size_t rows, std::size_t cols);
+        void setPixels(std::string color, std::size_t rows, std::size_t cols);
 
         Image* operator*();
         ~Image();

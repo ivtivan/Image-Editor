@@ -2,6 +2,8 @@
 #define PIXEL_H
 
 #include <iostream>
+#include <string>
+#include <sstream>
 
 const std::size_t MAX_VALUES_COUNT = 3;
 
@@ -20,8 +22,9 @@ class Pixel {
         Pixel& operator=(const Pixel& pixel);
 
         void setValue(const unsigned int value);
+        void setValue(unsigned int value[MAX_VALUES_COUNT]);
+        void setValue(std::string value);
         void setMaxValue(const unsigned int maxValue);
-        void setRGBValue(unsigned int value[MAX_VALUES_COUNT]);
 
         void incrementDitherValue(const double incr);
         void resetDitherValue();

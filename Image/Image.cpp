@@ -46,6 +46,21 @@ void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
     this->cols = cols;
 }
 
+void Image::colorPixels(std::string color) {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            pixels[i][j].setValue(color);
+        }
+    }
+}
+
+void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
+    this->rows = rows;
+    this->cols = cols;
+    allocatePixelArray();
+    colorPixels(color);
+}
+
 const fileType Image::determineFileType(std::string fileExtension) {
     if (fileExtension == "pbm") {
         return PBM;
@@ -84,7 +99,7 @@ void Image::allocatePixelArray() {
 void Image::fillPBM() {
     unsigned int countSetPixels = 0;
     for(std::size_t i = 0 ; i < this->content.length(); ++i) {
-        if(this->content[i] != ' ') {
+        if (this->content[i] != ' ') {
             this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(this->content[i] - '0');
             countSetPixels++;
         }
@@ -129,7 +144,7 @@ void Image::fillPPM() {
             pixelValue[valueCount] = atoi(value.c_str());
             valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
             if(valueCount == 0) {
-                this->pixels[countSetPixels / rows][countSetPixels % cols].setRGBValue(pixelValue);
+                this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(pixelValue);
                 countSetPixels++;
             }
         }
@@ -144,7 +159,7 @@ void Image::fillPPM() {
         pixelValue[valueCount] = atoi(value.c_str());
         valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
         if(valueCount == 0) {
-            this->pixels[countSetPixels / rows][countSetPixels % cols].setRGBValue(pixelValue);
+            this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(pixelValue);
             countSetPixels++;
         }
     }

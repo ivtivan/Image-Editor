@@ -21,7 +21,7 @@ class FileController {
         static FileController& instance();
         Image* getImage(); // gets image to which the data is copied
 
-        void createFile(std::string fileAddress);
+        void createFile(std::size_t rows, std::size_t cols, std::string color);
         void openFile(std::string fileAddress);
         void closeFile();
 
