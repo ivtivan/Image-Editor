@@ -5,9 +5,15 @@
 
 class InputReader {
     private:
+        InputReader();
     public:
-        static void printCommands();
-        static void readCommands();
+        InputReader(const InputReader&) = delete;
+        InputReader& operator=(const InputReader&) = delete;
+
+        static InputReader& instance();
+
+        void printCommands();
+        void readCommands();
 };
 
 #endif

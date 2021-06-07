@@ -2,9 +2,9 @@
 #include "InputReader/InputReader.h"
 
 int main() {
-    InputReader::printCommands();
+    InputReader::instance().printCommands();
     
-    InputReader::readCommands();
+    InputReader::instance().readCommands();
 
     return 0;
 }

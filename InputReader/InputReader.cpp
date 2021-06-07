@@ -4,6 +4,15 @@
 
 #include <iostream>
 
+InputReader::InputReader() {
+    ;
+}
+
+InputReader& InputReader::instance() {
+    static InputReader iR;
+    return iR;
+}
+
 void InputReader::printCommands() {
     std::cout << "------------------------------------\n";
     std::cout << "Commands supported:\n";
@@ -21,7 +30,7 @@ void InputReader::readCommands() {
         getline(std::cin, inputCommand);
         Command command(inputCommand);
         try {
-            CommandInterpreter::execute(command);
+            CommandInterpreter::instance().execute(command);
         }
         catch (const ExitException& e) {
             std::cout << e.what() << std::endl;

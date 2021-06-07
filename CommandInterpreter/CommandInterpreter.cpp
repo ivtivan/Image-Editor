@@ -3,6 +3,15 @@
 #include "../FileController/FileController.h"
 #include "../Editor/Editor.h"
 
+CommandInterpreter::CommandInterpreter() {
+    ;
+}
+
+CommandInterpreter& CommandInterpreter::instance() {
+    static CommandInterpreter cI;
+    return cI;
+}
+
 void CommandInterpreter::execute(Command command) {
     if (command[0] == "new") {
         FileController::instance().createFile(command[1]);

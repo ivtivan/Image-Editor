@@ -8,8 +8,15 @@
 // the respective function.
 
 class CommandInterpreter {
+    private:
+        CommandInterpreter();
     public:
-        static void execute(Command command);
+        CommandInterpreter(const CommandInterpreter&) = delete;
+        CommandInterpreter& operator=(const CommandInterpreter&) = delete;
+
+        static CommandInterpreter& instance();
+
+        void execute(Command command);
 };
 
 #endif
