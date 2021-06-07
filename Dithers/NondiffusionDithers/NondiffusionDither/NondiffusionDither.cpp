@@ -1,15 +1,26 @@
 #include "NondiffusionDither.h"
-#include <cmath>
 
-NondiffusionDither(std::size_t dMatrixRows, std::size_t tMatrixCols) :
-    dMatrixRows(tMatrixRows), tMatrixCols(tMatrixCols) {
+NondiffusionDither(std::size_t dimension) :
+    dimension(dimension) {
     ;
+}
+
+void DiffusionDither::calculateMatrixthresholds() {
+    std::size_t imageRows = image->getRows();
+    std::size_t imageCols = image->getRows();
+
+    for (std::size_t i = 0; i < imageRows; ++i) {
+        for (std::size_t j = 0; j < imageCols; ++j) {
+            tMatrix[i][j] = (tMatrix[i][j] + 1.0) / (dimension * dimension) - 0.5;
+        }
+    }
 }
 
 void DiffusionDither::setUpDither(Image* image) {
     this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
     this->threshold = (double) this->pixelsMaxValue / 2.0;
     this->precisionValue = (double) this->pixelsMaxValue / 2.0;
+    calculateMatrixthresholds();
 }
 
 void DiffusionDither::ditherImage(Image* image) {
@@ -17,10 +28,14 @@ void DiffusionDither::ditherImage(Image* image) {
 
     double pixelValue, alteredValue;
     double factor;
-    for (std::size_t i = 0; i < image->getRows(); ++i) {
-        for (std::size_t j = 0; j < image->getCols(); ++j) {
+
+    std::size_t imageRows = image->getRows();
+    std::size_t imageCols = image->getRows();
+
+    for (std::size_t i = 0; i < imageRows; ++i) {
+        for (std::size_t j = 0; j < imageCols; ++j) {
             pixelValue = image->getPixels()[i][j].getValue();
-            factor = tMatrix[i % tMatrixRows][j % tMatrixCols];
+            factor = tMatrix[i % dimension][j % dimension];
 
             if (alteredValue - pixelValue > EPS) {
                 image->getPixels()[i][j].setValue(this->pixelsMaxValue);

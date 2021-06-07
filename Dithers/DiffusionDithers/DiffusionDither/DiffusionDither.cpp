@@ -31,8 +31,12 @@ void DiffusionDither::ditherImage(Image* image) {
 
     double pixelValue;
     double difference;
-    for (std::size_t i = 0; i < image->getRows(); ++i) {
-        for (std::size_t j = 0; j < image->getCols(); ++j) {
+
+    std::size_t imageRows = image->getRows();
+    std::size_t imageCols = image->getRows();
+    
+    for (std::size_t i = 0; i < imageRows; ++i) {
+        for (std::size_t j = 0; j < imageCols; ++j) {
             pixelValue = image->getPixels()[i][j].getValue();
             difference = this->threshold + image->getPixels()[i][j].getDitherValue() - pixelValue;
             if (difference > EPS) {
