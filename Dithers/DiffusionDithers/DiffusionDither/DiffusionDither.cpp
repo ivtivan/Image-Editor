@@ -6,48 +6,9 @@ DiffusionDither(std::size_t dMatrixRows, std::size_t dMatrixCols, std::size_t po
     ;
 }
 
-void DiffusionDither::setUp4Bayer() {
-    // TODO
-}
-
-void DiffusionDither::setUp8Bayer() {
-    // TODO
-}
-
 void DiffusionDither::setUpDither(Image* image) {
     this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
     this->threshold = (double) this->pixelsMaxValue / 2.0;
-
-    if (this->algorithmName == "FS") {
-        setUpFS();
-    }
-    else if (this->algorithmName == "JJN") {
-        setUpJJN();
-    }
-    else if (this->algorithmName == "Stucki") {
-        setUpStucki();
-    }
-    else if (this->algorithmName == "Atkinson") {
-        setUpAtkinson();
-    }
-    else if (this->algorithmName == "Burkes") {
-        setUpBurkes();
-    }
-    else if (this->algorithmName == "Sierra") {
-        setUpSierra();
-    }
-    else if (this->algorithmName == "TRSierra") {
-        setUpTRSierra();
-    }
-    else if (this->algorithmName == "SieraLite") {
-        setUpSieraLite();
-    }
-    else if (this->algorithmName == "4Bayer") {
-        setUp4Bayer();
-    }
-    else if (this->algorithmName == "8Bayer") {
-        setUp8Bayer();
-    }
 }
 
 void DiffusionDither::distributeDifference(Image* image, double diff, std::size_t x, std::size_t y) {

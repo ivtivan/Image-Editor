@@ -1,13 +1,12 @@
 #ifndef DIFFUSION_DITHER_H
 #define DIFFUSION_DITHER_H
-#include "../../Image/Image.h"
-#include "../../Pixel/Pixel.h"
+#include "../../../Image/Image.h"
+#include "../../../Pixel/Pixel.h"
 
 class DiffusionDither {
     private:
-        static const std::size_t MAX_DISTRIBUTION_MATRIX_ROWS = 8;
-        static const std::size_t MAX_DISTRIBUTION_MATRIX_COLS = 8;
-        static const std::size_t MAX_ERROR_MATRIX_ROWS = 3;
+        static const std::size_t MAX_DISTRIBUTION_MATRIX_ROWS = 3;
+        static const std::size_t MAX_DISTRIBUTION_MATRIX_COLS = 5;
         const double EPS = 1.0 / (1 << 30);
 
         std::size_t dMatrixRows;
