@@ -2,7 +2,7 @@
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
 
-FileController::FileController() : isLoaded(false) {
+FileController::FileController() : isLoaded(false), setFilePath(false) {
     ;
 }
 
@@ -15,10 +15,10 @@ Image* FileController::getImage() {
     return *(this->image);
 }
 
-bool FileController::fileExists(std::string fileAddress) {
+bool FileController::fileExists(std::string filePath) {
     bool exists;
     std::ifstream testExists;
-    testExists.open(fileAddress);
+    testExists.open(filePath);
     
     // Checks if a file was opened.
     if (testExists) {
@@ -38,16 +38,22 @@ void FileController::createFile(std::size_t rows, std::size_t cols, std::string 
     }
 
     this->image.setPixels(color, rows, cols);
+    isLoaded = true;
 }
 
-void FileController::openFile(std::string fileAddress) {
+void FileController::openFile(std::string filePath) {
     if (this->isLoaded == true) {
-        throw FileException("Cannot open - another file already loaded");
+        throw FileException("Cannot open - another file already loaded.");
     }
 
-    std::ofstream file(fileAddress);
+    if (fileExists(filePath) == false) {
+        throw FileException("Cannot open - no such file was found.");
+    }
+
+    std::ofstream file(filePath);
     this->isLoaded = true;
-    this->filePath = fileAddress;
+    this->setFilePath = true;
+    this->filePath = filePath;
 
     try {
         this->image.storeImageFrom(this->filePath);
@@ -62,29 +68,33 @@ void FileController::openFile(std::string fileAddress) {
 
 void FileController::closeFile() {
     if (this->isLoaded == false) {
-        throw FileException("Cannot close file - no file loaded");
+        throw FileException("Cannot close file - no file loaded.");
     }
 
     this->isLoaded = false;
+    this->setFilePath = false;
 }
 
 void FileController::saveFile() {
     if (this->isLoaded == false) {
-        throw FileException("Cannot save file - no file loaded");
+        throw FileException("Cannot save file - no file loaded.");
     }
-    
+    if (this->setFilePath == false) {
+        throw FileException("Cannot save file - no file path is given.");
+    }
+
     image.saveImageTo(this->filePath);
 
     closeFile();
 }
 
-void FileController::saveFileAs(std::string fileAddress) {
+void FileController::saveFileAs(std::string filePath) {
     if (this->isLoaded == false) {
-        throw FileException("Cannot save file - no file loaded");
+        throw FileException("Cannot save file - no file loaded.");
     }
     
-    rename(this->filePath.c_str(), fileAddress.c_str());
-    this->filePath = fileAddress;
+    this->filePath = filePath;
+    this->setFilePath = true;
 
     saveFile();
 }

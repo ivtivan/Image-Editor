@@ -10,8 +10,9 @@ class FileController {
         Image image; // image to which the file data is copied
         bool isLoaded; // checks if a file is currently opened
         std::string filePath; // stores the path of the last loaded file
+        bool setFilePath; // checks if a file path was set
 
-        bool fileExists(std::string fileAddress);
+        bool fileExists(std::string filePath);
 
         FileController();
     public:
@@ -22,11 +23,15 @@ class FileController {
         Image* getImage(); // gets image to which the data is copied
 
         void createFile(std::size_t rows, std::size_t cols, std::string color);
-        void openFile(std::string fileAddress);
+        void openFile(std::string filePath);
         void closeFile();
 
+        // closes file after being saved
         void saveFile();
-        void saveFileAs(std::string fileAddress);
+
+        // does not rename the file from which the image was loaded
+        // creates a new file with the given path
+        void saveFileAs(std::string filePath);
 };
 
 #endif
