@@ -57,6 +57,7 @@ void Pixel::setValue(std::string value) {
     for (std::size_t i = 0; i < MAX_VALUES_COUNT; ++i) {
         colorReader << value.substr(i * colorLength + 1, colorLength);
         colorReader >> std::hex >> this->value[i];
+        colorReader.clear();
     }
 
     this->maxValue = 255;
@@ -93,13 +94,9 @@ std::ostream& operator<<(std::ostream& os, Pixel pixel) {
     
     if (pixel.isRGB == true) {
         for (std::size_t i = 1; i < MAX_VALUES_COUNT; ++i) {
-            os << pixel.value[i];
-
-            if (i != MAX_VALUES_COUNT - 1) {
-                os << " ";
-            }
+            os << " " << pixel.value[i];
         }
     }
-
+    os << " ";
     return os;
 }
