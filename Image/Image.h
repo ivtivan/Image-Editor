@@ -16,6 +16,7 @@ class Image {
         std::string content;
         Pixel** pixels;
         fileType type;
+        unsigned int pixelMaxValue;
 
         std::size_t cols;
         std::size_t rows;
@@ -56,7 +57,7 @@ class Image {
         Image* operator*();
         ~Image();
 
-        friend std::ostream& operator<<(std::ostream& os, Image image);
+        friend std::ostream& operator<<(std::ostream& os, const Image& image);
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include "Image.h"
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
+#include <iostream>
 
 Image::Image() {
     ;
@@ -57,6 +58,7 @@ void Image::colorPixels(std::string color) {
 void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     this->rows = rows;
     this->cols = cols;
+    this->type = PPM;
     allocatePixelArray();
     colorPixels(color);
 }
@@ -77,7 +79,7 @@ const fileType Image::determineFileType(std::string fileExtension) {
 
 void Image::storeFileType(std::string filePath) {
     const std::size_t fileExtensionLength = 3;
-    std::string fileExtension = filePath.substr(filePath.length() - 4, fileExtensionLength);
+    std::string fileExtension = filePath.substr(filePath.length() - 3, fileExtensionLength);
     this->type = determineFileType(fileExtension);
 }
 
@@ -85,7 +87,7 @@ void Image::allocatePixelArray() {
     this->pixels = new Pixel*[this->rows];
     for(std::size_t i = 0; i < this->rows; ++i) {
         try {
-            this->pixels[0] = new Pixel[this->cols];
+            this->pixels[i] = new Pixel[this->cols];
         }
         catch (const std::bad_alloc&) {
             for(std::size_t j = 0; j < i; ++j) {
@@ -100,7 +102,7 @@ void Image::fillPBM() {
     unsigned int countSetPixels = 0;
     for(std::size_t i = 0 ; i < this->content.length(); ++i) {
         if (this->content[i] != ' ') {
-            this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(this->content[i] - '0');
+            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(this->content[i] - '0');
             countSetPixels++;
         }
     }
@@ -115,7 +117,7 @@ void Image::fillPGM() {
     for (std::size_t i = 0 ; i < this->content.length(); ++i) {
         if (this->content[i] == ' ' || this->content[i] == '\n' && isSpaced == false) {
             value = this->content.substr(begin, i - begin);
-            this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(atoi(value.c_str()));
+            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(atoi(value.c_str()));
             countSetPixels++;
         }
         else if (this->content[i] != ' ' && this->content[i] != '\n' && isSpaced == true) {
@@ -126,7 +128,7 @@ void Image::fillPGM() {
 
     if (this->content[this->content.length() - 1] != ' ' && this->content[this->content.length() - 1] != '\n') {
         value = this->content.substr(begin, this->content.length() - begin);
-        this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(atoi(value.c_str()));
+        this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(atoi(value.c_str()));
     }
 }
 
@@ -144,7 +146,7 @@ void Image::fillPPM() {
             pixelValue[valueCount] = atoi(value.c_str());
             valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
             if(valueCount == 0) {
-                this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(pixelValue);
+                this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(pixelValue);
                 countSetPixels++;
             }
         }
@@ -159,7 +161,7 @@ void Image::fillPPM() {
         pixelValue[valueCount] = atoi(value.c_str());
         valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
         if(valueCount == 0) {
-            this->pixels[countSetPixels / rows][countSetPixels % cols].setValue(pixelValue);
+            this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(pixelValue);
             countSetPixels++;
         }
     }
@@ -190,6 +192,7 @@ void Image::storeContent(std::string filePath) {
     bool isReadType = false;
     bool isSetCols = false;
     bool isSetRows = false;
+    bool isSetMaxValue = false;
 
     std::ifstream file(filePath);
     if (!file) {
@@ -200,11 +203,10 @@ void Image::storeContent(std::string filePath) {
         pos = file.tellg();
         file >> readWord;
 
-        if (readWord[0] != '#') {
-            isSetRows = true;
+        if (readWord[0] != '#' && readWord[0] != ' ') {
+            isReadType = true;
         }
-
-        else {
+        else if (readWord[0] == '#') {
             file.seekg(pos);
             getline(file, comment);
         }
@@ -214,12 +216,12 @@ void Image::storeContent(std::string filePath) {
         pos = file.tellg();
         file >> readWord;
 
-        if (readWord[0] != '#') {
+        if (readWord[0] != '#' && readWord[0] != ' ') {
             isSetCols = true;
             this->cols = atoi(readWord.c_str());
         }
 
-        else {
+        else if (readWord[0] == '#') {
             file.seekg(pos);
             getline(file, comment);
         }
@@ -228,17 +230,34 @@ void Image::storeContent(std::string filePath) {
     while (isSetRows == false) {
         pos = file.tellg();
         file >> readWord;
-
-        if (readWord[0] != '#') {
+        if (readWord[0] != '#' && readWord[0] != ' ') {
             isSetRows = true;
             this->rows = atoi(readWord.c_str());
         }
 
-        else {
+        else if (readWord[0] == '#') {
             file.seekg(pos);
             getline(file, comment);
         }
     }
+
+    if (this->type != PBM) {
+        while (isSetMaxValue == false) {
+            pos = file.tellg();
+            file >> readWord;
+
+            if (readWord[0] != '#' && readWord[0] != ' ') {
+                isSetMaxValue = true;
+                this->pixelMaxValue = atoi(readWord.c_str());
+            }
+
+            else if (readWord[0] == '#') {
+                file.seekg(pos);
+                getline(file, comment);
+            }
+        }
+    }
+
 
     while(getline(file, readLine)) {
         removeCommentsFrom(readLine);
@@ -264,13 +283,6 @@ const std::string Image::getContent() const {
     return this->content;
 }
 
-void Image::saveImageTo(std::string filePath) const {
-    std::ofstream file(filePath);
-    file << *this;
-
-    file.close();
-}
-
 Image* Image::operator*() {
     return this;
 }
@@ -283,11 +295,28 @@ Image::~Image() {
     delete[] this->pixels;
 }
 
-std::ostream& operator<<(std::ostream& os, Image image) {
+std::ostream& operator<<(std::ostream& os, const Image& image) {
+    switch (image.type) {
+        case PBM: os << "P1" << std::endl; break;
+        case PGM: os << "P2" << std::endl; break;
+        case PPM: os << "P3" << std::endl; break;
+    }
+
+    os << image.cols << " " << image.rows << std::endl;
+
+    switch (image.type) {
+        case PGM: case PPM: os << image.pixels[0][0].getMaxValue() << std::endl; break;
+    }
+
     for (std::size_t i = 0; i < image.rows; ++i) {
         for (std::size_t j = 0; j < image.cols; ++j) {
             os << image.pixels[i][j];
+
+            if (j != image.cols - 1) {
+                os << " ";
+            }
         }
+        os << '\n';
     }
     return os;
 }

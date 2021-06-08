@@ -14,12 +14,21 @@ InputReader& InputReader::instance() {
 }
 
 void InputReader::printCommands() {
-    std::cout << "------------------------------------\n";
+    std::cout << "-------------------------------------------------\n";
     std::cout << "Commands supported:\n";
+    std::cout << "new <rows> <cols> <color>\n";
     std::cout << "open <file path>\n";
+    std::cout << "close\n";
+    std::cout << "save\n";
     std::cout << "saveas <file path>\n";
     std::cout << "exit\n";
-    std::cout << "------------------------------------\n";
+    std::cout << "crop <rows> <cols>\n";
+    std::cout << "resize <rows> <cols>\n";
+    std::cout << "dither <algorithmName>\n";
+    std::cout << "Algorithms supported: Linear, FS, JJN, Aktinson, \n";
+    std::cout << "Burkes, Sierra, TRSierra, SierraLite, Stucku, \n";
+    std::cout << "4Bayer, 8Bayers \n";
+    std::cout << "-------------------------------------------------\n";
     std::cout << std::endl;
 }
 

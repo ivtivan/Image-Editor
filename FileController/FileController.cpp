@@ -50,7 +50,6 @@ void FileController::openFile(std::string filePath) {
         throw FileException("Cannot open - no such file was found.");
     }
 
-    std::ofstream file(filePath);
     this->isLoaded = true;
     this->setFilePath = true;
     this->filePath = filePath;
@@ -63,7 +62,6 @@ void FileController::openFile(std::string filePath) {
         throw e;
     }
 
-    file.close();
 }
 
 void FileController::closeFile() {
@@ -83,7 +81,10 @@ void FileController::saveFile() {
         throw FileException("Cannot save file - no file path is given.");
     }
 
-    image.saveImageTo(this->filePath);
+    std::ofstream file(this->filePath);
+    file << this->image;
+
+    file.close();
 
     closeFile();
 }

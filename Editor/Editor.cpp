@@ -11,7 +11,7 @@
 #include "../Dithers/NondiffusionDithers/Dither4Bayer/Dither4Bayer.h"
 #include "../Dithers/NondiffusionDithers/Dither8Bayer/Dither8Bayer.h"
 #include <cmath>
-
+#include <iostream>
 Editor::Editor() {
     ;
 }
@@ -22,8 +22,12 @@ Editor& Editor::instance() {
 }
 
 void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
-    x2 = std::min(x2, image->getCols());
+    std::cout << x2 << " " << y2 << std::endl;
+    std::cout << image->getRows() << std::endl;
+    x2 = std::min(x2, image->getRows());
     y2 = std::min(y2, image->getCols());
+
+    std::cout << x2 << " " << y2 << std::endl;
 
     Pixel** pixelHolder = new Pixel*[x2 - x1];
     for (std::size_t i = 0; i < x2 - x1; ++i) {
@@ -41,6 +45,7 @@ void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t
     for (std::size_t i = 0; i < x2 - x1; ++i) {
         for (std::size_t j = 0; j < y2 - y1; ++j) {
             pixelHolder[i][j] = image->getPixels()[x1 + i][y1 + i];
+            std::cout << "pixelValue: " << pixelHolder[i][j].getValue() << std::endl;
         }
     }
 

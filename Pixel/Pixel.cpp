@@ -4,7 +4,7 @@ Pixel::Pixel() : maxValue(1), isRGB(false) {
 }
 
 Pixel::Pixel(const Pixel& pixel) : maxValue(pixel.maxValue),
-    isRGB(pixel.isRGB) {
+    isRGB(pixel.isRGB), ditherValue(pixel.ditherValue) {
     this->value[0] = pixel.value[0];
     if (pixel.isRGB == true) {
         for (std::size_t i = 1; i < MAX_VALUES_COUNT; ++i) {
@@ -19,6 +19,7 @@ Pixel& Pixel::operator=(const Pixel& pixel) {
     }
 
     this->maxValue = pixel.maxValue;
+    this->ditherValue = pixel.ditherValue;
     this->isRGB = pixel.isRGB;
     this->value[0] = pixel.value[0];
     if (pixel.isRGB == true) {
@@ -54,9 +55,12 @@ void Pixel::setValue(std::string value) {
     std::stringstream colorReader;
     std::size_t colorLength = 2;
     for (std::size_t i = 0; i < MAX_VALUES_COUNT; ++i) {
-        colorReader << value.substr(i * colorLength, colorLength);
+        colorReader << value.substr(i * colorLength + 1, colorLength);
         colorReader >> std::hex >> this->value[i];
     }
+
+    this->maxValue = 255;
+    this->isRGB = true;
 }
 
 void Pixel::incrementDitherValue(const double incr) {
@@ -89,11 +93,13 @@ std::ostream& operator<<(std::ostream& os, Pixel pixel) {
     
     if (pixel.isRGB == true) {
         for (std::size_t i = 1; i < MAX_VALUES_COUNT; ++i) {
-            os << " " << pixel.value[i];
+            os << pixel.value[i];
+
+            if (i != MAX_VALUES_COUNT - 1) {
+                os << " ";
+            }
         }
     }
-    
-    os << " ";
 
     return os;
 }
