@@ -63,24 +63,18 @@ void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     colorPixels(color);
 }
 
-const fileType Image::determineFileType(std::string fileExtension) {
-    if (fileExtension == "pbm") {
+const fileType Image::determineFileType(std::string identifier) {
+    if (identifier == "P1") {
         return PBM;
     }
-    else if (fileExtension == "pgm") {
+    else if (identifier == "P2") {
         return PGM;
     }
-    else if (fileExtension == "ppm") {
+    else if (identifier == "P3") {
         return PPM;
     }
 
     throw FileException("File type not valid.");
-}
-
-void Image::storeFileType(std::string filePath) {
-    const std::size_t fileExtensionLength = 3;
-    std::string fileExtension = filePath.substr(filePath.length() - 3, fileExtensionLength);
-    this->type = determineFileType(fileExtension);
 }
 
 void Image::allocatePixelArray() {
@@ -115,12 +109,13 @@ void Image::fillPGM() {
     std::size_t begin = 0;
 
     for (std::size_t i = 0 ; i < this->content.length(); ++i) {
-        if (this->content[i] == ' ' || this->content[i] == '\n' && isSpaced == false) {
+        if (this->content[i] == ' ' && isSpaced == false) {
             value = this->content.substr(begin, i - begin);
             this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(atoi(value.c_str()));
             countSetPixels++;
+            isSpaced = true;
         }
-        else if (this->content[i] != ' ' && this->content[i] != '\n' && isSpaced == true) {
+        else if (this->content[i] != ' ' && isSpaced == true) {
             isSpaced = false;
             begin = i;
         }
@@ -139,28 +134,28 @@ void Image::fillPPM() {
     std::string value;
     bool isSpaced = false;
     std::size_t begin = 0;
-
-    for (std::size_t i = 0 ; i < this->content.length(); ++i) {
-        if (this->content[i] == ' ' || this->content[i] == '\n' && isSpaced == false) {
+    for (std::size_t i = 0 ; i < this->content.length() ; ++i) {
+        if (this->content[i] == ' ' && isSpaced == false) {
             value = this->content.substr(begin, i - begin);
             pixelValue[valueCount] = atoi(value.c_str());
             valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
-            if(valueCount == 0) {
+            if (valueCount == 0) {
                 this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(pixelValue);
                 countSetPixels++;
             }
+            isSpaced = true;
         }
-        else if (this->content[i] != ' ' && this->content[i] != '\n' && isSpaced == true) {
+        else if (this->content[i] != ' ' && isSpaced == true) {
             isSpaced = false;
             begin = i;
         }
     }
 
-    if (this->content[this->content.length() - 1] != ' ' && this->content[this->content.length() - 1] != '\n') {
-        value = this->content.substr(begin, this->content.length() - begin);
+    if (this->content[this->content.length() - 1] != ' ') {
+        value = this->content.substr(begin, this->content.length() - 1 - begin);
         pixelValue[valueCount] = atoi(value.c_str());
         valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
-        if(valueCount == 0) {
+        if (valueCount == 0) {
             this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(pixelValue);
             countSetPixels++;
         }
@@ -184,95 +179,87 @@ void Image::removeCommentsFrom(std::string& line) {
     }
 }
 
-void Image::storeContent(std::string filePath) {
+const fileType Image::readFileType(std::ifstream& file) {
+    bool isRead = false;
+    std::size_t pos;
     std::string readWord;
+
+    while (isRead == false) {
+        pos = file.tellg();
+        file >> readWord;
+
+        if (readWord[0] != '#' && readWord[0] != ' ') {
+            isRead = true;
+            return determineFileType(readWord);
+        }
+        else if (readWord[0] == '#') {
+            file.seekg(pos);
+            getline(file, readWord);
+        }
+    }
+
+    throw FileException("Could not read fileType.");
+}
+
+const std::size_t Image::readParameter(std::ifstream& file) {
+    bool isRead = false;
+    std::size_t pos;
+    std::string readWord;
+
+    while (isRead == false) {
+        pos = file.tellg();
+        file >> readWord;
+
+        if (readWord[0] != '#' && readWord[0] != ' ') {
+            isRead = true;
+            return atoi(readWord.c_str());
+        }
+
+        else if (readWord[0] == '#') {
+            file.seekg(pos);
+            getline(file, readWord);
+        }
+    }
+
+    throw FileException("Could not read parameter.");
+}
+
+const std::string Image::readPixels(std::ifstream& file) {
+    std::string pixels;
     std::string readLine;
-    std::string comment;
-    int pos;
-    bool isReadType = false;
-    bool isSetCols = false;
-    bool isSetRows = false;
-    bool isSetMaxValue = false;
-
-    std::ifstream file(filePath);
-    if (!file) {
-        throw FileException("Could not open file.");
-    }
-
-    while (isReadType == false) {
-        pos = file.tellg();
-        file >> readWord;
-
-        if (readWord[0] != '#' && readWord[0] != ' ') {
-            isReadType = true;
-        }
-        else if (readWord[0] == '#') {
-            file.seekg(pos);
-            getline(file, comment);
-        }
-    }
-
-    while (isSetCols == false) {
-        pos = file.tellg();
-        file >> readWord;
-
-        if (readWord[0] != '#' && readWord[0] != ' ') {
-            isSetCols = true;
-            this->cols = atoi(readWord.c_str());
-        }
-
-        else if (readWord[0] == '#') {
-            file.seekg(pos);
-            getline(file, comment);
-        }
-    }
-
-    while (isSetRows == false) {
-        pos = file.tellg();
-        file >> readWord;
-        if (readWord[0] != '#' && readWord[0] != ' ') {
-            isSetRows = true;
-            this->rows = atoi(readWord.c_str());
-        }
-
-        else if (readWord[0] == '#') {
-            file.seekg(pos);
-            getline(file, comment);
-        }
-    }
-
-    if (this->type != PBM) {
-        while (isSetMaxValue == false) {
-            pos = file.tellg();
-            file >> readWord;
-
-            if (readWord[0] != '#' && readWord[0] != ' ') {
-                isSetMaxValue = true;
-                this->pixelMaxValue = atoi(readWord.c_str());
-            }
-
-            else if (readWord[0] == '#') {
-                file.seekg(pos);
-                getline(file, comment);
-            }
-        }
-    }
-
 
     while(getline(file, readLine)) {
         removeCommentsFrom(readLine);
-        this->content += readLine;
+        pixels += readLine;
     }
+
+    return pixels;
+}
+
+void Image::storeImageFrom(std::string filePath) {
+    std::string readLine;
+    std::size_t pos = 0;
+
+    std::ifstream file(filePath);
+    if(!file) {
+        throw FileException("Could not open file.");
+    }
+
+    this->type = readFileType(file);    
+
+    this->cols = readParameter(file);
+    this->rows = readParameter(file);
+
+    if (this->type != PBM) {
+        this->pixelMaxValue = readParameter(file);
+    }
+
+    this->content = readPixels(file);
 
     file.close();
 
     allocatePixelArray();
     fillPixelArray();
-}
-
-void Image::storeImageFrom(std::string filePath) {
-    storeFileType(filePath);
-    storeContent(filePath);
 }
 
 const fileType Image::getFileType() const {

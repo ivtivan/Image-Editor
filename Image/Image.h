@@ -23,14 +23,16 @@ class Image {
 
         void removeCommentsFrom(std::string& line);
         const fileType determineFileType(std::string fileExtension);
-        void storeFileType(std::string filePath);
-        void storeContent(std::string filePath);
 
         void allocatePixelArray();
 
         void fillPBM();
         void fillPGM();
         void fillPPM();
+        
+        const fileType readFileType(std::ifstream& file);
+        const std::size_t readParameter(std::ifstream& file);
+        const std::string readPixels(std::ifstream& file);
 
         void fillPixelArray();
         void colorPixels(std::string color);
