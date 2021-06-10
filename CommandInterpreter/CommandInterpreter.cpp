@@ -21,6 +21,7 @@ void CommandInterpreter::execute(Command command) {
     }
     else if (command[0] == "open") {
         FileController::instance().openFile(command[1]);
+        std::cout << "Opened successfully." << std::endl;
     }
     else if (command[0] == "close") {
         FileController::instance().closeFile();

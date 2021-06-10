@@ -1,6 +1,7 @@
 #include "InputReader.h"
 #include "../Image/Image.h"
 #include "../CustomExceptions/ExitException/ExitException.h"
+#include "../CustomExceptions/FileException/FileException.h"
 
 #include <iostream>
 
@@ -44,6 +45,9 @@ void InputReader::readCommands() {
         catch (const ExitException& e) {
             std::cout << e.what() << std::endl;
             break;
+        }
+        catch (const FileException& e) {
+            std::cout << e.what() << std::endl;
         }
         catch (const std::exception& e) {
             std::cout << e.what() << std::endl;

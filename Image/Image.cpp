@@ -51,11 +51,13 @@ void Image::colorPixels(std::string color) {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
             pixels[i][j].setValue(color);
+            pixels[i][j].setMaxValue(this->pixelMaxValue);
         }
     }
 }
 
 void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
+    this->pixelMaxValue = 255;
     this->rows = rows;
     this->cols = cols;
     this->type = PPM;
@@ -97,6 +99,7 @@ void Image::fillPBM() {
     for(std::size_t i = 0 ; i < this->content.length(); ++i) {
         if (this->content[i] != ' ') {
             this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(this->content[i] - '0');
+            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
         }
     }
@@ -112,6 +115,7 @@ void Image::fillPGM() {
         if (this->content[i] == ' ' && isSpaced == false) {
             value = this->content.substr(begin, i - begin);
             this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(atoi(value.c_str()));
+            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
             isSpaced = true;
         }
@@ -124,6 +128,7 @@ void Image::fillPGM() {
     if (this->content[this->content.length() - 1] != ' ' && this->content[this->content.length() - 1] != '\n') {
         value = this->content.substr(begin, this->content.length() - begin);
         this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(atoi(value.c_str()));
+        this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
     }
 }
 
@@ -141,6 +146,7 @@ void Image::fillPPM() {
             valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
             if (valueCount == 0) {
                 this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(pixelValue);
+                this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
                 countSetPixels++;
             }
             isSpaced = true;
@@ -157,6 +163,7 @@ void Image::fillPPM() {
         valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
         if (valueCount == 0) {
             this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(pixelValue);
+            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
         }
     }
