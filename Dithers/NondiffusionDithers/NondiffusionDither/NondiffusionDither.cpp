@@ -42,6 +42,8 @@ void NondiffusionDither::ditherImage(Image* image) {
             pixelValue = image->getPixels()[i][j].getValue();
             factor = tMatrix[i % dimension][j % dimension];
 
+            alteredValue = pixelValue + precisionValue * factor;
+
             if (alteredValue - pixelValue > EPS) {
                 image->getPixels()[i][j].setValue(this->pixelsMaxValue);
             }
