@@ -2,7 +2,6 @@
 #include "../CustomExceptions/ImageException/ImageException.h"
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
-#include <iostream>
 
 Image::Image() : cols(0), rows(0) {
     this->pixels = nullptr;
@@ -390,6 +389,8 @@ void Image::reset() {
     }
 
     delete[] this->pixels;
+
+    this->pixels = nullptr;
 
     this->rows = 0;
     this->cols = 0;
