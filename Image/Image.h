@@ -104,6 +104,14 @@ class Image {
          * @param color in hex form
          */
         void colorPixels(std::string color);
+
+        /**
+         * @brief Checks if a string is in valid hex form.
+         * 
+         * Color must begin with '#' and contain only chars from
+         * '0' - '9', 'a' - 'f' and 'A' - 'F'
+         */
+        bool isValidColor(std::string color);
     public:
         Image();
         Image(const Image& image);
@@ -116,9 +124,9 @@ class Image {
         Pixel** getPixels();
 
         /**
-         * @brief Set the Pixels object.
+         * @brief Sets the Pixel matrix.
          * 
-         * Clears the memory of the currently hold pixel martix.
+         * Clears the memory of the currently held pixel martix.
          * Points to the passed pixel matrix.
          * Changes the values of the rows and cols attributes.
          * 
@@ -129,10 +137,12 @@ class Image {
         void setPixels(Pixel** pixels, std::size_t rows, std::size_t cols);
 
         /**
-         * @brief Set the Pixels object.
+         * @brief Sets the Pixel matrix.
          * 
          * Allocates a pixel matrix with the desired size and colors
          * all pixels.
+         * 
+         * Throws ImageException if the color is not in valid hes form.
          * 
          * @param color in hex from
          * @param rows rows of image

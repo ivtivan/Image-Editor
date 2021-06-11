@@ -53,12 +53,37 @@ void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
 }
 
 void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
+    if (isValidColor(color) == false) {
+        throw ImageException("Color is not valid.");
+    }
     this->pixelMaxValue = 255;
     this->rows = rows;
     this->cols = cols;
     this->type = PPM;
     allocatePixelArray();
     colorPixels(color);
+}
+
+bool Image::isValidColor(std::string color) {
+    std::size_t validColorLength = 7;
+
+    if (color.length() != validColorLength) {
+        return false;
+    }
+
+    if (color[0] != '#') {
+        return false;
+    }
+
+    for (std::size_t i = 1; i < validColorLength; ++i) {
+        if (((color[i] >= '0' && color[i] <= '9') || 
+            (color[i] >= 'a' && color[i] <= 'f') || 
+            (color[i] >= 'A' && color[i] <= 'F')) == false) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 void Image::colorPixels(std::string color) {

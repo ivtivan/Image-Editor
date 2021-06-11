@@ -32,13 +32,13 @@ class DiffusionDither {
         /**
          * @brief Position of current pixel.
          * 
-         * Index of the pixel, whose error(offset) is being calcuated
+         * Index of the pixel, whose error (offset) is being calculated
          * in the first row of the distribution matrix
          */
         std::size_t pos;
 
         /**
-         * @brief Number of parts in which the error is spit.
+         * @brief Number of parts in which the error is split.
          * 
          */
         unsigned int distributionDivisor;
@@ -69,7 +69,7 @@ class DiffusionDither {
         void setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS]);
 
         /**
-         * @brief Sets parameters, which depent on the image, being dithered.
+         * @brief Sets parameters, which depend on the image, being dithered.
          * 
          * Changes value of the attributes pixelsMaxValue and threshold.
          * 

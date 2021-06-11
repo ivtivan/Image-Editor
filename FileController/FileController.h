@@ -6,7 +6,7 @@
 #include <string>
 
 /** 
- * @brief Controlls opening, closing, creating and saving a file.
+ * @brief Controlsopening, closing, creating and saving a file.
  * Singleton class.
  */
 class FileController {
@@ -71,7 +71,7 @@ class FileController {
         /**
          * @brief Closes file.
          * 
-         * Does not automatically save the chages made.
+         * Does not automatically save the changes made.
          * 
          * Throws FileException if no file is opened.
          */
@@ -82,7 +82,7 @@ class FileController {
          * 
          * Closes the file.
          * 
-         * Throws FileException if no file is opened or the destination file papth is not given.
+         * Throws FileException if no file is opened or the destination file path is not given.
          */
         void saveFile();
 
@@ -92,7 +92,7 @@ class FileController {
          * Closes the file.
          * 
          * Does not delete the loaded file.
-         * Saves changes to a newly created file with the given filePath.
+         * Saves changes to a newly created file with the given file path.
          * 
          * Throws FileException if no file is opened.
          */

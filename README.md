@@ -4,10 +4,10 @@ Allows editing PBM, PGM and PPM files.
 Supports cropping, resizing(scaling) and dithering.
 
 ## Resizing algorithm
-Resizeing algorithm described: https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
+The following [resizing algorithm](https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html) is used.
 
 ## Dithering algorithms
-The 11 supported dirhering algorithms: https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html
+The program supports [11 dirhering algorithms](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html).
 
 ## Command Line to run program
 ```
@@ -18,3 +18,11 @@ g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/EditException/EditEx
 ```
 g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/EditException/EditException.cpp CustomExceptions/ImageException/*.cpp CustomExceptions/ExitException/*.cpp CustomExceptions/FileException/*.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DitherLinear/*.cpp Dithers/DiffusionDithers/DitherAtkinson/*.cpp Dithers/DiffusionDithers/DitherBurkes/*.cpp Dithers/DiffusionDithers/DitherFS/*.cpp Dithers/DiffusionDithers/DitherJJN/*.cpp Dithers/DiffusionDithers/DitherSierra/*.cpp Dithers/DiffusionDithers/DitherSierraLite/*.cpp Dithers/DiffusionDithers/DitherStucki/*.cpp Dithers/DiffusionDithers/DitherTRSierra/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/Dither4Bayer/*.cpp Dithers/OrderedDithers/Dither8Bayer/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp Tests/*.cpp
 ```
+
+## Further Ideas
+Possible further implementations:
+- Change functions in Image class to make it clearer and easier to test
+- Implement Color class, which supports:
+  - color validation
+  - creating color from string
+- Better exception handling

@@ -38,7 +38,7 @@ class OrderedDither {
         double threshold;
 
         /**
-         * @brief Mupltipler of the value red from the threshold map
+         * @brief Mupltiplier of the value red from the threshold map
          * 
          */
         double precisionValue;
@@ -62,7 +62,7 @@ class OrderedDither {
         void calculateMatrixthresholds();
 
          /**
-         * @brief Sets parameters, which depent on the image, being dithered.
+         * @brief Sets parameters, which depend on the image, being dithered.
          * 
          * Changes value of the attributes pixelsMaxValue, precisonValue and threshold.
          * 
