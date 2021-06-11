@@ -5,7 +5,7 @@
 #include <vector>
 
 /**
- * @brief KSupports working with commands.
+ * @brief Supports working with commands.
  * 
  * Keeps a command and its parameters in a vector.
  * Created through splitting a string in substrings.
