@@ -59,4 +59,7 @@ void CommandInterpreter::execute(Command command) {
     else if (command[0] == "exit") {
         throw ExitException("Exit command registered. Program will exit.");
     }
+    else {
+        std::cout << "Command was not recognized." << std::endl;
+    }
 }
