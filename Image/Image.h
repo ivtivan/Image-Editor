@@ -35,7 +35,7 @@ class Image {
         /**
          * @brief determines the file type.
          * Recognized identifiers are P1, P2, P3.
-         * Throws FileException if the identifier is not recognized.
+         * Throws ImageException if the identifier is not recognized.
          */
         const fileType determineFileType(std::string identifier);
 
@@ -61,12 +61,17 @@ class Image {
         
         /**
          * @brief Determines type of an image, saved in a file.
+         * 
+         * Throws ImageException if fileType was not read.
          */
         const fileType readFileType(std::ifstream& file);
 
         /**
          * @brief Reads parameters of an image, saved in a file.
+         * 
          * Used to read image size and max value of pixel.
+         * 
+         * Throws ImageException if a parameter was not read.
          */
         const std::size_t readParameter(std::ifstream& file);
 

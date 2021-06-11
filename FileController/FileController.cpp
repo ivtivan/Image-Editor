@@ -1,5 +1,6 @@
 #include "FileController.h"
 #include "../CustomExceptions/FileException/FileException.h"
+#include "../CustomExceptions/ImageException/ImageException.h"
 #include <fstream>
 
 FileController::FileController() : isLoaded(false), setFilePath(false) {
@@ -58,6 +59,10 @@ void FileController::openFile(std::string filePath) {
         this->image.storeImageFrom(this->filePath);
     }
     catch (const FileException& e) {
+        this->isLoaded = false;
+        throw e;
+    }
+    catch (const ImageException& e) {
         this->isLoaded = false;
         throw e;
     }

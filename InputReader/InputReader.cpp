@@ -3,6 +3,7 @@
 #include "../CustomExceptions/EditException/EditException.h"
 #include "../CustomExceptions/ExitException/ExitException.h"
 #include "../CustomExceptions/FileException/FileException.h"
+#include "../CustomExceptions/ImageException/ImageException.h"
 #include <iostream>
 
 InputReader::InputReader() {
@@ -51,6 +52,10 @@ void InputReader::readCommands() {
         }
         catch (const EditException& e) {
             std::cout << "Image not editted due to the following reason:" << std::endl;
+            std::cout << e.what() << std::endl;
+        }
+        catch (const ImageException& e) {
+            std::cout << "Image was not createds due to the following reason:" << std::endl;
             std::cout << e.what() << std::endl;
         }
         catch (const std::exception& e) {

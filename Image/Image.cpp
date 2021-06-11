@@ -1,4 +1,5 @@
 #include "Image.h"
+#include "../CustomExceptions/ImageException/ImageException.h"
 #include "../CustomExceptions/FileException/FileException.h"
 #include <fstream>
 #include <iostream>
@@ -80,7 +81,7 @@ const fileType Image::determineFileType(std::string identifier) {
         return PPM;
     }
 
-    throw FileException("File type not valid.");
+    throw ImageException("Image type not valid.");
 }
 
 void Image::allocatePixelArray() {
@@ -209,7 +210,7 @@ const fileType Image::readFileType(std::ifstream& file) {
         }
     }
 
-    throw FileException("Could not read fileType.");
+    throw ImageException("Could not read fileType.");
 }
 
 const std::size_t Image::readParameter(std::ifstream& file) {
@@ -232,7 +233,7 @@ const std::size_t Image::readParameter(std::ifstream& file) {
         }
     }
 
-    throw FileException("Could not read parameter.");
+    throw ImageException("Could not read parameter.");
 }
 
 const std::string Image::readPixels(std::ifstream& file) {
