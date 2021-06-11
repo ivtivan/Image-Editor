@@ -3,9 +3,9 @@
 
 #include "../Image/Image.h"
 /**
- * @brief Allows cropping, resizing and dithering an image
+ * @brief Allows cropping, resizing and dithering an image.
  * 
- * Singleton class
+ * Singleton class.
  */
 class Editor {
     private:
@@ -17,7 +17,7 @@ class Editor {
         static Editor& instance();
 
         /**
-         * @brief Crops an image
+         * @brief Crops an image.
          * 
          * Throws EditException if the points passed are not valid.
          * 
@@ -30,7 +30,7 @@ class Editor {
         void cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2);
 
         /**
-         * @brief Resizes an image
+         * @brief Resizes an image.
          * 
          * @param image pointer to the image being editted
          * @param destRows number of rows in the resized image
@@ -39,7 +39,7 @@ class Editor {
         void resizeImage(Image* image, std::size_t destRows, std::size_t destCols);
 
         /**
-         * @brief Dithers an image
+         * @brief Dithers an image.
          * 
          * Throws EditException if no such algorithm is supported.
          * 

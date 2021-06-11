@@ -6,8 +6,8 @@
 #include <string>
 
 /** 
- * @brief Controlls opening, closing, creating and saving a file
- * Singleton class
+ * @brief Controlls opening, closing, creating and saving a file.
+ * Singleton class.
  */
 class FileController {
     private:
@@ -34,21 +34,21 @@ class FileController {
         Image* getImage();
 
         /**
-         * @brief Creates an image from the given parameters
+         * @brief Creates an image from the given parameters.
          * 
          * Creating an image counts as loading/opening a file.
          */
         void createFile(std::size_t rows, std::size_t cols, std::string color);
 
         /**
-         * @brief Copies information from file in an Image object
+         * @brief Copies information from file in an Image object.
          * 
          * Throws FileException if a file is already opened or the file does not exist.
          */
         void openFile(std::string filePath);
 
         /**
-         * @brief Closes file
+         * @brief Closes file.
          * 
          * Does not automatically save the chages made.
          * 

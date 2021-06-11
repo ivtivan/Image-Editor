@@ -11,9 +11,8 @@ enum fileType {
 };
 
 /**
- * @brief Image class.
- * Creates an image form parameters or
- * loads one from a PBM/PGM/PPM file.
+ * @brief Supports working with images.
+ * Creates an image form parameters or loads one from a PBM/PGM/PPM file.
  */
 class Image {
     private:
@@ -26,7 +25,7 @@ class Image {
         std::size_t rows;
 
         /**
-         * @brief Removes comments from a line
+         * @brief Removes comments from a line.
          * Comments begin with '#'.
          * 
          */
@@ -43,19 +42,19 @@ class Image {
 
         /**
          * @brief Filles allocated pixel matrix.
-         * Values of the pixels in the attribute content are used
+         * Values of the pixels in the attribute content are used.
          */
         void fillPBM();
 
         /**
          * @brief Filles allocated pixel matrix.
-         * Values of the pixels in the attribute content are used
+         * Values of the pixels in the attribute content are used.
          */
         void fillPGM();
 
         /**
          * @brief Filles allocated pixel matrix.
-         * Values of the pixels in the attribute content are used
+         * Values of the pixels in the attribute content are used.
          */
         void fillPPM();
         

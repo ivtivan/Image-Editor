@@ -5,7 +5,7 @@
 #include <vector>
 
 /**
- * @brief Command class
+ * @brief Command class.
  * Keeps a command and its parameters in a vector.
  * Created through splitting a string in substrings.
  */
@@ -19,7 +19,7 @@ class Command {
         void toLower(std::string& str);
 
         /**
-         * @brief Removes unneeded spaces
+         * @brief Removes unneeded spaces.
          * 
          * Removes space at the beginning and at the end, and 
          * replaces multiple cnsecutive spaces with a single one.
@@ -27,7 +27,7 @@ class Command {
         void removeAdditionalSpaces(std::string& str);
 
         /**
-         * @brief Saves substrings in a vector
+         * @brief Saves substrings in a vector.
          * 
          * Splits a string in substrings and saves them in a vector.
          * Substrings are delimited by " ".
@@ -37,17 +37,17 @@ class Command {
         Command(std::string str);
 
         /**
-         * @brief Accesses elements of the attribure vector
+         * @brief Accesses elements of the attribute vector.
          * 
-         * Accesses elements of the attribure vector, containing commands and parameters.
+         * Accesses elements of the attribute vector, containing commands and parameters.
          * The first element is the command.
          */
         std::string& operator[](std::size_t index);
 
         /**
-         * @brief Accesses elements of the attribure vector
+         * @brief Accesses elements of the attribute vector.
          * 
-         * Accesses elements of the attribure vector, containing commands and parameters.
+         * Accesses elements of the attribute vector, containing commands and parameters.
          * The first element is the command.
          */
         const std::string& operator[](std::size_t index) const;

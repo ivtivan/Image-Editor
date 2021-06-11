@@ -28,7 +28,7 @@ class DiffusionDither {
         std::size_t dMatrixCols;
 
         /**
-         * @brief Position of current pixel
+         * @brief Position of current pixel.
          * Index of the pixel, whose error(offset) is being calcuated
          * in the first row of the distribution matrix
          */
@@ -40,7 +40,7 @@ class DiffusionDither {
         unsigned int distributionDivisor;
 
         /**
-         * @brief Distribution matrix
+         * @brief Distribution matrix.
          * Holds how the error of a pixel is diffused by keeping
          * the number of parts diffused to the other pixels.
          */

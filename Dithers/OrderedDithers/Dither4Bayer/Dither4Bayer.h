@@ -4,7 +4,7 @@
 #include "../OrderedDither/OrderedDither.h"
 
 /**
- * @brief Child class that supports dithering with 4x4 Bayer matrix
+ * @brief Child class that supports dithering with 4x4 Bayer matrix.
  */
 class Dither4Bayer : public OrderedDither {
     public:

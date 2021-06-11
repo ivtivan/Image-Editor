@@ -27,7 +27,7 @@ void InputReader::printCommands() {
     std::cout << "crop <x1> <y1> <x2 (x2 >= x1)> <y2 (y2 >= y1)>\n";
     std::cout << "resize <rows> <cols>\n";
     std::cout << "dither <algorithmName>\n";
-    std::cout << "Algorithms supported: Linear, FS, JJN, Aktinson, \n";
+    std::cout << "Algorithms supported: Linear, FS, JJN, Atkinson, \n";
     std::cout << "Burkes, Sierra, TRSierra, SierraLite, Stucku, \n";
     std::cout << "4Bayer, 8Bayer \n";
     std::cout << "-------------------------------------------------\n";

@@ -4,10 +4,9 @@
 #include "../Command/Command.h"
 
 /**
- * @brief Allows the execution of a command
- * Allows the execution of a command.
+ * @brief Allows the execution of a command.
  * 
- * Singleton class
+ * Singleton class.
  */
 
 class CommandInterpreter {

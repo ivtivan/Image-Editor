@@ -6,9 +6,9 @@
 /**
  * @brief Child class that supports Atkinson Dithering
  */
-class DitherAktinson : public DiffusionDither {
+class DitherAtkinson : public DiffusionDither {
     public:
-        DitherAktinson();
+        DitherAtkinson();
 };
 
 #endif

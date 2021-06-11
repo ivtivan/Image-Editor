@@ -1,6 +1,6 @@
 #include "Editor.h"
 #include "../CustomExceptions/EditException/EditException.h"
-#include "../Dithers/DiffusionDithers/DitherAktinson/DitherAktinson.h"
+#include "../Dithers/DiffusionDithers/DitherAtkinson/DitherAtkinson.h"
 #include "../Dithers/DiffusionDithers/DitherBurkes/DitherBurkes.h"
 #include "../Dithers/DiffusionDithers/DitherFS/DitherFS.h"
 #include "../Dithers/DiffusionDithers/DitherJJN/DitherJJN.h"
@@ -91,8 +91,8 @@ void Editor::ditherImage(Image* image, std::string algorithmName) {
         DitherLinear dither;
         dither.ditherImage(image);
     }
-    else if (algorithmName == "Aktinson") {
-        DitherAktinson dither;
+    else if (algorithmName == "Atkinson") {
+        DitherAtkinson dither;
         dither.ditherImage(image);
     }
     else if (algorithmName == "Burkes") {

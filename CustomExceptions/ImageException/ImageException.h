@@ -4,7 +4,7 @@
 #include <string>
 
 /**
- * @brief Custom exception
+ * @brief Custom exception.
  * Exception, that is thrown when creating an image.
  */
 class ImageException : std::exception {
