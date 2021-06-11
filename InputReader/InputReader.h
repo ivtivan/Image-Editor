@@ -20,11 +20,13 @@ class InputReader {
 
         /**
          * @brief Prints supported commands.
+         * 
          */
         void printCommands();
 
         /**
          * @brief Reads command from terminal.
+         * 
          */
         void readCommands();
 };

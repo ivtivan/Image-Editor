@@ -5,7 +5,7 @@
 #include "../../../Pixel/Pixel.h"
 
 /**
- * @brief Dither class that supports oredered dithering.
+ * @brief Dither class that supports ordered dithering.
  * 
  * Parent class.
  * 
@@ -21,21 +21,25 @@ class OrderedDither {
 
         /**
          * @brief Dimension of threshold matrix
+         * 
          */
         std::size_t dimension;
 
         /**
          * @brief Threshold matrix
+         * 
          */
         double tMatrix[MAX_THRESHOLD_MATRIX_DIMENSION][MAX_THRESHOLD_MATRIX_DIMENSION];
 
         /**
          * @brief Threshold used for setting pixels either black or white
+         * 
          */
         double threshold;
 
         /**
          * @brief Mupltipler of the value red from the threshold map
+         * 
          */
         double precisionValue;
 
@@ -53,7 +57,8 @@ class OrderedDither {
 
         /**
          * @brief Precalculates the treshold matrix.
-        */
+         * 
+         */
         void calculateMatrixthresholds();
 
          /**

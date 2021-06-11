@@ -18,11 +18,12 @@ class Pixel {
         bool isRGB;
         unsigned int maxValue;
         const unsigned int minValue = 0;
+
         unsigned int value[MAX_VALUES_COUNT];
 
-        /**
-         * Value obtained from diffusing errors
-         * when using diffusuion ditters.
+        /** 
+         * @brief Value obtained from diffusing errors when using diffusuion ditters.
+         * 
          */
         double ditherValue = 0;
     public:
@@ -40,6 +41,7 @@ class Pixel {
 
         /**
          * @brief Sets value of pixel through an array.
+         * 
          * Marks the pixel as RGB.
          */
         void setValue(unsigned int value[MAX_VALUES_COUNT]);
@@ -55,6 +57,7 @@ class Pixel {
 
         /**
          * @brief Sets max possible value of pixel.
+         * 
          */
         void setMaxValue(const unsigned int maxValue);
 
@@ -62,6 +65,7 @@ class Pixel {
 
         /**
          * @brief Sets diffused error from dithering to 0.
+         * 
          */
         void resetDitherValue();
 
@@ -77,6 +81,7 @@ class Pixel {
 
         /**
          * @brief Returns diffused error.
+         * 
          */
         const double getDitherValue() const;
 

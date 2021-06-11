@@ -12,11 +12,18 @@ enum fileType {
 
 /**
  * @brief Supports working with images.
+ * 
  * Creates an image form parameters or loads one from a PBM/PGM/PPM file.
  */
 class Image {
     private:
-        std::string content; /**< Pixel values in form of a string*/
+        /**
+         * @brief Pixel values in form of a string.
+         * 
+         * Comments begin with '#'.
+         */
+        std::string content;
+
         Pixel** pixels;
         fileType type;
         unsigned int pixelMaxValue;
@@ -26,13 +33,14 @@ class Image {
 
         /**
          * @brief Removes comments from a line.
-         * Comments begin with '#'.
          * 
+         * Comments begin with '#'.
          */
         void removeCommentsFrom(std::string& line);
 
         /**
          * @brief determines the file type.
+         * 
          * Recognized identifiers are P1, P2, P3.
          * Throws ImageException if the identifier is not recognized.
          */
@@ -42,18 +50,21 @@ class Image {
 
         /**
          * @brief Filles allocated pixel matrix.
+         * 
          * Values of the pixels in the attribute content are used.
          */
         void fillPBM();
 
         /**
          * @brief Filles allocated pixel matrix.
+         * 
          * Values of the pixels in the attribute content are used.
          */
         void fillPGM();
 
         /**
          * @brief Filles allocated pixel matrix.
+         * 
          * Values of the pixels in the attribute content are used.
          */
         void fillPPM();
@@ -106,6 +117,7 @@ class Image {
 
         /**
          * @brief Set the Pixels object.
+         * 
          * Clears the memory of the currently hold pixel martix.
          * Points to the passed pixel matrix.
          * Changes the values of the rows and cols attributes.
@@ -118,6 +130,7 @@ class Image {
 
         /**
          * @brief Set the Pixels object.
+         * 
          * Allocates a pixel matrix with the desired size and colors
          * all pixels.
          * 
@@ -129,6 +142,7 @@ class Image {
 
         /**
          * @brief Stores image from a file.
+         * 
          * Saves image parameters and pixels.
          * Throws FileException if no such file exists.
          */

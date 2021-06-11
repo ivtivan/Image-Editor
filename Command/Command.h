@@ -5,16 +5,22 @@
 #include <vector>
 
 /**
- * @brief Command class.
+ * @brief KSupports working with commands.
+ * 
  * Keeps a command and its parameters in a vector.
  * Created through splitting a string in substrings.
  */
 class Command {
     private:
-        std::vector<std::string> comm; /**< Contains command and arguments*/
+        /**
+         * @brief Contains command and arguments
+         * 
+         */
+        std::vector<std::string> comm;
 
         /**
          * @brief Converts uppercase letters in string to lowercase.
+         * 
          */
         void toLower(std::string& str);
 

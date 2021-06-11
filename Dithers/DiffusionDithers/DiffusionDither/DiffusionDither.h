@@ -19,16 +19,19 @@ class DiffusionDither {
 
         /**
          * @brief Rows in the specific distribution matrix
+         * 
          */
         std::size_t dMatrixRows;
 
         /**
          * @brief Columns in the specific distribution matrix
+         * 
          */
         std::size_t dMatrixCols;
 
         /**
          * @brief Position of current pixel.
+         * 
          * Index of the pixel, whose error(offset) is being calcuated
          * in the first row of the distribution matrix
          */
@@ -36,6 +39,7 @@ class DiffusionDither {
 
         /**
          * @brief Number of parts in which the error is spit.
+         * 
          */
         unsigned int distributionDivisor;
 
@@ -48,6 +52,7 @@ class DiffusionDither {
 
         /**
          * @brief Threshold used for setting pixels either black or white
+         * 
          */
         double threshold;
 

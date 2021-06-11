@@ -20,6 +20,7 @@ class CommandInterpreter {
 
         /**
          * @brief Call the function, needed to execute the command.
+         * 
          */
         void execute(Command command);
 };

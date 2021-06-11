@@ -11,13 +11,33 @@
  */
 class FileController {
     private:
-        Image image; /**< Image to which the file data is copied */
-        bool isLoaded; /**< Checks if a file is currently opened */
-        std::string filePath; /**< Path of the last loaded file */
-        bool setFilePath; /**< checks if a file path was set */
+        /**
+         * @brief Image to which the file data is copied
+         * 
+         */
+        Image image;
+
+        /**
+         * @brief Checks if a file is currently opened 
+         * 
+         */
+        bool isLoaded;
+
+        /**
+         * @brief Path of the last loaded file
+         * 
+         */
+        std::string filePath;
+
+        /**
+         * @brief Checks if a file path was set
+         * 
+         */
+        bool setFilePath;
 
         /**
          * @brief Checks if a file exists.
+         * 
          */
         bool fileExists(std::string filePath);
 
@@ -29,7 +49,8 @@ class FileController {
         static FileController& instance();
         
         /**
-         * @brief Returns pointer to the image to which the file content is copied
+         * @brief Returns pointer to the image to which the file content is copied.
+         * 
          */
         Image* getImage();
 
