@@ -46,6 +46,22 @@ class Pixel {
         Pixel(const Pixel& pixel);
         Pixel& operator=(const Pixel& pixel);
 
+        const unsigned int getMaxValue() const;
+
+        /**
+         * @brief Returns a representation of the pixel as a double.
+         * 
+         * If the image is in RGB format returns a greyscale color.
+         * Otherwise, the exact value is returned.
+         */
+        const double getValue() const;
+
+        /**
+         * @brief Returns diffused error.
+         * 
+         */
+        const double getDitherValue() const;
+
         /**
          * @brief Sets value of pixel.
          * 
@@ -75,6 +91,29 @@ class Pixel {
          */
         void setMaxValue(const unsigned int maxValue);
 
+        /**
+         * @brief Sets RGB status.
+         * 
+         * Throws PixelException when setted to false if this might result in loss of data.
+         * Sets max value to 255 and adjusts pixel value if RGB status was previously false 
+         * and is set to true.
+         */
+        void setRGB(bool value);
+
+        /**
+         * @brief Sets RGB status of black or white pixel to false and changes max value to 1.
+         * 
+         * Throws PixelException when the pixel is neither black nor white.
+         */
+        void setBlackOrWhite();
+
+        /**
+         * @brief Swaps the two colors.
+         * 
+         * Throws PixelException when the pixel is neither black nor white.
+         */
+        void swapBlackAndWhite();
+
         void incrementDitherValue(const double incr);
 
         /**
@@ -82,22 +121,6 @@ class Pixel {
          * 
          */
         void resetDitherValue();
-
-        const unsigned int getMaxValue() const;
-
-        /**
-         * @brief Returns a representation of the pixel as a double.
-         * 
-         * If the image is in RGB format returns a greyscale color.
-         * Otherwise, the exact value is returned.
-         */
-        const double getValue() const;
-
-        /**
-         * @brief Returns diffused error.
-         * 
-         */
-        const double getDitherValue() const;
 
         /**
          * @brief Checks if a pixel is a shade of grey.

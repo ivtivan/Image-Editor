@@ -290,6 +290,9 @@ void Image::storeImageFrom(std::string filePath) {
     if (this->type != PBM) {
         this->pixelMaxValue = readParameter(file);
     }
+    else {
+        this->pixelMaxValue = 1;
+    }
 
     this->content = readPixels(file);
 
@@ -299,7 +302,7 @@ void Image::storeImageFrom(std::string filePath) {
     fillPixelArray();
 }
 
-const bool Image::isGrey(std::string color) const {
+const bool Image::isGrey() const {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
             if (this->pixels[i][j].isGrey() == false) {
@@ -311,7 +314,7 @@ const bool Image::isGrey(std::string color) const {
     return true;
 }
 
-const bool Image::isBlackAndWhite(std::string color) const {
+const bool Image::isBlackAndWhite() const {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
             if (this->pixels[i][j].isBlackOrWhite() == false) {
@@ -321,6 +324,77 @@ const bool Image::isBlackAndWhite(std::string color) const {
     }
 
     return true;
+}
+
+void Image::convertToPBM() {
+    if (isBlackAndWhite() == false) {
+        throw FileException("Cannot convert file to PBM.");
+    }
+
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            this->pixels[i][j].swapBlackAndWhite();
+            this->pixels[i][j].setBlackOrWhite();
+        }
+    }
+    
+    this->type = PBM;
+    this->pixelMaxValue = 1;
+}
+
+void Image::convertToPGM() {
+    if (isGrey() == false) {
+        throw FileException("Cannot convert file to PGM.");
+    }
+
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            if (this->type == PBM) {
+                this->pixels[i][j].swapBlackAndWhite();
+            }
+
+            this->pixels[i][j].setRGB(false);
+        }
+    }
+
+    this->type = PGM;
+    this->pixelMaxValue = this->pixels[0][0].getMaxValue();
+}
+
+void Image::convertToPPM() {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            if (this->type == PBM) {
+                this->pixels[i][j].swapBlackAndWhite();
+            }
+            
+            this->pixels[i][j].setRGB(true);
+        }
+    }
+
+    this->type = PPM;
+    this->pixelMaxValue = this->pixels[0][0].getMaxValue();
+}
+
+void Image::convertTo(fileType neededType) {
+    if (this->type != neededType) {
+        switch (neededType) {
+            case PBM: convertToPBM(); break;
+            case PGM: convertToPGM(); break;
+            case PPM: convertToPPM(); break;
+        }
+    }
+}
+
+void Image::reset() {
+    for (std::size_t i = 0; i < this->cols; ++i) {
+        delete[] this->pixels[i];
+    }
+
+    delete[] this->pixels;
+
+    this->rows = 0;
+    this->cols = 0;
 }
 
 Image* Image::operator*() {

@@ -47,7 +47,7 @@ class OrderedDither {
         const unsigned int pixelsMinValue = 0;
 
         /**
-         * @brief Sets treshold matrix.
+         * @brief Sets threshold matrix.
          * 
          * Copies the values from the source matrix.
          * 
@@ -56,7 +56,7 @@ class OrderedDither {
         void setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]);
 
         /**
-         * @brief Precalculates the treshold matrix.
+         * @brief Precalculates the threshold matrix.
          * 
          */
         void calculateMatrixthresholds();

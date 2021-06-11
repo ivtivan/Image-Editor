@@ -118,13 +118,29 @@ class Image {
          * 
          * Black and white count as shades of grey.
          */
-        const bool isGrey(std::string color) const;
+        const bool isGrey() const;
 
         /**
          * @brief Checks if all pixels are black or white.
          * 
          */
-        const bool isBlackAndWhite(std::string color) const;
+        const bool isBlackAndWhite() const;
+
+        /**
+         * @brief Converts image to PBM.
+         * 
+         * Throws FileException if it is not possible to do so.
+         */
+        void convertToPBM();
+
+        /**
+         * @brief Converts image to PGM.
+         * 
+         * Throws FileException if it is not possible to do so.
+         */
+        void convertToPGM();
+
+        void convertToPPM();
     public:
         Image();
         Image(const Image& image);
@@ -155,6 +171,8 @@ class Image {
          * Allocates a pixel matrix with the desired size and colors
          * all pixels.
          * 
+         * The image is of type PPM.
+         * 
          * Throws ImageException if the color is not in valid hes form.
          * 
          * @param color in hex from
@@ -170,6 +188,20 @@ class Image {
          * Throws FileException if no such file exists.
          */
         void storeImageFrom(std::string filePath);
+
+        /**
+         * @brief Convert image to another type.
+         * 
+         * Does not do anything if the image is already in the desired type.
+         * Throws FileException if the image cannot be converted.
+         */
+        void convertTo(fileType neededType);
+
+        /**
+         * @brief Clears allocated memory and sets dimensions to 0.
+         * 
+         */
+        void reset();
 
         Image* operator*();
         ~Image();

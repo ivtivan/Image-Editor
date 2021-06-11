@@ -42,6 +42,30 @@ class FileController {
         bool fileExists(std::string filePath);
 
         FileController();
+
+        /**
+         * @brief Determines name of file.
+         * 
+         * Gets substring after the last '/' and '\'.
+         */
+        const std::string determineFileName(std::string filePath) const;
+
+        /**
+         * @brief Determines type of a file by its extension.
+         * 
+         * Throws FileException is the file is not supported.
+         * 
+         * @param fileExtension must be an extension (not name of the file)
+         */
+        const fileType determineFileType(std::string fileExtension) const;
+
+        /**
+         * @brief Determines type of a file.
+         * 
+         * 
+         * Throws FileException if the file name/path is not valid.
+         */
+        const fileType determineDestinationFileType(std::string filePath) const;
     public:
         FileController(const FileController&) = delete;
         FileController& operator=(const FileController&) = delete;
@@ -72,7 +96,7 @@ class FileController {
          * @brief Closes file.
          * 
          * Does not automatically save the changes made.
-         * 
+         * Resets the image (makes it clear the allocated memory).
          * Throws FileException if no file is opened.
          */
         void closeFile();
@@ -94,7 +118,7 @@ class FileController {
          * Does not delete the loaded file.
          * Saves changes to a newly created file with the given file path.
          * 
-         * Throws FileException if no file is opened.
+         * Throws FileException if no file is opened or if the image cannot be saved in such file.
          */
         void saveFileAs(std::string filePath);
 };
