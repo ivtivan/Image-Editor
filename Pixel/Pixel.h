@@ -30,14 +30,18 @@ class Pixel {
         /**
          * @brief Checks if a pixel is black.
          * 
-         * A pixel is black if its value is equal to the max possible value.
+         * A pixel is black if its value is equal to the min possible value.
+         * Since for some file types this is not the case, the function should not be called
+         * outside of the member function isBlackOrWhite().
          */
         const bool isBlack() const;
 
         /**
          * @brief Checks if a pixel is white.
          * 
-         * A pixel is black if its value is equal to the min possible value.
+         * A pixel is black if its value is equal to the max possible value.
+         * Since for some file types this is not the case, the function should not be called
+         * outside of the member function isBlackOrWhite(). 
          */
         const bool isWhite() const;
     public:
@@ -65,21 +69,23 @@ class Pixel {
         /**
          * @brief Sets value of pixel.
          * 
-         * If it is in RGB, the value is set to each color.
          */
         void setValue(const unsigned int value);
 
         /**
          * @brief Sets value of pixel through an array.
          * 
-         * Marks the pixel as RGB.
+         * If the pixel was not makred as RGB, marks it as RGB 
+         * and sets its maximum value to 255.
+         * 
          */
         void setValue(unsigned int value[MAX_VALUES_COUNT]);
 
         /**
          * @brief Sets value of pixel through string.
          * 
-         * If it is in RGB, the value is set to each color.
+         * If the pixel was not makred as RGB, marks it as RGB 
+         * and sets its maximum value to 255.
          * 
          * @param value color in hex form
          */
@@ -102,6 +108,8 @@ class Pixel {
 
         /**
          * @brief Sets RGB status of black or white pixel to false and changes max value to 1.
+         * 
+         * Value of pixel is changed if needed.
          * 
          * Throws PixelException when the pixel is neither black nor white.
          */

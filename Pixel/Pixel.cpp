@@ -61,7 +61,11 @@ void Pixel::setValue(unsigned int value[MAX_VALUES_COUNT]) {
         this->value[i] = value[i];
     }
     
-    this->isRGB = true;
+    if (this->isRGB == false) {
+        unsigned int maxValueRGB = 255;
+        this->maxValue = maxValueRGB;
+        this->isRGB = true;
+    }
 }
 
 void Pixel::setValue(std::string value) {
@@ -73,7 +77,11 @@ void Pixel::setValue(std::string value) {
         colorReader.clear();
     }
 
-    this->isRGB = true;
+    if (this->isRGB == false) {
+        unsigned int maxValueRGB = 255;
+        this->maxValue = maxValueRGB;
+        this->isRGB = true;
+    }
 }
 
 void Pixel::setRGB(bool value) {
