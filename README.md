@@ -27,3 +27,7 @@ Possible further implementations:
   - creating color from string
 - Implement the file ocnversion in its own class
 - Better exception handling
+
+
+## Link to GitHub Repository
+the following is a link to [the GitHub Repository](https://github.com/ivtivan/Image-Editor).
