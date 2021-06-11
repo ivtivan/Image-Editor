@@ -1,6 +1,8 @@
 #include "InputReader.h"
 #include "../Image/Image.h"
-
+#include "../CustomExceptions/EditException/EditException.h"
+#include "../CustomExceptions/ExitException/ExitException.h"
+#include "../CustomExceptions/FileException/FileException.h"
 #include <iostream>
 
 InputReader::InputReader() {
@@ -48,6 +50,7 @@ void InputReader::readCommands() {
             std::cout << e.what() << std::endl;
         }
         catch (const EditException& e) {
+            std::cout << "Image not editted due to the following reason:" << std::endl;
             std::cout << e.what() << std::endl;
         }
         catch (const std::exception& e) {

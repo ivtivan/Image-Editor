@@ -14,4 +14,5 @@ class FileException : std::exception {
         FileException(const std::string& message);
         const char* what() const throw();
 };
+
 #endif
