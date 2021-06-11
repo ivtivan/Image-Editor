@@ -4,8 +4,8 @@
 #include <fstream>
 #include <iostream>
 
-Image::Image() {
-    ;
+Image::Image() : cols(0), rows(0) {
+    this->pixels = nullptr;
 }
 
 Image::Image(const Image& image) : content(image.content),
@@ -41,13 +41,9 @@ Pixel** Image::getPixels() {
 }
 
 void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
-    for (std::size_t i = 0; i < this->rows; ++i) {
-        delete[] this->pixels[i];
-    }
-    delete[] this->pixels;
+    reset();
 
     this->pixels = pixels;
-
     this->rows = rows;
     this->cols = cols;
 }
@@ -56,6 +52,8 @@ void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     if (isValidColor(color) == false) {
         throw ImageException("Color is not valid.");
     }
+
+    reset();
     this->pixelMaxValue = 255;
     this->rows = rows;
     this->cols = cols;
@@ -387,7 +385,7 @@ void Image::convertTo(fileType neededType) {
 }
 
 void Image::reset() {
-    for (std::size_t i = 0; i < this->cols; ++i) {
+    for (std::size_t i = 0; i < this->rows; ++i) {
         delete[] this->pixels[i];
     }
 
@@ -402,7 +400,7 @@ Image* Image::operator*() {
 }
 
 Image::~Image() {
-    for (std::size_t i = 0; i < this->cols; ++i) {
+    for (std::size_t i = 0; i < this->rows; ++i) {
         delete[] this->pixels[i];
     }
 

@@ -1,7 +1,7 @@
 # Image-Editor
 Allows editing PBM, PGM and PPM files.
 
-Supports creating new images, as well as cropping, resizing(scaling) and dithering.
+Supports creating new images, as well as cropping, resizing (scaling) and dithering.
 
 ## Resizing Algorithm
 The following [resizing algorithm](https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html) is used.

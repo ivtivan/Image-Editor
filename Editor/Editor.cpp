@@ -23,14 +23,13 @@ Editor& Editor::instance() {
 }
 
 void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
-    if (x1 < x2 || y1 < y2) {
+    if (x1 > x2 || y1 > y2) {
         throw EditException("Points passed not valid.");
     }
-    x2 = std::min(x2, image->getRows());
-    y2 = std::min(y2, image->getCols());
 
-    std::cout << x2 << " " << y2 << std::endl;
-
+    x2 = std::round(std::min((double)x2, (double)image->getRows()));
+    y2 = std::round(std::min((double)y2, (double)image->getCols()));
+ 
     Pixel** pixelHolder = new Pixel*[x2 - x1];
     for (std::size_t i = 0; i < x2 - x1; ++i) {
         try {
@@ -73,12 +72,12 @@ void Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCol
     }
 
     for (std::size_t i = 0; i < destRows; ++i) {
-        srcX =(int) std::round((double) srcRows * (double) i / (double)destRows); 
-        srcX = std::min(srcX, srcRows - 1);
+        srcX = (int)((double) srcRows * (double) i / (double)destRows); 
+        srcX = (int)(std::min((double)srcX, (double)(srcRows - 1)));
         for (std::size_t j = 0; j < destCols; ++j) {
-            srcY =(int) std::round((double) srcCols * (double) j / (double)destCols);
-            srcY = std::min(srcY, srcCols - 1);
-            
+            srcY = (int)((double) srcCols * (double) j / (double)destCols);
+            srcY = (int)(std::min((double)srcY, (double)(srcCols - 1)));
+
             destPixels[i][j] = image->getPixels()[srcX][srcY];
         }
     }
