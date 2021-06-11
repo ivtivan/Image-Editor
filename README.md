@@ -30,4 +30,4 @@ Possible further implementations:
 
 
 ## Link to GitHub Repository
-the following is a link to [the GitHub Repository](https://github.com/ivtivan/Image-Editor).
+The following is a link to [the GitHub Repository](https://github.com/ivtivan/Image-Editor).
