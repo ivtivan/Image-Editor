@@ -64,7 +64,7 @@ void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     colorPixels(color);
 }
 
-bool Image::isValidColor(std::string color) {
+const bool Image::isValidColor(std::string color) const {
     std::size_t validColorLength = 7;
 
     if (color.length() != validColorLength) {
@@ -297,6 +297,30 @@ void Image::storeImageFrom(std::string filePath) {
 
     allocatePixelArray();
     fillPixelArray();
+}
+
+const bool Image::isGrey(std::string color) const {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            if (this->pixels[i][j].isGrey() == false) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+const bool Image::isBlackAndWhite(std::string color) const {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            if (this->pixels[i][j].isBlackOrWhite() == false) {
+                return false;
+            }
+        }
+    }
+
+    return true;
 }
 
 Image* Image::operator*() {

@@ -26,6 +26,20 @@ class Pixel {
          * 
          */
         double ditherValue = 0;
+
+        /**
+         * @brief Checks if a pixel is black.
+         * 
+         * A pixel is black if its value is equal to the max possible value.
+         */
+        const bool isBlack() const;
+
+        /**
+         * @brief Checks if a pixel is white.
+         * 
+         * A pixel is black if its value is equal to the min possible value.
+         */
+        const bool isWhite() const;
     public:
         Pixel();
 
@@ -84,6 +98,16 @@ class Pixel {
          * 
          */
         const double getDitherValue() const;
+
+        /**
+         * @brief Checks if a pixel is a shade of grey.
+         * 
+         * Black and white are counted as shades of grey.
+         * A pixel which is not RGB is always grey.
+         */
+        const bool isGrey() const;
+
+        const bool isBlackOrWhite() const;
 
         friend std::ostream& operator<<(std::ostream& os, Pixel pixel);
 };

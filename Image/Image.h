@@ -109,9 +109,22 @@ class Image {
          * @brief Checks if a string is in valid hex form.
          * 
          * Color must begin with '#' and contain only chars from
-         * '0' - '9', 'a' - 'f' and 'A' - 'F'
+         * '0' - '9', 'a' - 'f' and 'A' - 'F'.
          */
-        bool isValidColor(std::string color);
+        const bool isValidColor(std::string color) const;
+
+        /**
+         * @brief Checks if all pixels are grey.
+         * 
+         * Black and white count as shades of grey.
+         */
+        const bool isGrey(std::string color) const;
+
+        /**
+         * @brief Checks if all pixels are black or white.
+         * 
+         */
+        const bool isBlackAndWhite(std::string color) const;
     public:
         Image();
         Image(const Image& image);

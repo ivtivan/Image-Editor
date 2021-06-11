@@ -79,15 +79,35 @@ const unsigned int Pixel::getMaxValue() const {
 
 const double Pixel::getValue() const {
     if (this->isRGB == false) {
-        return (double)value[0];
+        return (double)this->value[0];
     }
 
     // Formula from https://tannerhelland.com/2011/10/01/grayscale-image-algorithm-vb6.html
-    return (double)value[0] * 0.3 + (double)value[1] * 0.59 + (double)value[2] * 0.11;
+    return (double)this->value[0] * 0.3 + (double)this->value[1] * 0.59 + (double)this->value[2] * 0.11;
 }
 
 const double Pixel::getDitherValue() const {
     return this->ditherValue;
+}
+
+const bool Pixel::isGrey() const {
+    if (this->isRGB == true) {
+        return (this->value[0] == this->value[1] && this->value[0] == this->value[2]);
+    }
+
+    return true;
+}
+
+const bool Pixel::isBlack() const {
+    return ((int)getValue() == this->maxValue);
+}
+
+const bool Pixel::isWhite() const {
+    return ((int)getValue() == this->minValue);
+}
+
+const bool Pixel::isBlackOrWhite() const {
+    return (isWhite() || isBlack());
 }
 
 std::ostream& operator<<(std::ostream& os, Pixel pixel) {
