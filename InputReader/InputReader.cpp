@@ -1,7 +1,5 @@
 #include "InputReader.h"
 #include "../Image/Image.h"
-#include "../CustomExceptions/ExitException/ExitException.h"
-#include "../CustomExceptions/FileException/FileException.h"
 
 #include <iostream>
 
@@ -28,7 +26,7 @@ void InputReader::printCommands() {
     std::cout << "dither <algorithmName>\n";
     std::cout << "Algorithms supported: Linear, FS, JJN, Aktinson, \n";
     std::cout << "Burkes, Sierra, TRSierra, SierraLite, Stucku, \n";
-    std::cout << "4Bayer, 8Bayers \n";
+    std::cout << "4Bayer, 8Bayer \n";
     std::cout << "-------------------------------------------------\n";
     std::cout << std::endl;
 }
@@ -47,6 +45,9 @@ void InputReader::readCommands() {
             break;
         }
         catch (const FileException& e) {
+            std::cout << e.what() << std::endl;
+        }
+        catch (const EditException& e) {
             std::cout << e.what() << std::endl;
         }
         catch (const std::exception& e) {

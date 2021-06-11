@@ -4,8 +4,9 @@
 #include "../CommandInterpreter/CommandInterpreter.h"
 
 /**
- * Singleton class.
- * Allows reading input from terminal.
+ * @brief Allows reading input from terminal
+ * 
+ * Singleton class
  */
 
 class InputReader {
@@ -18,12 +19,12 @@ class InputReader {
         static InputReader& instance();
 
         /**
-         * Prints supported commands.
+         * @brief Prints supported commands
          */
         void printCommands();
 
         /**
-         * Reads command from terminal.
+         * @brief Reads command from terminal
          */
         void readCommands();
 };

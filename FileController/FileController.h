@@ -6,8 +6,8 @@
 #include <string>
 
 /** 
- * Singleton class.
- * Controlls opening, closing, creating and saving a file.
+ * @brief Controlls opening, closing, creating and saving a file
+ * Singleton class
  */
 class FileController {
     private:
@@ -17,7 +17,7 @@ class FileController {
         bool setFilePath; /**< checks if a file path was set */
 
         /**
-         * Checks if a file exists.
+         * @brief Checks if a file exists.
          */
         bool fileExists(std::string filePath);
 
@@ -29,34 +29,51 @@ class FileController {
         static FileController& instance();
         
         /**
-         * Returns pointer to the image to which the file content is copied.
+         * @brief Returns pointer to the image to which the file content is copied
          */
         Image* getImage();
 
         /**
-         * Creates an image from the given parameters.
+         * @brief Creates an image from the given parameters
+         * 
+         * Creating an image counts as loading/opening a file.
          */
         void createFile(std::size_t rows, std::size_t cols, std::string color);
 
         /**
-         * Copies file information in image.
+         * @brief Copies information from file in an Image object
+         * 
+         * Throws FileException if a file is already opened or the file does not exist.
          */
         void openFile(std::string filePath);
 
         /**
-         * Closes file.
+         * @brief Closes file
+         * 
          * Does not automatically save the chages made.
+         * 
+         * Throws FileException if no file is opened.
          */
         void closeFile();
 
         /**
-         * Replaces the content of the loaded file with the image.
+         * @brief Replaces the content of the loaded file with the one in the image attribute.
+         * 
+         * Closes the file.
+         * 
+         * Throws FileException if no file is opened or the destination file papth is not given.
          */
         void saveFile();
 
         /**
+         * @brief Saves the content in the image attribute in a new file.
+         * 
+         * Closes the file.
+         * 
          * Does not delete the loaded file.
          * Saves changes to a newly created file with the given filePath.
+         * 
+         * Throws FileException if no file is opened.
          */
         void saveFileAs(std::string filePath);
 };

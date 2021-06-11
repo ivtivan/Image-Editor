@@ -11,13 +11,13 @@ enum fileType {
 };
 
 /**
- * Image class.
- * Creates image form parameters or
+ * @brief Image class.
+ * Creates an image form parameters or
  * loads one from a PBM/PGM/PPM file.
  */
 class Image {
     private:
-        std::string content; /**< pixel values in form of a string*/
+        std::string content; /**< Pixel values in form of a string*/
         Pixel** pixels;
         fileType type;
         unsigned int pixelMaxValue;

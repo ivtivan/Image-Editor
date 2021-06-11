@@ -3,8 +3,8 @@
 
 #include <string>
 
-
 /**
+ * @brief Custom exception
  * Exception, that is thrown when working with a file.
  */
 class FileException : std::exception {

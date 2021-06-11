@@ -4,6 +4,7 @@
 #include <string>
 
 /**
+ * @brief Custom exception
  * Exception, that is thrown when the program must exit.
  */
 class ExitException : std::exception {

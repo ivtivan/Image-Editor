@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "../CustomExceptions/EditException/EditException.h"
 #include "../Dithers/DiffusionDithers/DitherAktinson/DitherAktinson.h"
 #include "../Dithers/DiffusionDithers/DitherBurkes/DitherBurkes.h"
 #include "../Dithers/DiffusionDithers/DitherFS/DitherFS.h"
@@ -11,7 +12,7 @@
 #include "../Dithers/OrderedDithers/Dither4Bayer/Dither4Bayer.h"
 #include "../Dithers/OrderedDithers/Dither8Bayer/Dither8Bayer.h"
 #include <cmath>
-#include <iostream>
+
 Editor::Editor() {
     ;
 }
@@ -22,8 +23,9 @@ Editor& Editor::instance() {
 }
 
 void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t x2, std::size_t y2) {
-    std::cout << x2 << " " << y2 << std::endl;
-    std::cout << image->getRows() << std::endl;
+    if (x1 < x2 || y1 < y2) {
+        throw EditException("Points passed not valid.");
+    }
     x2 = std::min(x2, image->getRows());
     y2 = std::min(y2, image->getCols());
 
@@ -45,7 +47,6 @@ void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t
     for (std::size_t i = 0; i < x2 - x1; ++i) {
         for (std::size_t j = 0; j < y2 - y1; ++j) {
             pixelHolder[i][j] = image->getPixels()[x1 + i][y1 + i];
-            std::cout << "pixelValue: " << pixelHolder[i][j].getValue() << std::endl;
         }
     }
 
@@ -129,5 +130,8 @@ void Editor::ditherImage(Image* image, std::string algorithmName) {
     else if (algorithmName == "8Bayer") {
         Dither8Bayer dither;
         dither.ditherImage(image);
+    }
+    else {
+        throw EditException("Dithering algorithm not found.");
     }
 }

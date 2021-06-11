@@ -4,8 +4,10 @@
 #include "../Command/Command.h"
 
 /**
- * Singleton class.
+ * @brief Allows the execution of a command
  * Allows the execution of a command.
+ * 
+ * Singleton class
  */
 
 class CommandInterpreter {
@@ -18,7 +20,7 @@ class CommandInterpreter {
         static CommandInterpreter& instance();
 
         /**
-         * Call the function, needed to execute the command.
+         * @brief Call the function, needed to execute the command.
          */
         void execute(Command command);
 };
