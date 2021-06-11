@@ -20,7 +20,7 @@ void DiffusionDither::setUpDither(Image* image) {
     this->threshold = (double) this->pixelsMaxValue / 2.0;
 }
 
-void DiffusionDither::distributeDifference(Image* image, double diff, std::size_t x, std::size_t y) {
+void DiffusionDither::distributeError(Image* image, double error, std::size_t x, std::size_t y) {
     std::size_t endingRowIndex = std::min(x + this->dMatrixRows, image->getRows());
     std::size_t beginningColIndex = std::max(0, (int)y - (int)this->pos);
     std::size_t endingColIndex = std::min((int)y - (int)this->pos + this->dMatrixCols, image->getCols());
@@ -29,7 +29,7 @@ void DiffusionDither::distributeDifference(Image* image, double diff, std::size_
         for (std::size_t j = beginningColIndex; j < endingColIndex; ++j) {
             distributionCoefficient = this->dMatrix[i - x][j - ((int)y - (int)this->pos)];
             if (distributionCoefficient != 0) {
-                image->getPixels()[i][j].incrementDitherValue(diff * (double)distributionCoefficient / this->distributionDivisor);
+                image->getPixels()[i][j].incrementDitherValue(error * (double)distributionCoefficient / this->distributionDivisor);
             }
         }
     }
@@ -58,7 +58,7 @@ void DiffusionDither::ditherImage(Image* image) {
                 difference = this->threshold + difference - this->pixelsMinValue;
             }
             image->getPixels()[i][j].resetDitherValue();
-            distributeDifference(image, difference, i, j);
+            distributeError(image, difference, i, j);
         }
     }
 }

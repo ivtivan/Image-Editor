@@ -3,9 +3,10 @@
 
 #include "../Command/Command.h"
 
-// Allows the execution of a command in the form of a string.
-// The command is formated in the needed way before calling 
-// the respective function.
+/**
+ * Singleton class.
+ * Allows the execution of a command.
+ */
 
 class CommandInterpreter {
     private:
@@ -16,6 +17,9 @@ class CommandInterpreter {
 
         static CommandInterpreter& instance();
 
+        /**
+         * Call the function, needed to execute the command.
+         */
         void execute(Command command);
 };
 

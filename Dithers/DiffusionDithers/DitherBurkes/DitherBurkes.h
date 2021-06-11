@@ -3,6 +3,9 @@
 
 #include "../DiffusionDither/DiffusionDither.h"
 
+/**
+ * @brief Child class that supports Burkes Dithering
+ */
 class DitherBurkes : public DiffusionDither {
     public:
         DitherBurkes();

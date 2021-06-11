@@ -8,8 +8,8 @@
 #include "../Dithers/DiffusionDithers/DitherSierraLite/DitherSierraLite.h"
 #include "../Dithers/DiffusionDithers/DitherTRSierra/DitherTRSierra.h"
 #include "../Dithers/DiffusionDithers/DitherStucki/DitherStucki.h"
-#include "../Dithers/NondiffusionDithers/Dither4Bayer/Dither4Bayer.h"
-#include "../Dithers/NondiffusionDithers/Dither8Bayer/Dither8Bayer.h"
+#include "../Dithers/OrderedDithers/Dither4Bayer/Dither4Bayer.h"
+#include "../Dithers/OrderedDithers/Dither8Bayer/Dither8Bayer.h"
 #include <cmath>
 #include <iostream>
 Editor::Editor() {

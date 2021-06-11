@@ -3,6 +3,9 @@
 
 #include "../DiffusionDither/DiffusionDither.h"
 
+/**
+ * @brief Child class that supports Floyd-Steinberg Dithering
+ */
 class DitherFS : public DiffusionDither {
     public:
         DitherFS();

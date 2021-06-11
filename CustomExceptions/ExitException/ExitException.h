@@ -3,6 +3,9 @@
 
 #include <string>
 
+/**
+ * Exception, that is thrown when the program must exit.
+ */
 class ExitException : std::exception {
     private:
         std::string message;

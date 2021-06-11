@@ -1,11 +1,11 @@
-#include "NondiffusionDither.h"
+#include "OrderedDither.h"
 
-NondiffusionDither::NondiffusionDither(std::size_t dimension) :
+OrderedDither::OrderedDither(std::size_t dimension) :
     dimension(dimension) {
     ;
 }
 
-void NondiffusionDither::setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]) {
+void OrderedDither::setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]) {
     for (std::size_t i = 0; i < this->dimension; ++i) {
         for (std::size_t j = 0; j < this->dimension; ++j) {
             this->tMatrix[i][j] = src[i][j];
@@ -13,7 +13,7 @@ void NondiffusionDither::setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]
     }
 }
 
-void NondiffusionDither::calculateMatrixthresholds() {
+void OrderedDither::calculateMatrixthresholds() {
     for (std::size_t i = 0; i < this->dimension; ++i) {
         for (std::size_t j = 0; j < this->dimension; ++j) {
             tMatrix[i][j] = (tMatrix[i][j] + 1.0) / (dimension * dimension) - 0.5;
@@ -21,14 +21,14 @@ void NondiffusionDither::calculateMatrixthresholds() {
     }
 }
 
-void NondiffusionDither::setUpDither(Image* image) {
+void OrderedDither::setUpDither(Image* image) {
     this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
     this->threshold = (double) this->pixelsMaxValue / 2.0;
     this->precisionValue = (double) this->pixelsMaxValue / 2.0;
     calculateMatrixthresholds();
 }
 
-void NondiffusionDither::ditherImage(Image* image) {
+void OrderedDither::ditherImage(Image* image) {
     setUpDither(image);
 
     double pixelValue, alteredValue;

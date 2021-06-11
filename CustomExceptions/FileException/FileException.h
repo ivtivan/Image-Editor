@@ -4,7 +4,9 @@
 #include <string>
 
 
-// Exception that is thrown when working with a file.
+/**
+ * Exception, that is thrown when working with a file.
+ */
 class FileException : std::exception {
     private:
         std::string message;

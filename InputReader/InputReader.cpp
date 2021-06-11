@@ -23,7 +23,7 @@ void InputReader::printCommands() {
     std::cout << "save\n";
     std::cout << "saveas <file path>\n";
     std::cout << "exit\n";
-    std::cout << "crop <rows> <cols>\n";
+    std::cout << "crop <x1> <y1> <x2 (x2 >= x1)> <y2 (y2 >= y1)>\n";
     std::cout << "resize <rows> <cols>\n";
     std::cout << "dither <algorithmName>\n";
     std::cout << "Algorithms supported: Linear, FS, JJN, Aktinson, \n";

@@ -3,6 +3,9 @@
 
 #include "../DiffusionDither/DiffusionDither.h"
 
+/**
+ * @brief Child class that supports Jarvis, Judice, and Ninke Dithering
+ */
 class DitherJJN : public DiffusionDither {
     public:
         DitherJJN();

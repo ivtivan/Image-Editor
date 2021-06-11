@@ -3,6 +3,11 @@
 
 #include "../CommandInterpreter/CommandInterpreter.h"
 
+/**
+ * Singleton class.
+ * Allows reading input from terminal.
+ */
+
 class InputReader {
     private:
         InputReader();
@@ -12,7 +17,14 @@ class InputReader {
 
         static InputReader& instance();
 
+        /**
+         * Prints supported commands.
+         */
         void printCommands();
+
+        /**
+         * Reads command from terminal.
+         */
         void readCommands();
 };
 

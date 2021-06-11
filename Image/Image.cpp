@@ -23,6 +23,10 @@ Image& Image::operator=(const Image& image) {
     return *this;
 }
 
+const fileType Image::getFileType() const {
+    return this->type;
+}
+
 const std::size_t Image::getRows() const {
     return this->rows;
 }
@@ -47,15 +51,6 @@ void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
     this->cols = cols;
 }
 
-void Image::colorPixels(std::string color) {
-    for (std::size_t i = 0; i < this->rows; ++i) {
-        for (std::size_t j = 0; j < this->cols; ++j) {
-            pixels[i][j].setValue(color);
-            pixels[i][j].setMaxValue(this->pixelMaxValue);
-        }
-    }
-}
-
 void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     this->pixelMaxValue = 255;
     this->rows = rows;
@@ -63,6 +58,15 @@ void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     this->type = PPM;
     allocatePixelArray();
     colorPixels(color);
+}
+
+void Image::colorPixels(std::string color) {
+    for (std::size_t i = 0; i < this->rows; ++i) {
+        for (std::size_t j = 0; j < this->cols; ++j) {
+            pixels[i][j].setValue(color);
+            pixels[i][j].setMaxValue(this->pixelMaxValue);
+        }
+    }
 }
 
 const fileType Image::determineFileType(std::string identifier) {
@@ -267,14 +271,6 @@ void Image::storeImageFrom(std::string filePath) {
 
     allocatePixelArray();
     fillPixelArray();
-}
-
-const fileType Image::getFileType() const {
-    return this->type;
-}
-
-const std::string Image::getContent() const {
-    return this->content;
 }
 
 Image* Image::operator*() {

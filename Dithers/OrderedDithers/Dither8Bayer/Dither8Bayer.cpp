@@ -1,6 +1,6 @@
 #include "Dither8Bayer.h"
 
-Dither8Bayer::Dither8Bayer() : NondiffusionDither(8) {
+Dither8Bayer::Dither8Bayer() : OrderedDither(8) {
     double src[8][8] = {{  0, 32,  8, 40,  2, 34, 10, 42 }, 
                       { 48, 16, 56, 24, 50, 18, 58, 26 },
                       { 12, 44,  4, 36, 14, 46,  6, 38 },
