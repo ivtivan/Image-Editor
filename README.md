@@ -9,6 +9,8 @@ The following [resizing algorithm](https://courses.cs.vt.edu/~masc1044/L17-Rotat
 ## Dithering Algorithms
 The program supports [11 dirhering algorithms](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html).
 
+It creates a black and white image of the same file type as the original one.
+
 ## Command Line to Run Program
 ```
 g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/EditException/EditException.cpp CustomExceptions/ExitException/*.cpp CustomExceptions/ImageException/*.cpp CustomExceptions/PixelException/*.cpp CustomExceptions/FileException/*.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DitherLinear/*.cpp Dithers/DiffusionDithers/DitherAtkinson/*.cpp Dithers/DiffusionDithers/DitherBurkes/*.cpp Dithers/DiffusionDithers/DitherFS/*.cpp Dithers/DiffusionDithers/DitherJJN/*.cpp Dithers/DiffusionDithers/DitherSierra/*.cpp Dithers/DiffusionDithers/DitherSierraLite/*.cpp Dithers/DiffusionDithers/DitherStucki/*.cpp Dithers/DiffusionDithers/DitherTRSierra/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/Dither4Bayer/*.cpp Dithers/OrderedDithers/Dither8Bayer/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp main.cpp
@@ -21,12 +23,12 @@ g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/EditException/EditEx
 
 ## Further Ideas
 Possible further implementations:
-- Change functions in Image class to make it clearer and easier to test
+- Change functions in Image class to make it clearer and easier to test.
 - Implement Color class, which supports:
-  - color validation
-  - creating color from string
-- Implement the file ocnversion in its own class
-- Better exception handling
+  - color validation;
+  - creating color from string.
+- Implement the file conversion in its own class.
+- Better exception handling.
 
 
 ## Link to GitHub Repository
