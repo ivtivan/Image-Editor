@@ -45,7 +45,7 @@ void Editor::cropImage(Image* image, std::size_t x1, std::size_t y1, std::size_t
 
     for (std::size_t i = 0; i < x2 - x1; ++i) {
         for (std::size_t j = 0; j < y2 - y1; ++j) {
-            pixelHolder[i][j] = image->getPixels()[x1 + i][y1 + i];
+            pixelHolder[i][j] = image->getPixels()[x1 + i][y1 + j];
         }
     }
 
