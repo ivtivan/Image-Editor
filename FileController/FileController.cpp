@@ -1,6 +1,5 @@
 #include "FileController.h"
-#include "../CustomExceptions/FileException/FileException.h"
-#include "../CustomExceptions/ImageException/ImageException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include <fstream>
 
 FileController::FileController() : isLoaded(false), setFilePath(false) {

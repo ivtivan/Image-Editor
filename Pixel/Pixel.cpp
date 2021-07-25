@@ -1,5 +1,5 @@
 #include "Pixel.h"
-#include "../CustomExceptions/PixelException/PixelException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include <cmath>
 
 Pixel::Pixel() : maxValue(1), isRGB(false) {

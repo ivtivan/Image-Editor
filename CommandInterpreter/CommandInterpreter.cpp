@@ -1,5 +1,5 @@
 #include "CommandInterpreter.h"
-#include "../CustomExceptions/ExitException/ExitException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include "../FileController/FileController.h"
 #include "../Editor/Editor.h"
 

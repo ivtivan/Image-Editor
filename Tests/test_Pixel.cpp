@@ -1,7 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "../Catch2/catch.hpp"
 #include "../Pixel/Pixel.h"
-#include "../CustomExceptions/PixelException/PixelException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 
 SCENARIO("Testing setting value through string", "[setter]") {
     GIVEN("A pixel and a color in two formats") {

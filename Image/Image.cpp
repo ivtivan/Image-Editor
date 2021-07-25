@@ -1,6 +1,5 @@
 #include "Image.h"
-#include "../CustomExceptions/ImageException/ImageException.h"
-#include "../CustomExceptions/FileException/FileException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include <fstream>
 
 Image::Image() : cols(0), rows(0) {

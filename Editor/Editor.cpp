@@ -1,5 +1,5 @@
 #include "Editor.h"
-#include "../CustomExceptions/EditException/EditException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include "../Dithers/DiffusionDithers/DitherAtkinson/DitherAtkinson.h"
 #include "../Dithers/DiffusionDithers/DitherBurkes/DitherBurkes.h"
 #include "../Dithers/DiffusionDithers/DitherFS/DitherFS.h"

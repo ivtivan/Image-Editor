@@ -1,8 +1,7 @@
 // #define CATCH_CONFIG_MAIN
 #include "../Catch2/catch.hpp"
 #include "../Image/Image.h"
-#include "../CustomExceptions/ImageException/ImageException.h"
-#include "../CustomExceptions/FileException/FileException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include <cmath>
 
 SCENARIO("Testing setting pixels through pixel matrix", "[setter]") {

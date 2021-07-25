@@ -1,7 +1,7 @@
 // #define CATCH_CONFIG_MAIN
 #include "../Catch2/catch.hpp"
 #include "../Editor/Editor.h"
-#include "../CustomExceptions/EditException/EditException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 
 SCENARIO("Testing cropping image", "[cropping]") {
     GIVEN("An image") {

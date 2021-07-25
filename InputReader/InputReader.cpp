@@ -1,9 +1,6 @@
 #include "InputReader.h"
 #include "../Image/Image.h"
-#include "../CustomExceptions/EditException/EditException.h"
-#include "../CustomExceptions/ExitException/ExitException.h"
-#include "../CustomExceptions/FileException/FileException.h"
-#include "../CustomExceptions/ImageException/ImageException.h"
+#include "../CustomExceptions/CustomExceptions.h"
 #include <iostream>
 
 InputReader::InputReader() {
