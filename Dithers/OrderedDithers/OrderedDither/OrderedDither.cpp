@@ -16,7 +16,7 @@ void OrderedDither::setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]) {
 void OrderedDither::calculateMatrixthresholds() {
     for (std::size_t i = 0; i < this->dimension; ++i) {
         for (std::size_t j = 0; j < this->dimension; ++j) {
-            tMatrix[i][j] = (tMatrix[i][j] + 1.0) / (dimension * dimension) - 0.5;
+            tMatrix[i][j] = (tMatrix[i][j] + 1.0) / (double)(dimension * dimension) - 0.5;
         }
     }
 }
@@ -35,7 +35,7 @@ void OrderedDither::ditherImage(Image* image) {
     double factor;
 
     std::size_t imageRows = image->getRows();
-    std::size_t imageCols = image->getRows();
+    std::size_t imageCols = image->getCols();
 
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {
@@ -44,7 +44,7 @@ void OrderedDither::ditherImage(Image* image) {
 
             alteredValue = pixelValue + precisionValue * factor;
 
-            if (alteredValue - pixelValue > EPS) {
+            if (alteredValue - threshold > EPS) {
                 image->getPixels()[i][j].setValue(this->pixelsMaxValue);
             }
             else {

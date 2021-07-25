@@ -42,7 +42,7 @@ void DiffusionDither::ditherImage(Image* image) {
     double difference;
 
     std::size_t imageRows = image->getRows();
-    std::size_t imageCols = image->getRows();
+    std::size_t imageCols = image->getCols();
 
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {

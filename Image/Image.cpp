@@ -264,7 +264,7 @@ const std::string Image::readPixels(std::ifstream& file) {
 
     while(getline(file, readLine)) {
         removeCommentsFrom(readLine);
-        pixels += readLine;
+        pixels += readLine + " ";
     }
 
     return pixels;
