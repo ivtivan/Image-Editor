@@ -13,12 +13,12 @@ It creates a black and white image of the same file type as the original one.
 
 ## Command Line to Run Program
 ```
-g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp main.cpp
+g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/Dither/*.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp main.cpp
 ```
 
 ## Command Line to Run Tests
 ```
-g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp Tests/*.cpp
+g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/Dither/*.cpp  Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp Tests/*.cpp
 ```
 
 ## Further Ideas

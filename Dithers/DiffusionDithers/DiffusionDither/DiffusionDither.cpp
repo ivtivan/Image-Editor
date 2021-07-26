@@ -1,14 +1,14 @@
 #include "DiffusionDither.h"
 #include <cmath>
 
-DiffusionDither::DiffusionDither(std::size_t dMatrixRows, std::size_t dMatrixCols, std::size_t pos) :
-    dMatrixRows(dMatrixRows), dMatrixCols(dMatrixCols), pos(pos) {
+DiffusionDither::DiffusionDither(const std::size_t& matrixRows, const std::size_t& matrixCols, const std::size_t& pos) :
+    Dither(matrixRows, matrixCols), pos(pos) {
     ;
 }
 
 void DiffusionDither::setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS]) {
-    for (std::size_t i = 0; i < this->dMatrixRows; ++i) {
-        for (std::size_t j = 0; j < this->dMatrixCols; ++j) {
+    for (std::size_t i = 0; i < this->matrixRows; ++i) {
+        for (std::size_t j = 0; j < this->matrixCols; ++j) {
             this->dMatrix[i][j] = src[i][j];
         }
     }
@@ -21,9 +21,9 @@ void DiffusionDither::setUpDither(Image* image) {
 }
 
 void DiffusionDither::distributeError(Image* image, double error, std::size_t x, std::size_t y) {
-    std::size_t endingRowIndex = std::min(x + this->dMatrixRows, image->getRows());
+    std::size_t endingRowIndex = std::min(x + this->matrixRows, image->getRows());
     std::size_t beginningColIndex = std::max(0, (int)y - (int)this->pos);
-    std::size_t endingColIndex = std::min((int)y - (int)this->pos + this->dMatrixCols, image->getCols());
+    std::size_t endingColIndex = std::min((int)y - (int)this->pos + this->matrixCols, image->getCols());
     unsigned int distributionCoefficient;
     for (std::size_t i = x; i < endingRowIndex; ++i) {
         for (std::size_t j = beginningColIndex; j < endingColIndex; ++j) {
