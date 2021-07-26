@@ -1,16 +1,7 @@
 #include "Editor.h"
 #include "../CustomExceptions/CustomExceptions.h"
-#include "../Dithers/DiffusionDithers/DitherAtkinson/DitherAtkinson.h"
-#include "../Dithers/DiffusionDithers/DitherBurkes/DitherBurkes.h"
-#include "../Dithers/DiffusionDithers/DitherFS/DitherFS.h"
-#include "../Dithers/DiffusionDithers/DitherJJN/DitherJJN.h"
-#include "../Dithers/DiffusionDithers/DitherLinear/DitherLinear.h"
-#include "../Dithers/DiffusionDithers/DitherSierra/DitherSierra.h"
-#include "../Dithers/DiffusionDithers/DitherSierraLite/DitherSierraLite.h"
-#include "../Dithers/DiffusionDithers/DitherTRSierra/DitherTRSierra.h"
-#include "../Dithers/DiffusionDithers/DitherStucki/DitherStucki.h"
-#include "../Dithers/OrderedDithers/Dither4Bayer/Dither4Bayer.h"
-#include "../Dithers/OrderedDithers/Dither8Bayer/Dither8Bayer.h"
+#include "../Dithers/DiffusionDithers/DiffusionDithersTypes/DiffusionDithersTypes.h"
+#include "../Dithers/OrderedDithers/OrderedDithersTypes/OrderedDithersTypes.h"
 #include <cmath>
 
 Editor::Editor() {
