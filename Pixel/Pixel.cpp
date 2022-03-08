@@ -1,26 +1,19 @@
 #include "Pixel.h"
+#include "PixelTypes.h"
 #include "../CustomExceptions/CustomExceptions.h"
 #include <cmath>
 
-Pixel::Pixel(unsigned short maxValue, std::size_t length) : maxValue(maxValue), ditherValue(0) {
+Pixel::Pixel(unsigned short maxValue, std::size_t length) :
+        minValue(0), maxValue(maxValue), ditherValue(0.0) {
     this->value = new unsigned short[length];
 }
 
-Pixel::Pixel(const Pixel& pixel) : maxValue(pixel.maxValue),
-    ditherValue(pixel.ditherValue) {
-    setValue(pixel.getValueArray());
-}
-
-Pixel& Pixel::operator=(const Pixel& pixel) {
-    if (this == &pixel) {
-        return *this;
+Pixel::Pixel(unsigned short value, unsigned short maxValue, std::size_t length) : 
+        minValue(0), maxValue(maxValue), ditherValue(0.0) {
+    this->value = new unsigned short[length];
+    for (std::size_t i = 0; i < length; ++i) {
+        this->value[i] = value;
     }
-
-    this->maxValue = pixel.maxValue;
-    this->ditherValue = pixel.ditherValue;
-    setValue(pixel.getValueArray());
-
-    return *this;
 }
 
 const unsigned short* Pixel::getValueArray() const {
@@ -50,25 +43,6 @@ void Pixel::setValue(std::string value) {
     }
 }
 
-void Pixel::setBlackOrWhite() {
-    if (isBlackOrWhite() == false) {
-        throw PixelException("The pixel is neither black nor white.");
-    }
-    this->maxValue = 1;
-
-    if (this->value[0] > this->maxValue) {
-        setValue(this->maxValue);
-    }
-}
-
-void Pixel::swapBlackAndWhite() {
-    if (isBlackOrWhite() == false) {
-        throw PixelException("Pixel is neither white nor black.");
-    }
-
-    setValue(this->maxValue - value[0]);
-}
-
 void Pixel::incrementDitherValue(const double incr) {
     this->ditherValue += incr;
 }
@@ -81,18 +55,6 @@ const double Pixel::getDitherValue() const {
     return this->ditherValue;
 }
 
-const bool Pixel::isGrey() const {
-    if (value == NULL) {
-        throw PixelException("Pixel is not set.");
-    }
-    for (std::size_t i = 0; i < sizeof(this->value) / sizeof(this->value[0]); ++i) {
-        if (this->value[0] != this->value[i]) {
-            return false;
-        }
-    }
-    return true;
-}
-
 const bool Pixel::isBlack() const {
     return ((int)getValue() == this->minValue);
 }
@@ -103,6 +65,29 @@ const bool Pixel::isWhite() const {
 
 const bool Pixel::isBlackOrWhite() const {
     return (isWhite() || isBlack());
+}
+
+PBMPixel* Pixel::toPBMPixel() {
+    if (this->isBlack()) {
+        return new PBMPixel(1);
+    }
+    if (this->isWhite()) {
+        return new PBMPixel(1);
+    }
+
+    throw PixelException("The pixel is neither black nor white and cannot be converted.");
+}
+
+PGMPixel* Pixel::toPGMPixel() {
+    if (this->isGrey()) {
+        return new PGMPixel((unsigned short) (this->getValue()), this->getMaxValue());
+    }
+
+    throw PixelException("The pixel is neither black nor white and cannot be converted.");
+}
+
+PPMPixel* Pixel::toPPMPixel() {
+    return new PPMPixel((unsigned short) (this->getValue()), this->getMaxValue());
 }
 
 Pixel::~Pixel() {

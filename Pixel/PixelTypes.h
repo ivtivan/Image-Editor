@@ -6,6 +6,7 @@
 class PBMPixel : public Pixel {
     public:
         PBMPixel();
+        PBMPixel(unsigned short value);
 
         const double getValue() const;
         const std::string getValueString() const;
@@ -18,6 +19,7 @@ class PBMPixel : public Pixel {
 class PGMPixel : public Pixel {
     public:
         PGMPixel(unsigned short maxValue);
+        PGMPixel(unsigned short value, unsigned short maxValue);
 
         const double getValue() const;
         const std::string getValueString() const;
@@ -30,6 +32,7 @@ class PGMPixel : public Pixel {
 class PPMPixel : public Pixel {
     public:
         PPMPixel(unsigned short maxValue);
+        PPMPixel(unsigned short value, unsigned short maxValue);
 
         const double getValue() const;
         const std::string getValueString() const;

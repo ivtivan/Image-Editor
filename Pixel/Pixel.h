@@ -5,13 +5,17 @@
 #include <string>
 #include <sstream>
 
+class PBMPixel;
+class PGMPixel;
+class PPMPixel;
+
 /**
  * @brief pixel parrent class.
  */
 class Pixel {
     protected:
-        unsigned short maxValue;
-        unsigned short minValue = 0;
+        const unsigned short maxValue;
+        const unsigned short minValue;
         unsigned short* value;
 
         /** 
@@ -20,27 +24,12 @@ class Pixel {
          */
         double ditherValue;
 
-        /**
-         * @brief Checks if a pixel is black.
-         * 
-         * A pixel is black if its value is equal to the min possible value.
-         * Since for some file types this is not the case, the function should not be called
-         * outside of the member function isBlackOrWhite().
-         */
         const bool isBlack() const;
-
-        /**
-         * @brief Checks if a pixel is white.
-         * 
-         * A pixel is black if its value is equal to the max possible value.
-         * Since for some file types this is not the case, the function should not be called
-         * outside of the member function isBlackOrWhite(). 
-         */
         const bool isWhite() const;
+
     public:
         Pixel(unsigned short maxValue, std::size_t length);
-        Pixel(const Pixel& pixel);
-        Pixel& operator=(const Pixel& pixel);
+        Pixel(unsigned short value, unsigned short maxValue, std::size_t length);
 
         virtual const double getValue() const;
         const unsigned short* getValueArray() const;
@@ -59,34 +48,33 @@ class Pixel {
          */
         void setValue(std::string value);
 
-        /**
-         * @brief Sets RGB status of black or white pixel to false and changes max value to 1.
-         * 
-         * Value of pixel is changed if needed.
-         * 
-         * Throws PixelException when the pixel is neither black nor white.
-         */
-        void setBlackOrWhite();
-
-        /**
-         * @brief Swaps the two colors.
-         * 
-         * Throws PixelException when the pixel is neither black nor white.
-         */
-        void swapBlackAndWhite();
-
         void incrementDitherValue(const double incr);
 
         /**
          * @brief Sets diffused error from dithering to 0.
-         * 
          */
         void resetDitherValue();
         
         virtual const bool isGrey() const;
-
         const bool isBlackOrWhite() const;
         
+        /**
+         * @brief Converts a pixel in PBM format.
+         * 
+         * Throws an exception if the pixel is neither black nor white.
+         */
+        PBMPixel* toPBMPixel();
+
+        /**
+         * @brief Converts a pixel in PGM format while keeping the opriginal maxValue.
+         */
+        PGMPixel* toPGMPixel();
+
+        /**
+         * @brief Converts a pixel in PPM format while keeping the opriginal value and maxValue.
+         */
+        PPMPixel* toPPMPixel();
+
         ~Pixel();
 
         friend std::ostream& operator<<(std::ostream& os, Pixel pixel);

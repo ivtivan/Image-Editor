@@ -8,6 +8,10 @@ PBMPixel::PBMPixel() : Pixel(1, 1) {
     ;
 }
 
+PBMPixel::PBMPixel(unsigned short value) : Pixel(value, 1, 1) {
+    ;
+}
+
 const double PBMPixel::getValue() const {
     return this->value[0];
 }
@@ -21,7 +25,7 @@ void PBMPixel::setValue(const unsigned short value) {
 }
 
 const bool PBMPixel::isGrey() const {
-      return true;
+    return true;
 }
 
 /**
@@ -29,6 +33,10 @@ const bool PBMPixel::isGrey() const {
  */
 
 PGMPixel::PGMPixel(unsigned short maxValue) : Pixel(maxValue, 1) {
+    ;
+}
+
+PGMPixel::PGMPixel(unsigned short value, unsigned short maxValue) : Pixel(value, maxValue, 1) {
     ;
 }
 
@@ -53,6 +61,10 @@ const bool PGMPixel::isGrey() const {
  */
 
 PPMPixel::PPMPixel(unsigned short maxValue) : Pixel(maxValue, 3) {
+    ;
+}
+
+PPMPixel::PPMPixel(unsigned short value, unsigned short maxValue) : Pixel(value, maxValue, 3) {
     ;
 }
 
