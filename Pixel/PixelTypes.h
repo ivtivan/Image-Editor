@@ -14,6 +14,10 @@ class PBMPixel : public Pixel {
         void setValue(const unsigned short value);
 
         const bool isGrey() const;
+        
+        PBMPixel* toPBMPixel();
+        PGMPixel* toPGMPixel();
+        PPMPixel* toPPMPixel();
 };
 
 class PGMPixel : public Pixel {
@@ -27,6 +31,10 @@ class PGMPixel : public Pixel {
         void setValue(const unsigned short value);
 
         const bool isGrey() const;
+
+        PBMPixel* toPBMPixel();
+        PGMPixel* toPGMPixel();
+        PPMPixel* toPPMPixel();
 };
 
 class PPMPixel : public Pixel {
@@ -40,6 +48,10 @@ class PPMPixel : public Pixel {
         void setValue(const unsigned short value);
 
         const bool isGrey() const;
+
+        PBMPixel* toPBMPixel();
+        PGMPixel* toPGMPixel();
+        PPMPixel* toPPMPixel();
 };
 
 #endif

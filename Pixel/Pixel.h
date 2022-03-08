@@ -62,18 +62,23 @@ class Pixel {
          * @brief Converts a pixel in PBM format.
          * 
          * Throws an exception if the pixel is neither black nor white.
+         * Throws an exception if the pixel is already in PBM.
          */
-        PBMPixel* toPBMPixel();
+        virtual PBMPixel* toPBMPixel();
 
         /**
          * @brief Converts a pixel in PGM format while keeping the opriginal maxValue.
+         * 
+         * Throws an exception if the pixel is already in PGM.
          */
-        PGMPixel* toPGMPixel();
+        virtual PGMPixel* toPGMPixel();
 
         /**
          * @brief Converts a pixel in PPM format while keeping the opriginal value and maxValue.
+         * 
+         * Throws an exception if the pixel is already in PPM.
          */
-        PPMPixel* toPPMPixel();
+        virtual PPMPixel* toPPMPixel();
 
         ~Pixel();
 

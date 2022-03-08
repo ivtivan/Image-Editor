@@ -67,29 +67,6 @@ const bool Pixel::isBlackOrWhite() const {
     return (isWhite() || isBlack());
 }
 
-PBMPixel* Pixel::toPBMPixel() {
-    if (this->isBlack()) {
-        return new PBMPixel(1);
-    }
-    if (this->isWhite()) {
-        return new PBMPixel(1);
-    }
-
-    throw PixelException("The pixel is neither black nor white and cannot be converted.");
-}
-
-PGMPixel* Pixel::toPGMPixel() {
-    if (this->isGrey()) {
-        return new PGMPixel((unsigned short) (this->getValue()), this->getMaxValue());
-    }
-
-    throw PixelException("The pixel is neither black nor white and cannot be converted.");
-}
-
-PPMPixel* Pixel::toPPMPixel() {
-    return new PPMPixel((unsigned short) (this->getValue()), this->getMaxValue());
-}
-
 Pixel::~Pixel() {
     delete[] this->value;
 }

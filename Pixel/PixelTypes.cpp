@@ -1,4 +1,5 @@
 #include "PixelTypes.h"
+#include "../CustomExceptions/CustomExceptions.h"
 
 /**
  * @brief PBM functionality.
@@ -28,6 +29,18 @@ const bool PBMPixel::isGrey() const {
     return true;
 }
 
+PBMPixel* PBMPixel::toPBMPixel() {
+    throw PixelException("The pixel is already in PBM.");
+}
+
+PGMPixel* PBMPixel::toPGMPixel() {
+    return new PGMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
+}
+
+PPMPixel* PBMPixel::toPPMPixel() {
+    return new PPMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
+}
+
 /**
  * @brief PGM functionality.
  */
@@ -54,6 +67,25 @@ void PGMPixel::setValue(const unsigned short value) {
 
 const bool PGMPixel::isGrey() const {
       return true;
+}
+
+PBMPixel* PGMPixel::toPBMPixel() {
+    if (this->isBlack()) {
+        return new PBMPixel(1);
+    }
+    if (this->isWhite()) {
+        return new PBMPixel(1);
+    }
+
+    throw PixelException("The pixel is neither black nor white and cannot be converted.");
+}
+
+PGMPixel* PGMPixel::toPGMPixel() {
+    throw PixelException("The pixel is already in PGM.");
+}
+
+PPMPixel* PGMPixel::toPPMPixel() {
+    return new PPMPixel((unsigned short) (this->getValue()), this->getMaxValue());
 }
 
 /**
@@ -85,4 +117,23 @@ void PPMPixel::setValue(const unsigned short value) {
 
 const bool PPMPixel::isGrey() const {
       return this->value[0] == this->value[1] && this->value[0] == this->value[2];
+}
+
+PBMPixel* PPMPixel::toPBMPixel() {
+    if (this->isBlack()) {
+        return new PBMPixel(1);
+    }
+    if (this->isWhite()) {
+        return new PBMPixel(1);
+    }
+
+    throw PixelException("The pixel is neither black nor white and cannot be converted.");
+}
+
+PGMPixel* PPMPixel::toPGMPixel() {
+    return new PGMPixel((unsigned short) (this->getValue()), this->getMaxValue());
+}
+
+PPMPixel* PPMPixel::toPPMPixel() {
+    throw PixelException("The pixel is already in PPM.");
 }
