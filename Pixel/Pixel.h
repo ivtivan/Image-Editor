@@ -5,27 +5,20 @@
 #include <string>
 #include <sstream>
 
-const std::size_t MAX_VALUES_COUNT = 3;
-
-
 /**
- * @brief Supports working with pixels.
- * 
- * The value is either a number or in RGB format.
+ * @brief pixel parrent class.
  */
 class Pixel {
-    private:
-        bool isRGB;
-        unsigned int maxValue;
-        const unsigned int minValue = 0;
-
-        unsigned int value[MAX_VALUES_COUNT];
+    protected:
+        unsigned short maxValue;
+        unsigned short minValue = 0;
+        unsigned short* value;
 
         /** 
          * @brief Value obtained from diffusing errors when using diffusuion ditters.
          * 
          */
-        double ditherValue = 0;
+        double ditherValue;
 
         /**
          * @brief Checks if a pixel is black.
@@ -45,66 +38,26 @@ class Pixel {
          */
         const bool isWhite() const;
     public:
-        Pixel();
-
+        Pixel(unsigned short maxValue, std::size_t length);
         Pixel(const Pixel& pixel);
         Pixel& operator=(const Pixel& pixel);
 
+        virtual const double getValue() const;
+        const unsigned short* getValueArray() const;
+        virtual const std::string getValueString() const;
+
         const unsigned int getMaxValue() const;
-
-        /**
-         * @brief Returns a representation of the pixel as a double.
-         * 
-         * If the image is in RGB format returns a greyscale color.
-         * Otherwise, the exact value is returned.
-         */
-        const double getValue() const;
-
-        /**
-         * @brief Returns diffused error.
-         * 
-         */
         const double getDitherValue() const;
-
-        /**
-         * @brief Sets value of pixel.
-         * 
-         */
-        void setValue(const unsigned int value);
-
-        /**
-         * @brief Sets value of pixel through an array.
-         * 
-         * If the pixel was not makred as RGB, marks it as RGB 
-         * and sets its maximum value to 255.
-         * 
-         */
-        void setValue(unsigned int value[MAX_VALUES_COUNT]);
+        
+        virtual void setValue(const unsigned short value);
+        void setValue(const unsigned short* value);
 
         /**
          * @brief Sets value of pixel through string.
          * 
-         * If the pixel was not makred as RGB, marks it as RGB 
-         * and sets its maximum value to 255.
-         * 
          * @param value color in hex form
          */
         void setValue(std::string value);
-
-        /**
-         * @brief Sets max possible value of pixel.
-         * 
-         */
-        void setMaxValue(const unsigned int maxValue);
-
-        /**
-         * @brief Sets RGB status.
-         * 
-         * Throws PixelException when setted to false if this might result in loss of data.
-         * Sets max value to 255 and adjusts pixel value if RGB status was previously false 
-         * and is set to true.
-         */
-        void setRGB(bool value);
 
         /**
          * @brief Sets RGB status of black or white pixel to false and changes max value to 1.
@@ -129,16 +82,12 @@ class Pixel {
          * 
          */
         void resetDitherValue();
-
-        /**
-         * @brief Checks if a pixel is a shade of grey.
-         * 
-         * Black and white are counted as shades of grey.
-         * A pixel which is not RGB is always grey.
-         */
-        const bool isGrey() const;
+        
+        virtual const bool isGrey() const;
 
         const bool isBlackOrWhite() const;
+        
+        ~Pixel();
 
         friend std::ostream& operator<<(std::ostream& os, Pixel pixel);
 };
