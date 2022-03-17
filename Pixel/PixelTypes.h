@@ -15,9 +15,9 @@ class PBMPixel : public Pixel {
 
         const bool isGrey() const;
         
-        PBMPixel* toPBMPixel();
-        PGMPixel* toPGMPixel();
-        PPMPixel* toPPMPixel();
+        PBMPixel toPBMPixel();
+        PGMPixel toPGMPixel();
+        PPMPixel toPPMPixel();
 };
 
 class PGMPixel : public Pixel {
@@ -32,9 +32,9 @@ class PGMPixel : public Pixel {
 
         const bool isGrey() const;
 
-        PBMPixel* toPBMPixel();
-        PGMPixel* toPGMPixel();
-        PPMPixel* toPPMPixel();
+        PBMPixel toPBMPixel();
+        PGMPixel toPGMPixel();
+        PPMPixel toPPMPixel();
 };
 
 class PPMPixel : public Pixel {
@@ -49,9 +49,9 @@ class PPMPixel : public Pixel {
 
         const bool isGrey() const;
 
-        PBMPixel* toPBMPixel();
-        PGMPixel* toPGMPixel();
-        PPMPixel* toPPMPixel();
+        PBMPixel toPBMPixel();
+        PGMPixel toPGMPixel();
+        PPMPixel toPPMPixel();
 };
 
 #endif

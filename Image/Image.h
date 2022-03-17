@@ -2,13 +2,10 @@
 #define IMAGE_H
 
 #include "../Pixel/Pixel.h"
-#include <string>
 
-enum fileType {
-    PBM,
-    PGM,
-    PPM
-};
+class PBMImage;
+class PGMImage;
+class PPMImage;
 
 /**
  * @brief Supports working with images.
@@ -17,191 +14,31 @@ enum fileType {
  */
 class Image {
     private:
-        /**
-         * @brief Pixel values in form of a string.
-         * 
-         * Comments begin with '#'.
-         */
-        std::string content;
-
         Pixel** pixels;
-        fileType type;
-        unsigned int pixelMaxValue;
-
         std::size_t cols;
         std::size_t rows;
 
-        /**
-         * @brief Removes comments from a line.
-         * 
-         * Comments begin with '#'.
-         */
-        void removeCommentsFrom(std::string& line);
-
-        /**
-         * @brief determines the file type.
-         * 
-         * Recognized identifiers are P1, P2, P3.
-         * Throws ImageException if the identifier is not recognized.
-         */
-        const fileType determineFileType(std::string identifier);
-
-        void allocatePixelArray();
-
-        /**
-         * @brief Filles allocated pixel matrix.
-         * 
-         * Values of the pixels in the attribute content are used.
-         */
-        void fillPBM();
-
-        /**
-         * @brief Filles allocated pixel matrix.
-         * 
-         * Values of the pixels in the attribute content are used.
-         */
-        void fillPGM();
-
-        /**
-         * @brief Filles allocated pixel matrix.
-         * 
-         * Values of the pixels in the attribute content are used.
-         */
-        void fillPPM();
-        
-        /**
-         * @brief Determines type of an image, saved in a file.
-         * 
-         * Throws ImageException if fileType was not read.
-         */
-        const fileType readFileType(std::ifstream& file);
-
-        /**
-         * @brief Reads parameters of an image, saved in a file.
-         * 
-         * Used to read image size and max value of pixel.
-         * 
-         * Throws ImageException if a parameter was not read.
-         */
-        const std::size_t readParameter(std::ifstream& file);
-
-        /**
-         * @brief Reads pixels' values of an image, saved in a file.
-         * 
-         * @return const std::string containing the pixels. values.
-         */
-        const std::string readPixels(std::ifstream& file);
-
-        /**
-         * @brief Calls the needed fill function based on the file type.
-         * Calls fillPBM(), fillPGM() or fillPPM90
-         */
-        void fillPixelArray();
-
-        /**
-         * @brief Sets value of all pixels.
-         * 
-         * @param color in hex form
-         */
         void colorPixels(std::string color);
-
-        /**
-         * @brief Checks if a string is in valid hex form.
-         * 
-         * Color must begin with '#' and contain only chars from
-         * '0' - '9', 'a' - 'f' and 'A' - 'F'.
-         */
         const bool isValidColor(std::string color) const;
 
-        /**
-         * @brief Checks if all pixels are grey.
-         * 
-         * Black and white count as shades of grey.
-         */
         const bool isGrey() const;
-
-        /**
-         * @brief Checks if all pixels are black or white.
-         * 
-         */
         const bool isBlackAndWhite() const;
 
-        /**
-         * @brief Converts image to PBM.
-         * 
-         * Throws FileException if it is not possible to do so.
-         */
-        void convertToPBM();
-
-        /**
-         * @brief Converts image to PGM.
-         * 
-         * Throws FileException if it is not possible to do so.
-         */
-        void convertToPGM();
-
-        void convertToPPM();
+        void toPBMPixels();
+        void toPGMPixels();
+        void toPPMPixels();
     public:
         Image();
+        Image(Pixel** pixels, std::size_t rows, std::size_t cols);
         Image(const Image& image);
-
         Image& operator=(const Image& image);
 
-        const fileType getFileType() const;
         const std::size_t getRows() const;
         const std::size_t getCols() const;
-        Pixel** getPixels();
+        Pixel** getPixels() const;
 
-        /**
-         * @brief Sets the Pixel matrix.
-         * 
-         * Clears the memory of the currently held pixel martix.
-         * Points to the passed pixel matrix.
-         * Changes the values of the rows and cols attributes.
-         * 
-         * @param pixels passed pixel matrix
-         * @param rows number of rows in the passed pixel matrix
-         * @param cols number of columns in the passed pixel matrix
-         */
-        void setPixels(Pixel** pixels, std::size_t rows, std::size_t cols);
-
-        /**
-         * @brief Sets the Pixel matrix.
-         * 
-         * Allocates a pixel matrix with the desired size and colors
-         * all pixels.
-         * 
-         * The image is of type PPM.
-         * 
-         * Throws ImageException if the color is not in valid hes form.
-         * 
-         * @param color in hex from
-         * @param rows rows of image
-         * @param cols columns of image
-         */
+        // void setPixels(Pixel** pixels, std::size_t rows, std::size_t cols);
         void setPixels(std::string color, std::size_t rows, std::size_t cols);
-
-        /**
-         * @brief Stores image from a file.
-         * 
-         * Saves image parameters and pixels.
-         * Throws FileException if no such file exists.
-         */
-        void storeImageFrom(std::string filePath);
-
-        /**
-         * @brief Convert image to another type.
-         * 
-         * Does not do anything if the image is already in the desired type.
-         * Throws FileException if the image cannot be converted.
-         */
-        void convertTo(fileType neededType);
-
-        /**
-         * @brief Clears allocated memory and sets dimensions to 0.
-         * 
-         */
-        void reset();
 
         Image* operator*();
         ~Image();

@@ -29,16 +29,16 @@ const bool PBMPixel::isGrey() const {
     return true;
 }
 
-PBMPixel* PBMPixel::toPBMPixel() {
+PBMPixel PBMPixel::toPBMPixel() {
     throw PixelException("The pixel is already in PBM.");
 }
 
-PGMPixel* PBMPixel::toPGMPixel() {
-    return new PGMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
+PGMPixel PBMPixel::toPGMPixel() {
+    return PGMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
 }
 
-PPMPixel* PBMPixel::toPPMPixel() {
-    return new PPMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
+PPMPixel PBMPixel::toPPMPixel() {
+    return PPMPixel(this->getMaxValue() - (unsigned short) (this->getValue()), this->getMaxValue());
 }
 
 /**
@@ -69,23 +69,23 @@ const bool PGMPixel::isGrey() const {
       return true;
 }
 
-PBMPixel* PGMPixel::toPBMPixel() {
+PBMPixel PGMPixel::toPBMPixel() {
     if (this->isBlack()) {
-        return new PBMPixel(1);
+        return PBMPixel(1);
     }
     if (this->isWhite()) {
-        return new PBMPixel(1);
+        return PBMPixel(0);
     }
 
     throw PixelException("The pixel is neither black nor white and cannot be converted.");
 }
 
-PGMPixel* PGMPixel::toPGMPixel() {
+PGMPixel PGMPixel::toPGMPixel() {
     throw PixelException("The pixel is already in PGM.");
 }
 
-PPMPixel* PGMPixel::toPPMPixel() {
-    return new PPMPixel((unsigned short) (this->getValue()), this->getMaxValue());
+PPMPixel PGMPixel::toPPMPixel() {
+    return PPMPixel((unsigned short) (this->getValue()), this->getMaxValue());
 }
 
 /**
@@ -119,21 +119,21 @@ const bool PPMPixel::isGrey() const {
       return this->value[0] == this->value[1] && this->value[0] == this->value[2];
 }
 
-PBMPixel* PPMPixel::toPBMPixel() {
+PBMPixel PPMPixel::toPBMPixel() {
     if (this->isBlack()) {
-        return new PBMPixel(1);
+        return PBMPixel(1);
     }
     if (this->isWhite()) {
-        return new PBMPixel(1);
+        return PBMPixel(0);
     }
 
     throw PixelException("The pixel is neither black nor white and cannot be converted.");
 }
 
-PGMPixel* PPMPixel::toPGMPixel() {
-    return new PGMPixel((unsigned short) (this->getValue()), this->getMaxValue());
+PGMPixel PPMPixel::toPGMPixel() {
+    return PGMPixel((unsigned short) (this->getValue()), this->getMaxValue());
 }
 
-PPMPixel* PPMPixel::toPPMPixel() {
+PPMPixel PPMPixel::toPPMPixel() {
     throw PixelException("The pixel is already in PPM.");
 }

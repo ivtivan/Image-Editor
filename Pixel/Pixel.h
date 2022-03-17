@@ -28,6 +28,7 @@ class Pixel {
         const bool isWhite() const;
 
     public:
+        Pixel();
         Pixel(unsigned short maxValue, std::size_t length);
         Pixel(unsigned short value, unsigned short maxValue, std::size_t length);
 
@@ -64,21 +65,21 @@ class Pixel {
          * Throws an exception if the pixel is neither black nor white.
          * Throws an exception if the pixel is already in PBM.
          */
-        virtual PBMPixel* toPBMPixel();
+        virtual PBMPixel toPBMPixel();
 
         /**
          * @brief Converts a pixel in PGM format while keeping the opriginal maxValue.
          * 
          * Throws an exception if the pixel is already in PGM.
          */
-        virtual PGMPixel* toPGMPixel();
+        virtual PGMPixel toPGMPixel();
 
         /**
          * @brief Converts a pixel in PPM format while keeping the opriginal value and maxValue.
          * 
          * Throws an exception if the pixel is already in PPM.
          */
-        virtual PPMPixel* toPPMPixel();
+        virtual PPMPixel toPPMPixel();
 
         ~Pixel();
 

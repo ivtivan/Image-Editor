@@ -6,24 +6,22 @@ Image::Image() : cols(0), rows(0) {
     this->pixels = nullptr;
 }
 
-Image::Image(const Image& image) : content(image.content),
-    type(image.type) {
-    ;
+Image::Image(const Image& image) {
+    this->pixels = image.getPixels();
+    this->rows = image.getRows();
+    this->cols = image.getCols();
 }
 
 Image& Image::operator=(const Image& image) {
     if (this == &image) {
         return *this;
     }
-
-    this->content = image.content;
-    this->type = image.type;
+    
+    this->pixels = image.getPixels();
+    this->rows = image.getRows();
+    this->cols = image.getCols();
 
     return *this;
-}
-
-const fileType Image::getFileType() const {
-    return this->type;
 }
 
 const std::size_t Image::getRows() const {
@@ -34,13 +32,13 @@ const std::size_t Image::getCols() const {
     return this->cols;
 }
 
-Pixel** Image::getPixels() {
+Pixel** Image::getPixels() const {
     return this->pixels;
 }
 
 void Image::setPixels(Pixel** pixels, std::size_t rows, std::size_t cols) {
     reset();
-
+    
     this->pixels = pixels;
     this->rows = rows;
     this->cols = cols;
@@ -55,8 +53,6 @@ void Image::setPixels(std::string color, std::size_t rows, std::size_t cols) {
     this->pixelMaxValue = 255;
     this->rows = rows;
     this->cols = cols;
-    this->type = PPM;
-    allocatePixelArray();
     colorPixels(color);
 }
 
@@ -86,36 +82,6 @@ void Image::colorPixels(std::string color) {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
             pixels[i][j].setValue(color);
-            pixels[i][j].setMaxValue(this->pixelMaxValue);
-        }
-    }
-}
-
-const fileType Image::determineFileType(std::string identifier) {
-    if (identifier == "P1") {
-        return PBM;
-    }
-    else if (identifier == "P2") {
-        return PGM;
-    }
-    else if (identifier == "P3") {
-        return PPM;
-    }
-
-    throw ImageException("Image type not valid.");
-}
-
-void Image::allocatePixelArray() {
-    this->pixels = new Pixel*[this->rows];
-    for(std::size_t i = 0; i < this->rows; ++i) {
-        try {
-            this->pixels[i] = new Pixel[this->cols];
-        }
-        catch (const std::bad_alloc&) {
-            for(std::size_t j = 0; j < i; ++j) {
-                delete[] this->pixels[j];
-            }
-            delete[] this->pixels;
         }
     }
 }
@@ -125,7 +91,6 @@ void Image::fillPBM() {
     for(std::size_t i = 0 ; i < this->content.length(); ++i) {
         if (this->content[i] != ' ') {
             this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(this->content[i] - '0');
-            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
         }
     }
@@ -141,7 +106,6 @@ void Image::fillPGM() {
         if (this->content[i] == ' ' && isSpaced == false) {
             value = this->content.substr(begin, i - begin);
             this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(atoi(value.c_str()));
-            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
             isSpaced = true;
         }
@@ -154,7 +118,6 @@ void Image::fillPGM() {
     if (this->content[this->content.length() - 1] != ' ' && this->content[this->content.length() - 1] != '\n') {
         value = this->content.substr(begin, this->content.length() - begin);
         this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(atoi(value.c_str()));
-        this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
     }
 }
 
@@ -172,7 +135,6 @@ void Image::fillPPM() {
             valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
             if (valueCount == 0) {
                 this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setValue(pixelValue);
-                this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
                 countSetPixels++;
             }
             isSpaced = true;
@@ -189,119 +151,15 @@ void Image::fillPPM() {
         valueCount = (valueCount + 1) % MAX_VALUES_COUNT;
         if (valueCount == 0) {
             this->pixels[countSetPixels / this->rows][countSetPixels % this->cols].setValue(pixelValue);
-            this->pixels[countSetPixels / this->cols][countSetPixels % this->cols].setMaxValue(this->pixelMaxValue);
             countSetPixels++;
         }
     }
 }
 
-void Image::fillPixelArray() {
-    switch(this->type) {
-        case PBM: fillPBM(); break;
-        case PGM: fillPGM(); break;
-        case PPM: fillPPM(); break;
-    }
-}
-
-void Image::removeCommentsFrom(std::string& line) {
-    for (std::size_t i  = 0; i < line.length(); ++i) {
-        if (line[i] == '#') {
-            line = line.substr(0, i);
-            break;
-        }
-    }
-}
-
-const fileType Image::readFileType(std::ifstream& file) {
-    bool isRead = false;
-    std::size_t pos;
-    std::string readWord;
-
-    while (isRead == false) {
-        pos = file.tellg();
-        file >> readWord;
-
-        if (readWord[0] != '#' && readWord[0] != ' ') {
-            isRead = true;
-            return determineFileType(readWord);
-        }
-        else if (readWord[0] == '#') {
-            file.seekg(pos);
-            getline(file, readWord);
-        }
-    }
-
-    throw ImageException("Could not read fileType.");
-}
-
-const std::size_t Image::readParameter(std::ifstream& file) {
-    bool isRead = false;
-    std::size_t pos;
-    std::string readWord;
-
-    while (isRead == false) {
-        pos = file.tellg();
-        file >> readWord;
-
-        if (readWord[0] != '#' && readWord[0] != ' ') {
-            isRead = true;
-            return atoi(readWord.c_str());
-        }
-
-        else if (readWord[0] == '#') {
-            file.seekg(pos);
-            getline(file, readWord);
-        }
-    }
-
-    throw ImageException("Could not read parameter.");
-}
-
-const std::string Image::readPixels(std::ifstream& file) {
-    std::string pixels;
-    std::string readLine;
-
-    while(getline(file, readLine)) {
-        removeCommentsFrom(readLine);
-        pixels += readLine + " ";
-    }
-
-    return pixels;
-}
-
-void Image::storeImageFrom(std::string filePath) {
-    std::string readLine;
-    std::size_t pos = 0;
-
-    std::ifstream file(filePath);
-    if(!file) {
-        throw FileException("Could not open file.");
-    }
-
-    this->type = readFileType(file);    
-
-    this->cols = readParameter(file);
-    this->rows = readParameter(file);
-
-    if (this->type != PBM) {
-        this->pixelMaxValue = readParameter(file);
-    }
-    else {
-        this->pixelMaxValue = 1;
-    }
-
-    this->content = readPixels(file);
-
-    file.close();
-
-    allocatePixelArray();
-    fillPixelArray();
-}
-
 const bool Image::isGrey() const {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
-            if (this->pixels[i][j].isGrey() == false) {
+            if (!this->pixels[i][j].isGrey()) {
                 return false;
             }
         }
@@ -313,7 +171,7 @@ const bool Image::isGrey() const {
 const bool Image::isBlackAndWhite() const {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
-            if (this->pixels[i][j].isBlackOrWhite() == false) {
+            if (!this->pixels[i][j].isBlackOrWhite()) {
                 return false;
             }
         }
@@ -322,54 +180,36 @@ const bool Image::isBlackAndWhite() const {
     return true;
 }
 
-void Image::convertToPBM() {
+void Image::toPBMPixels() {
     if (isBlackAndWhite() == false) {
         throw FileException("Cannot convert file to PBM.");
     }
 
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
-            this->pixels[i][j].swapBlackAndWhite();
-            this->pixels[i][j].setBlackOrWhite();
+            pixels[i][j] = pixels[i][j].toPBMPixel();
         }
     }
-    
-    this->type = PBM;
-    this->pixelMaxValue = 1;
 }
 
-void Image::convertToPGM() {
+void Image::toPGMPixels() {
     if (isGrey() == false) {
         throw FileException("Cannot convert file to PGM.");
     }
 
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
-            if (this->type == PBM) {
-                this->pixels[i][j].swapBlackAndWhite();
-            }
-
-            this->pixels[i][j].setRGB(false);
+            pixels[i][j] = pixels[i][j].toPBMPixel();
         }
     }
-
-    this->type = PGM;
-    this->pixelMaxValue = this->pixels[0][0].getMaxValue();
 }
 
-void Image::convertToPPM() {
+void Image::toPPMPixels() {
     for (std::size_t i = 0; i < this->rows; ++i) {
         for (std::size_t j = 0; j < this->cols; ++j) {
-            if (this->type == PBM) {
-                this->pixels[i][j].swapBlackAndWhite();
-            }
-            
-            this->pixels[i][j].setRGB(true);
+            pixels[i][j] = pixels[i][j].toPBMPixel();
         }
     }
-
-    this->type = PPM;
-    this->pixelMaxValue = this->pixels[0][0].getMaxValue();
 }
 
 void Image::convertTo(fileType neededType) {

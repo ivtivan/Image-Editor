@@ -20,16 +20,3 @@ g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp
 ```
 g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/Dither/*.cpp  Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp Tests/*.cpp
 ```
-
-## Further Ideas
-Possible further implementations:
-- Change functions in Image class to make it clearer and easier to test.
-- Implement Color class, which supports:
-  - color validation;
-  - creating color from string.
-- Implement the file conversion in its own class.
-- Better exception handling.
-
-
-## Link to GitHub Repository
-The following is a link to [the GitHub Repository](https://github.com/ivtivan/Image-Editor).
