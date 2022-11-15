@@ -70,19 +70,6 @@
         "xlocbuf": "cpp",
         "xlocmes": "cpp",
         "xloctime": "cpp",
-        "xtree": "cpp",
-        "array": "cpp",
-        "bit": "cpp",
-        "*.tcc": "cpp",
-        "bitset": "cpp",
-        "clocale": "cpp",
-        "compare": "cpp",
-        "concepts": "cpp",
-        "cstdarg": "cpp",
-        "cwctype": "cpp",
-        "memory_resource": "cpp",
-        "numbers": "cpp",
-        "semaphore": "cpp",
-        "stop_token": "cpp"
+        "xtree": "cpp"
     }
 }
