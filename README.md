@@ -1,6 +1,12 @@
 # Image-Editor
 Allows editing PBM, PGM and PPM files.
 
+## Important note
+
+The following is a project done during the first year ar university. It will be left in the state in which it was handed in so it can be used as an example for how much was needed to pass.
+
+## Project Information
+
 Supports creating new images, as well as cropping, resizing (scaling) and dithering.
 
 ## Resizing Algorithm
