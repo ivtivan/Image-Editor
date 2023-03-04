@@ -13,6 +13,7 @@ class FileController {
         bool isOpened;
         std::string filePath;
         bool isSetFilePath;
+
         const bool fileExists(std::string filePath) const;
 
         const std::string determineFileName(std::string filePath) const;
@@ -24,9 +25,9 @@ class FileController {
 
         const bool FileController::write(Image* image) const;
         const bool FileController::writeTo(Image* image, const std::string& filePath) const;
-        const bool createFile(std::size_t rows, std::size_t cols, std::string color);
-        const bool checkOpened(std::string filePath) const;
-        const bool closeFile();
+        const bool open(const std::string& filePath);
+        const bool create();
+        const bool close();
 };
 
 #endif

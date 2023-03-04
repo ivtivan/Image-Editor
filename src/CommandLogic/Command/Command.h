@@ -5,10 +5,9 @@
 #include <vector>
 
 /**
- * @brief Supports working with commands.
+ *  Supports working with commands.
  * 
- * Keeps a command and its parameters in a vector.
- * Created through splitting a string in substrings.
+ *  Created through splitting a string in substrings.
  */
 class Command {
     private:
@@ -20,7 +19,6 @@ class Command {
         void extractCommand(const std::string& str);
         void extractParams(const std::string& str);
         void parseCommand(const std::string& str);
-    
     public:
         Command(std::string str);
 

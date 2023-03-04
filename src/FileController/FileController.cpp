@@ -23,7 +23,20 @@ const bool FileController::fileExists(std::string filePath) const {
     return exists;
 }
 
-const bool FileController::createFile(std::size_t rows, std::size_t cols, std::string color) {
+const bool FileController::open(const std::string& filePath) {
+    if (isOpened || !fileExists(filePath)) {
+        return false;
+    }
+
+    isOpened = true;
+    isSetFilePath = true;
+    this->filePath = filePath;
+
+    // TODO: read image
+    return true;
+}
+
+const bool FileController::create() {
     if (isOpened == true) {
         return false;
     }
@@ -48,7 +61,7 @@ const bool FileController::writeTo(Image* image, const std::string& filePath) co
     return true;
 }
 
-const bool FileController::closeFile() {
+const bool FileController::close() {
     if (isOpened == false) {
         return false;
     }
