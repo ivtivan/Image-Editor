@@ -1,41 +1,5 @@
-# Image-Editor
-Allows editing PBM, PGM and PPM files.
+# Image-Editor Refactored
 
-## Important note
+The following aims to tackle some of the problems with the original projec and serves mostly learning purposes.
 
-The following is a project done during the first year ar university. It will be left in the state in which it was handed in so it can be used as an example for how much was needed to pass.
-
-## Project Information
-
-Supports creating new images, as well as cropping, resizing (scaling) and dithering.
-
-## Resizing Algorithm
-The following [resizing algorithm](https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html) is used.
-
-## Dithering Algorithms
-The program supports [11 dirhering algorithms](https://tannerhelland.com/2012/12/28/dithering-eleven-algorithms-source-code.html).
-
-It creates a black and white image of the same file type as the original one.
-
-## Command Line to Run Program
-```
-g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/Dither/*.cpp Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp main.cpp
-```
-
-## Command Line to Run Tests
-```
-g++ Command/*.cpp CommandInterpreter/*.cpp CustomExceptions/CustomExceptions.cpp Dithers/Dither/*.cpp  Dithers/DiffusionDithers/DiffusionDither/*.cpp Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp Dithers/OrderedDithers/OrderedDither/*.cpp Dithers/OrderedDithers/OrderedDithersTypes/*.cpp Editor/*.cpp FileController/*.cpp Image/*.cpp InputReader/*.cpp Pixel/*.cpp Tests/*.cpp
-```
-
-## Further Ideas
-Possible further implementations:
-- Change functions in Image class to make it clearer and easier to test.
-- Implement Color class, which supports:
-  - color validation;
-  - creating color from string.
-- Implement the file conversion in its own class.
-- Better exception handling.
-
-
-## Link to GitHub Repository
-The following is a link to [the GitHub Repository](https://github.com/ivtivan/Image-Editor).
+NOTE: Due to its function as a playground, it might not always even be in a compilable state.

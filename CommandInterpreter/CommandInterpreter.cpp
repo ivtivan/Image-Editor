@@ -7,11 +7,6 @@ CommandInterpreter::CommandInterpreter() {
     ;
 }
 
-CommandInterpreter& CommandInterpreter::instance() {
-    static CommandInterpreter cI;
-    return cI;
-}
-
 void CommandInterpreter::execute(Command command) {
     if (command[0] == "new") {
         std::size_t rows = atoi(command[1].c_str());

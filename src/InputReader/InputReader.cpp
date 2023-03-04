@@ -1,15 +1,9 @@
 #include "InputReader.h"
-#include "../Image/Image.h"
-#include "../CustomExceptions/CustomExceptions.h"
+#include "../../CustomExceptions/CustomExceptions.h"
 #include <iostream>
 
 InputReader::InputReader() {
     ;
-}
-
-InputReader& InputReader::instance() {
-    static InputReader iR;
-    return iR;
 }
 
 void InputReader::printCommands() {
@@ -31,14 +25,19 @@ void InputReader::printCommands() {
     std::cout << std::endl;
 }
 
-void InputReader::readCommands() {
+std::string InputReader::readCommand() {
     std::string inputCommand;
+    std::cout << "Command: ";
+    getline(std::cin, inputCommand);
+    return inputCommand;
+}
+
+void InputReader::readCommands() {
     while (true) {
-        std::cout << "Command: ";
-        getline(std::cin, inputCommand);
-        Command command(inputCommand);
+        Command command(readCommand());
+
         try {
-            CommandInterpreter::instance().execute(command);
+            commandInterpreter.execute(command);
         }
         catch (const ExitException& e) {
             std::cout << e.what() << std::endl;

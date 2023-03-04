@@ -1,10 +1,11 @@
 #include <iostream>
-#include "InputReader/InputReader.h"
+#include "src/InputReader/InputReader.h"
 
 int main() {
-    InputReader::instance().printCommands();
+    InputReader inputReader;
     
-    InputReader::instance().readCommands();
+    inputReader.printCommands();
+    inputReader.readCommands();
 
     return 0;
 }

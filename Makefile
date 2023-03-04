@@ -1,6 +1,7 @@
-
+GXX_FLAGS = -Wall -Werror
+ 
 run:
-	g++ -o edit \
+	@g++ -o edit $(GXX_FLAGS) \
 	Command/*.cpp \
 	CommandInterpreter/*.cpp \
 	CustomExceptions/CustomExceptions.cpp \
@@ -12,13 +13,13 @@ run:
 	Editor/*.cpp \
 	FileController/*.cpp \
 	Image/*.cpp \
-	InputReader/*.cpp \
+	src/InputReader/*.cpp \
 	Pixel/*.cpp \
 	main.cpp
 
-	./edit
-tests:
-	g++ -o tests \
+	@./edit
+test:
+	@g++ -o test \
 	Command/*.cpp \
 	CommandInterpreter/*.cpp \
 	CustomExceptions/CustomExceptions.cpp \
@@ -30,8 +31,11 @@ tests:
 	Editor/*.cpp \
 	FileController/*.cpp \
 	Image/*.cpp \
-	InputReader/*.cpp \
+	src/InputReader/*.cpp \
 	Pixel/*.cpp \
-	Tests/*.cpp
+	Tests/test_Command.cpp
 
-	./tests
+	@./tests
+
+clean:
+	@rm edit tests

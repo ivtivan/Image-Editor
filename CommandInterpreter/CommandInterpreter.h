@@ -10,18 +10,8 @@
  */
 
 class CommandInterpreter {
-    private:
-        CommandInterpreter();
     public:
-        CommandInterpreter(const CommandInterpreter&) = delete;
-        CommandInterpreter& operator=(const CommandInterpreter&) = delete;
-
-        static CommandInterpreter& instance();
-
-        /**
-         * @brief Call the function, needed to execute the command.
-         * 
-         */
+        CommandInterpreter();
         void execute(Command command);
 };
 
