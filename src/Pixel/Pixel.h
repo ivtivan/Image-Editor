@@ -27,15 +27,12 @@ class Pixel {
 
         virtual const double getValue() const;
 
-        virtual void setValue(const short value);
-        void setValue(std::string value);
-
         void incrementDitherValue(const double incr);
         void resetDitherValue();
 
         virtual const std::string toString() const;
-
         friend std::ostream& operator<<(std::ostream& os, const Pixel& pixel);
+        
         // TODO: virtual destructor?
 };
 

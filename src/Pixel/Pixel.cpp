@@ -1,6 +1,5 @@
 #include "Pixel.h"
 #include "../CustomExceptions/CustomExceptions.h"
-#include <cmath>
 
 Pixel::Pixel() : minValue(0), ditherValue(0) {
     ;
