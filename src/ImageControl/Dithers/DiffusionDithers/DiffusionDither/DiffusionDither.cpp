@@ -7,29 +7,29 @@ DiffusionDither::DiffusionDither(const std::size_t& matrixRows, const std::size_
 }
 
 void DiffusionDither::setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS]) {
-    for (std::size_t i = 0; i < this->matrixRows; ++i) {
-        for (std::size_t j = 0; j < this->matrixCols; ++j) {
-            this->dMatrix[i][j] = src[i][j];
+    for (std::size_t i = 0; i < matrixRows; ++i) {
+        for (std::size_t j = 0; j < matrixCols; ++j) {
+            dMatrix[i][j] = src[i][j];
         }
     }
 }
 
 
 void DiffusionDither::setUpDither(Image* image) {
-    this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
-    this->threshold = (double) this->pixelsMaxValue / 2.0;
+    pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
+    threshold = (double) pixelsMaxValue / 2.0;
 }
 
 void DiffusionDither::distributeError(Image* image, double error, std::size_t x, std::size_t y) {
-    std::size_t endingRowIndex = std::min(x + this->matrixRows, image->getRows());
-    std::size_t beginningColIndex = std::max(0, (int)y - (int)this->pos);
-    std::size_t endingColIndex = std::min((int)y - (int)this->pos + this->matrixCols, image->getCols());
+    std::size_t endingRowIndex = std::min(x + matrixRows, image->getRows());
+    std::size_t beginningColIndex = std::max((std::size_t)0, (std::size_t)y - (std::size_t)pos);
+    std::size_t endingColIndex = std::min((std::size_t)y - (std::size_t)pos + matrixCols, image->getCols());
     unsigned int distributionCoefficient;
     for (std::size_t i = x; i < endingRowIndex; ++i) {
         for (std::size_t j = beginningColIndex; j < endingColIndex; ++j) {
-            distributionCoefficient = this->dMatrix[i - x][j - ((int)y - (int)this->pos)];
+            distributionCoefficient = dMatrix[i - x][j - ((std::size_t)y - (std::size_t)pos)];
             if (distributionCoefficient != 0) {
-                image->getPixels()[i][j].incrementDitherValue(error * (double)distributionCoefficient / this->distributionDivisor);
+                image->getPixels()[i][j].incrementDitherValue(error * (double)distributionCoefficient / distributionDivisor);
             }
         }
     }
@@ -47,15 +47,15 @@ void DiffusionDither::ditherImage(Image* image) {
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {
             pixelValue = image->getPixels()[i][j].getValue();
-            difference = pixelValue + image->getPixels()[i][j].getDitherValue() - this->threshold;
+            difference = pixelValue + image->getPixels()[i][j].getDitherValue() - threshold;
 
             if (difference > EPS) {
-                image->getPixels()[i][j].setValue(this->pixelsMaxValue);
-                difference = -(this->pixelsMaxValue - this->threshold - difference);
+                image->getPixels()[i][j].setValue(pixelsMaxValue);
+                difference = -(pixelsMaxValue - threshold - difference);
             }
             else {
-                image->getPixels()[i][j].setValue(this->pixelsMinValue);
-                difference = this->threshold + difference - this->pixelsMinValue;
+                image->getPixels()[i][j].setValue(pixelsMinValue);
+                difference = threshold + difference - pixelsMinValue;
             }
             image->getPixels()[i][j].resetDitherValue();
             distributeError(image, difference, i, j);

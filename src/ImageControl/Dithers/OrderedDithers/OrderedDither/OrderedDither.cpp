@@ -6,25 +6,25 @@ OrderedDither::OrderedDither(const std::size_t& dimension) :
 }
 
 void OrderedDither::setTMatrix(double src[][MAX_THRESHOLD_MATRIX_DIMENSION]) {
-    for (std::size_t i = 0; i < this->matrixRows; ++i) {
-        for (std::size_t j = 0; j < this->matrixCols; ++j) {
-            this->tMatrix[i][j] = src[i][j];
+    for (std::size_t i = 0; i < matrixRows; ++i) {
+        for (std::size_t j = 0; j < matrixCols; ++j) {
+            tMatrix[i][j] = src[i][j];
         }
     }
 }
 
 void OrderedDither::calculateMatrixthresholds() {
-    for (std::size_t i = 0; i < this->matrixRows; ++i) {
-        for (std::size_t j = 0; j < this->matrixCols; ++j) {
+    for (std::size_t i = 0; i < matrixRows; ++i) {
+        for (std::size_t j = 0; j < matrixCols; ++j) {
             tMatrix[i][j] = (tMatrix[i][j] + 1.0) / (double)(matrixRows * matrixCols) - 0.5;
         }
     }
 }
 
 void OrderedDither::setUpDither(Image* image) {
-    this->pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
-    this->threshold = (double) this->pixelsMaxValue / 2.0;
-    this->precisionValue = (double) this->pixelsMaxValue / 2.0;
+    pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
+    threshold = (double) pixelsMaxValue / 2.0;
+    precisionValue = (double) pixelsMaxValue / 2.0;
     calculateMatrixthresholds();
 }
 
@@ -45,10 +45,10 @@ void OrderedDither::ditherImage(Image* image) {
             alteredValue = pixelValue + precisionValue * factor;
 
             if (alteredValue - threshold > EPS) {
-                image->getPixels()[i][j].setValue(this->pixelsMaxValue);
+                image->getPixels()[i][j].setValue(pixelsMaxValue);
             }
             else {
-                image->getPixels()[i][j].setValue(this->pixelsMinValue);
+                image->getPixels()[i][j].setValue(pixelsMinValue);
             }
         }
     }
