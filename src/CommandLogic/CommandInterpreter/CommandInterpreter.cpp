@@ -92,4 +92,6 @@ void CommandInterpreter::execute(const Command& command) {
     else {
         std::cout << "Command was not recognized." << std::endl;
     }
+    // TODO: add handling based on rerturn value of functions
+    // possibilities: handle it here or change function to const bool
 }

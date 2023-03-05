@@ -1,12 +1,13 @@
 #ifndef INPUT_READER_H
 #define INPUT_READER_H
 
-#include "../../CommandInterpreter/CommandInterpreter.h"
+#include "../CommandLogic/CommandInterpreter/CommandInterpreter.h"
 
 /**
  * @brief Allows reading input from terminal.
  */
 
+// TODO: rename
 class InputReader {
     private:
         CommandInterpreter commandInterpreter;
