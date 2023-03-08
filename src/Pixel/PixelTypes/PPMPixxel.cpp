@@ -6,7 +6,7 @@ PPMPixel::PPMPixel(unsigned short value[3], unsigned short maxValue) : Pixel(max
     }
 }
 
-PPMPixel::PPMPixel(std::string hex) {
+PPMPixel::PPMPixel(std::string hex) : Pixel(255) {
     for (char i = 0; i < 3; ++i) {
         this->value[i] = std::stoi(hex.substr(2 * i + 1, 2));
     }

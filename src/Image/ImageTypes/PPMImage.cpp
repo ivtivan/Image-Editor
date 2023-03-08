@@ -9,6 +9,7 @@ PPMImage::PPMImage(std::string hexColor, std::size_t rows, std::size_t cols) {
     this->cols = cols;
     
     allocatePixels();
+    createPixels(hexColor);
 }
 
 void PPMImage::allocatePixels() {
@@ -17,6 +18,16 @@ void PPMImage::allocatePixels() {
     pixels = new PPMPixel*[rows];
     for (std::size_t row = 0; row < rows; ++row) {
         pixels[row] = (PPMPixel*) operator new[](cols * sizeof(PPMPixel));
+    }
+}
+
+void PPMImage::createPixels(const std::string& hexColor) {
+    PPMPixel* pixel_ptr;
+    for (std::size_t row = 0; row < rows; ++row) {
+        pixel_ptr = static_cast<PPMPixel*>(pixels[row]);
+        for (std::size_t col = 0; col < cols; ++col) {
+            new(&pixel_ptr[col]) PPMPixel(hexColor);
+        }
     }
 }
 
