@@ -32,7 +32,6 @@ const bool FileController::open(const std::string& filePath) {
     isSetFilePath = true;
     this->filePath = filePath;
 
-    // TODO: read image
     return true;
 }
 
@@ -45,12 +44,12 @@ const bool FileController::create() {
     return true;
 }
 
-const bool FileController::write(Image* image) const {
+const bool FileController::write(const Image* image) const {
     return writeTo(image, filePath);
 }
 
-const bool FileController::writeTo(Image* image, const std::string& filePath) const {
-    image->convertTo(determineDestinationFileType(filePath));
+const bool FileController::writeTo(const Image* image, const std::string& filePath) const {
+    //image->convertTo(determineDestinationFileType(filePath));
     try {
         std::ofstream file(filePath);
         file << *image;
@@ -69,6 +68,16 @@ const bool FileController::close() {
     isOpened = false;
     isSetFilePath = false;
     return true;
+}
+
+const bool FileController::save(const Image* image) {
+    write(image);
+    close();
+}
+
+const bool FileController::saveAs(const Image* image, const std::string& filePath) {
+    write(image);
+    close();
 }
 
 const fileType FileController::determineFileType(std::string fileExtension) const {

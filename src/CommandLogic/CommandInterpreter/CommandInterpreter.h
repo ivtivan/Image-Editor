@@ -10,7 +10,7 @@
 
 class CommandInterpreter {
     private:
-        ControllerFrame controller_frame;
+        ControllerFrame controllerFrame;
     public:
         CommandInterpreter();
         void execute(const Command& command);

@@ -3,22 +3,23 @@
 
 #include "../FileController/FileController.h"
 #include "../ImageControl/ImageController/ImageController.h"
+#include <vector>
 
 class ControllerFrame {
     private:
-        ImageController image_controller;
-        FileController file_controller;
+        ImageController imageController;
+        FileController fileController;
     public:
-        const bool create(/* TODO add parameters*/);
-        const bool open(/* TODO add parameters*/);
+        ControllerFrame();
+        const bool create(const std::vector<std::string> param);
+        const bool open(const std::vector<std::string> param);
         const bool close();
         const bool save();
-        const bool saveAs(/* TODO add parameters*/);
-        const bool crop(/* TODO add parameters*/) const;
-        const bool resize(/* TODO add parameters*/) const;
-        const bool dither(/* TODO add parameters*/) const;
+        const bool saveAs(const std::vector<std::string> param);
+        const bool crop(const std::vector<std::string> param) const;
+        const bool resize(const std::vector<std::string> param) const;
+        const bool dither(const std::vector<std::string> param) const;
         const bool exit() const;
-
 };
 
 #endif

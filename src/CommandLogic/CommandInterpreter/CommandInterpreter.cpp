@@ -1,40 +1,38 @@
 #include "CommandInterpreter.h"
-#include "../CustomExceptions/CustomExceptions.h"
-#include "../FileController/FileController.h"
-#include "../Editor/Editor.h"
+#include "../../Controllers/ControllerFrame/ControllerFrame.h"
 
-CommandInterpreter::CommandInterpreter() : fileController() {
+CommandInterpreter::CommandInterpreter() : controllerFrame() {
     ;
 }
 
 void CommandInterpreter::execute(const Command& command) {
     bool result;
     if (command.getCommand() == "new") {
-        result = create(command.getParams());
+        result = controllerFrame.create(command.getParams());
     }
     else if (command.getCommand() == "open") {
-        result = open(command.getParams());
+        result = controllerFrame.open(command.getParams());
     }
     else if (command.getCommand() == "close") {
-        result = close();
+        result = controllerFrame.close();
     }
     else if (command.getCommand() == "save") {
-        result = save();
+        result = controllerFrame.save();
     }
     else if (command.getCommand() == "saveas") {
-        result = saveAs(command.getParams());
+        result = controllerFrame.saveAs(command.getParams());
     }
     else if (command.getCommand() == "crop") {
-        result = crop(command.getParams());
+        result = controllerFrame.crop(command.getParams());
     }
     else if (command.getCommand() == "resize") {
-        result = resize(command.getParams());
+        result = controllerFrame.resize(command.getParams());
     }
     else if (command.getCommand() == "dither") {
-        result = dither(command.getParams());
+        result = controllerFrame.dither(command.getParams());
     }     
     else if (command.getCommand() == "exit") {
-        exit();
+        controllerFrame.exit();
     }
     else {
         std::cout << "Command was not recognized." << std::endl;

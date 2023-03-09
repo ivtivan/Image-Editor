@@ -18,13 +18,15 @@ class FileController {
 
         const std::string determineFileName(std::string filePath) const;
         const fileType determineFileType(std::string fileExtension) const;
+        const bool FileController::write(const Image* image) const;
+        const bool FileController::writeTo(const Image* image, const std::string& filePath) const;
 
         const fileType determineDestinationFileType(std::string filePath) const;
     public:
         FileController();
 
-        const bool FileController::write(Image* image) const;
-        const bool FileController::writeTo(Image* image, const std::string& filePath) const;
+        const bool save(const Image* image);
+        const bool saveAs(const Image* image, const std::string& filePath);
         const bool open(const std::string& filePath);
         const bool create();
         const bool close();
