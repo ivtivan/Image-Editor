@@ -16,6 +16,9 @@ class PPMPixel : public Pixel {
         PPMPixel(std::string hex);
 
         const double getValue() const;
+
+        void setToMaxValue();
+        void setToMinValue();
 };
 
 #endif

@@ -45,10 +45,10 @@ void OrderedDither::ditherImage(Image* image) {
             alteredValue = pixelValue + precisionValue * factor;
 
             if (alteredValue - threshold > EPS) {
-                image->getPixels()[i][j].setValue(pixelsMaxValue);
+                image->getPixels()[i][j].setToMaxValue();
             }
             else {
-                image->getPixels()[i][j].setValue(pixelsMinValue);
+                image->getPixels()[i][j].setToMinValue();
             }
         }
     }

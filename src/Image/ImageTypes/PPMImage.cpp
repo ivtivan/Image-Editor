@@ -1,10 +1,6 @@
 #include "PPMImage.h"
 
-PPMImage::PPMImage(const std::ifstream& sourceFile) : Image(sourceFile) {
-
-}
-
-PPMImage::PPMImage(std::string hexColor, std::size_t rows, std::size_t cols) {
+PPMImage::PPMImage(std::size_t rows, std::size_t cols, std::string hexColor) {
     this->rows = rows;
     this->cols = cols;
     
@@ -29,6 +25,14 @@ void PPMImage::createPixels(const std::string& hexColor) {
             new(&pixel_ptr[col]) PPMPixel(hexColor);
         }
     }
+}
+
+void PPMImage::updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols) {
+    //  TODO
+} 
+
+const std::string PPMImage::getTypeID() const {
+    return "P3";
 }
 
 PPMImage::~PPMImage() {

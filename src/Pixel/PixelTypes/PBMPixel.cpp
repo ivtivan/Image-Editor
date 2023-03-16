@@ -4,11 +4,11 @@ PBMPixel::PBMPixel(unsigned char value) : Pixel(1) , value(value) {
 }
 
 const bool PBMPixel::isBlack() const {
-    return value == 1;
+    return value == getMaxValue();
 }
 
 const bool PBMPixel::isWhite() const {
-    return value == 0;
+    return value == getMinValue();
 }
 
 const std::string PBMPixel::toString() const {
@@ -17,4 +17,12 @@ const std::string PBMPixel::toString() const {
 
 const double PBMPixel::getValue() const {
     return (double)value;
+}
+
+void PBMPixel::setToMaxValue() {
+    value = getMaxValue();
+}
+
+void PBMPixel::setToMinValue() {
+    value = getMinValue();
 }

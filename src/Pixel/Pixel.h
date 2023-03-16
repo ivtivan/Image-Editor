@@ -11,29 +11,31 @@
  * The value is either a number or in RGB format.
  */
 class Pixel {
-    protected:
+    private:
+        unsigned short minValue;
         unsigned short maxValue;
-        const unsigned short minValue;
         double ditherValue;
-
+    protected:
         virtual const bool isBlack() const;
         virtual const bool isWhite() const;
     public:
         Pixel();
         Pixel(unsigned short maxValue);
 
+        const unsigned short getMinValue() const;
         const unsigned short getMaxValue() const;
         const double getDitherValue() const;
-
         virtual const double getValue() const;
+        virtual void setToMaxValue();
+        virtual void setToMinValue();
 
         void incrementDitherValue(const double incr);
         void resetDitherValue();
 
         virtual const std::string toString() const;
-        friend std::ostream& operator<<(std::ostream& os, const Pixel& pixel);
+        friend std::ostream& operator<<(std::ostream& os, const Pixel* pixel);
         
-        // TODO: virtual destructor?
+        virtual ~Pixel();
 };
 
 #endif

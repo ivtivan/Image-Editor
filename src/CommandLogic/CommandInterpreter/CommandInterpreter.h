@@ -2,7 +2,7 @@
 #define COMMAND_INTERPRETER_H
 
 #include "../Command/Command.h"
-#include "../../Controllers/ControllerFrame/ControllerFrame.h"
+#include "../../Controllers/ControllerFacade/ControllerFacade.h"
 
 /**
  *  Allows the execution of a command.
@@ -10,10 +10,10 @@
 
 class CommandInterpreter {
     private:
-        ControllerFrame controllerFrame;
+        ControllerFacade controllerFacade;
     public:
         CommandInterpreter();
-        void execute(const Command& command);
+        const bool execute(const Command& command);
 };
 
 #endif

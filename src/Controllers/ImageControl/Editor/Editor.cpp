@@ -7,6 +7,11 @@ Editor::Editor() {
     ;
 }
 
+void Editor::setTargetImage(Image* targetImage) {
+    this->targetImage = targetImage;
+}
+
+
 // TODO: move to a helepr file if beneficial
 Pixel** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
     Pixel** pixels;
@@ -32,14 +37,14 @@ Pixel** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
     return pixels;
 }
 
-const bool Editor::cropImage(Image* image, std::size_t xUpLeft, std::size_t yUpLeft,
+const bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
             std::size_t xDownRight, std::size_t yDownRight) const {
     if (xUpLeft > xDownRight || yUpLeft > yDownRight) {
         return false;
     }
 
-    xDownRight = (std::size_t)(std::min((double)xDownRight, (double)image->getRows()));
-    yDownRight = (std::size_t)(std::min((double)yDownRight, (double)image->getCols()));
+    xDownRight = (std::size_t)(std::min((double)xDownRight, (double)targetImage->getRows()));
+    yDownRight = (std::size_t)(std::min((double)yDownRight, (double)targetImage->getCols()));
  
     Pixel** pixelHolder = allocatePixelMatrix(xDownRight - xUpLeft, yDownRight - yUpLeft);
     if (!pixelHolder) {
@@ -50,18 +55,18 @@ const bool Editor::cropImage(Image* image, std::size_t xUpLeft, std::size_t yUpL
     for (std::size_t xOffset = 0; xOffset < xDownRight - xUpLeft; ++xOffset) {
         for (std::size_t yOffset = 0; yOffset < yDownRight - yUpLeft; ++yOffset) {
             pixelHolder[xOffset][yOffset] = 
-                image->getPixels()[xUpLeft + xOffset][yUpLeft + yOffset];
+                targetImage->getPixels()[xUpLeft + xOffset][yUpLeft + yOffset];
         }
     }
 
-    image->setPixels(pixelHolder, xDownRight - xUpLeft, yDownRight - yUpLeft);
+    targetImage->updatePixels(pixelHolder, xDownRight - xUpLeft, yDownRight - yUpLeft);
     return true;
 }
 
 // Algorithm from https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
-const bool Editor::resizeImage(Image* image, std::size_t destRows, std::size_t destCols) const {
-    std::size_t srcRows = image->getRows();
-    std::size_t srcCols = image->getCols();
+const bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
+    std::size_t srcRows = targetImage->getRows();
+    std::size_t srcCols = targetImage->getCols();
     std::size_t srcX, srcY; // coordinates of the source pixel
 
     Pixel** destPixels = allocatePixelMatrix(destRows, destCols);
@@ -77,59 +82,59 @@ const bool Editor::resizeImage(Image* image, std::size_t destRows, std::size_t d
             srcY = (std::size_t)((double) srcCols * (double) destY / (double)destCols);
             srcY = (std::size_t)(std::min((double)srcY, (double)(srcCols - 1)));
 
-            destPixels[destX][destY] = image->getPixels()[srcX][srcY];
+            destPixels[destX][destY] = targetImage->getPixels()[srcX][srcY];
         }
     }
 
-    image->setPixels(destPixels, destRows, destCols);
+    targetImage->updatePixels(destPixels, destRows, destCols);
     return true;
 }
 
 // TODO: move to DitherController
-const bool Editor::ditherImage(Image* image, std::string algorithmName) const {
+const bool Editor::ditherImage(std::string algorithmName) const {
     if (algorithmName == "Linear") {
         DitherLinear dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "Atkinson") {
         DitherAtkinson dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "Burkes") {
         DitherBurkes dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "FS") {
         DitherFS dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "JJN") {
         DitherJJN dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "Sierra") {
         DitherSierra dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "SierraLite") {
         DitherSierraLite dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "TRSierra") {
         DitherTRSierra dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "Stucki") {
         DitherStucki dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "4Bayer") {
         Dither4Bayer dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else if (algorithmName == "8Bayer") {
         Dither8Bayer dither;
-        dither.ditherImage(image);
+        dither.ditherImage(targetImage);
     }
     else {
         return false;

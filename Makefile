@@ -1,41 +1,40 @@
 GXX_FLAGS = -Wall -Werror
- 
-run:
-	@g++ -o edit $(GXX_FLAGS) \
-	Command/*.cpp \
-	CommandInterpreter/*.cpp \
-	CustomExceptions/CustomExceptions.cpp \
-	Dithers/Dither/*.cpp \
-	Dithers/DiffusionDithers/DiffusionDither/*.cpp \
-	Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp \
-	Dithers/OrderedDithers/OrderedDither/*.cpp \
-	Dithers/OrderedDithers/OrderedDithersTypes/*.cpp \
-	Editor/*.cpp \
-	FileController/*.cpp \
-	Image/*.cpp \
-	src/InputReader/*.cpp \
-	Pixel/*.cpp \
+
+RUN_SOURCES = $(shell find src -name "*.cpp")
+
+TEST_SOURCES = src/CommandLogic/Command/Command.cpp \
+#	src/FileController/FileController.cpp
+
+TEST_FILES = test/testCommand.cpp \ 
+#	tests\testFileController.cpp
+
+EXECUTABLE_RUN = imageEditor
+EXECUTABLE_TEST = tests
+
+
+compile_main:
+	@g++ -o $(EXECUTABLE_RUN) $(GXX_FLAGS) \
+	$(RUN_SOURCES) \
 	main.cpp
 
-	@./edit
-test:
-	@g++ -o test \
-	Command/*.cpp \
-	CommandInterpreter/*.cpp \
-	CustomExceptions/CustomExceptions.cpp \
-	Dithers/Dither/*.cpp \
-	Dithers/DiffusionDithers/DiffusionDither/*.cpp \
-	Dithers/DiffusionDithers/DiffusionDithersTypes/*.cpp \
-	Dithers/OrderedDithers/OrderedDither/*.cpp \
-	Dithers/OrderedDithers/OrderedDithersTypes/*.cpp \
-	Editor/*.cpp \
-	FileController/*.cpp \
-	Image/*.cpp \
-	src/InputReader/*.cpp \
-	Pixel/*.cpp \
-	Tests/test_Command.cpp
+run: compile
+	@./$(EXECUTABLE_RUN)
 
-	@./tests
+run_test:
+	@g++ -o $(TEST_RUN) $(GXX_FLAGS) \
+	$(TEST_SOURCES) \
+	$(TEST_FILEES)
 
-clean:
-	@rm edit tests
+	@./$(EXECUTABLE_TEST)
+
+run_test_coverage:
+	@g++ -o $(TEST_RUN) $(GXX_FLAGS) --coverage \
+	$(TEST_SOURCES) \
+	$(TEST_FILEES)
+
+	@./$(EXECUTABLE_TEST)
+
+	gcovr
+
+clear:
+	@rm -rf $(EXECUTABLE_RUN) $(EXECUTABLE_TEST)

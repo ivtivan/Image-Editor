@@ -1,16 +1,16 @@
-#ifndef CONTROLLER_FRAME_H
-#define CONTROLLER_FRAME_H
+#ifndef CONTROLLER_FACADE_H
+#define CONTROLLER_FACADE_H
 
 #include "../FileController/FileController.h"
-#include "../ImageControl/ImageController/ImageController.h"
+#include "../ImageControl/Editor/Editor.h"
 #include <vector>
 
-class ControllerFrame {
+class ControllerFacade {
     private:
-        ImageController imageController;
+        Editor editor;
         FileController fileController;
     public:
-        ControllerFrame();
+        ControllerFacade();
         const bool create(const std::vector<std::string> param);
         const bool open(const std::vector<std::string> param);
         const bool close();

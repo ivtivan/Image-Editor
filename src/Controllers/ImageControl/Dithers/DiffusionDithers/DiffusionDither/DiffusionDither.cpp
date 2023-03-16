@@ -50,11 +50,11 @@ void DiffusionDither::ditherImage(Image* image) {
             difference = pixelValue + image->getPixels()[i][j].getDitherValue() - threshold;
 
             if (difference > EPS) {
-                image->getPixels()[i][j].setValue(pixelsMaxValue);
+                image->getPixels()[i][j].setToMaxValue();
                 difference = -(pixelsMaxValue - threshold - difference);
             }
             else {
-                image->getPixels()[i][j].setValue(pixelsMinValue);
+                image->getPixels()[i][j].setToMinValue();
                 difference = threshold + difference - pixelsMinValue;
             }
             image->getPixels()[i][j].resetDitherValue();

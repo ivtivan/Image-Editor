@@ -5,8 +5,14 @@
 
 class PGMImage : public Image {
     private:
+        void allocatePixels();
     public:
-        PGMImage(const std::ifstream& sourceFile);
+        PGMImage();
+        
+        const std::string getTypeID() const;
+
+        void updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols);
+        
         ~PGMImage();
 };
 

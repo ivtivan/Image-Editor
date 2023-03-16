@@ -11,8 +11,12 @@ class PPMImage : public Image {
         void allocatePixels();
         void createPixels(const std::string& hexColor);
     public:
-        PPMImage(const std::ifstream& sourceFile);
-        PPMImage(std::string hexColor, std::size_t rows, std::size_t cols);
+        PPMImage(std::size_t rows, std::size_t cols, std::string hexColor);
+
+        const std::string getTypeID() const;
+
+        void updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols);
+
         ~PPMImage();
 };
 

@@ -15,7 +15,9 @@ class PBMPixel : public Pixel {
         PBMPixel(unsigned char value);
 
         const double getValue() const;
-        
+
+        void setToMaxValue();
+        void setToMinValue();      
 };
 
 #endif

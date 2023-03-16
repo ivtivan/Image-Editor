@@ -1,5 +1,4 @@
 #include "InputReader.h"
-#include "../../CustomExceptions/CustomExceptions.h"
 #include <iostream>
 
 InputReader::InputReader() {
@@ -33,29 +32,10 @@ std::string InputReader::readCommand() {
 }
 
 void InputReader::readCommands() {
-    while (true) {
+    bool isInValidState = true;
+    while (isInValidState) {
         Command command(readCommand());
 
-        try {
-            commandInterpreter.execute(command);
-        }
-        catch (const ExitException& e) {
-            std::cout << e.what() << std::endl;
-            break;
-        }
-        catch (const FileException& e) {
-            std::cout << e.what() << std::endl;
-        }
-        catch (const EditException& e) {
-            std::cout << "Image not editted due to the following reason:" << std::endl;
-            std::cout << e.what() << std::endl;
-        }
-        catch (const ImageException& e) {
-            std::cout << "Image was not createds due to the following reason:" << std::endl;
-            std::cout << e.what() << std::endl;
-        }
-        catch (const std::exception& e) {
-            std::cout << e.what() << std::endl;
-        }
+        isInValidState = commandInterpreter.execute(command);
     }
 }

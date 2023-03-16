@@ -15,7 +15,9 @@ class PGMPixel : public Pixel {
         PGMPixel(unsigned short value, unsigned short maxValue);
 
         const double getValue() const;
-        
+
+        void setToMaxValue();
+        void setToMinValue();      
 };
 
 #endif

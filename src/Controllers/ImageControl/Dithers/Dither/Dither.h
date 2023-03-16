@@ -1,8 +1,8 @@
 #ifndef DITHER_H
 #define DITHER_H
 
-#include "../../Image/Image.h"
-#include "../../Pixel/Pixel.h"
+#include "../../../../Image/Image.h"
+#include "../../../../Pixel/Pixel.h"
 
 class Dither {
     protected:

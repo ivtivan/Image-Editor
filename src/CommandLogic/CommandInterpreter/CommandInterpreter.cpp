@@ -1,42 +1,44 @@
 #include "CommandInterpreter.h"
-#include "../../Controllers/ControllerFrame/ControllerFrame.h"
+#include "../../Controllers/ControllerFacade/ControllerFacade.h"
 
-CommandInterpreter::CommandInterpreter() : controllerFrame() {
+CommandInterpreter::CommandInterpreter() {
     ;
 }
 
-void CommandInterpreter::execute(const Command& command) {
+const bool CommandInterpreter::execute(const Command& command) {
     bool result;
     if (command.getCommand() == "new") {
-        result = controllerFrame.create(command.getParams());
+        result = controllerFacade.create(command.getParams());
     }
     else if (command.getCommand() == "open") {
-        result = controllerFrame.open(command.getParams());
+        result = controllerFacade.open(command.getParams());
     }
     else if (command.getCommand() == "close") {
-        result = controllerFrame.close();
+        result = controllerFacade.close();
     }
     else if (command.getCommand() == "save") {
-        result = controllerFrame.save();
+        result = controllerFacade.save();
     }
     else if (command.getCommand() == "saveas") {
-        result = controllerFrame.saveAs(command.getParams());
+        result = controllerFacade.saveAs(command.getParams());
     }
     else if (command.getCommand() == "crop") {
-        result = controllerFrame.crop(command.getParams());
+        result = controllerFacade.crop(command.getParams());
     }
     else if (command.getCommand() == "resize") {
-        result = controllerFrame.resize(command.getParams());
+        result = controllerFacade.resize(command.getParams());
     }
     else if (command.getCommand() == "dither") {
-        result = controllerFrame.dither(command.getParams());
+        result = controllerFacade.dither(command.getParams());
     }     
     else if (command.getCommand() == "exit") {
-        controllerFrame.exit();
+        return false;    
     }
     else {
         std::cout << "Command was not recognized." << std::endl;
     }
     // TODO: add handling based on rerturn value of functions
     // possibilities: handle it here or change function to const bool
+
+    return result;
 }

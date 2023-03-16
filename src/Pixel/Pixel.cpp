@@ -1,17 +1,23 @@
 #include "Pixel.h"
-#include "../CustomExceptions/CustomExceptions.h"
 
-Pixel::Pixel() : minValue(0), ditherValue(0) {
+Pixel::Pixel() : minValue(0), maxValue(1), ditherValue(0) {
     ;
 }
 
-Pixel::Pixel(unsigned short maxValue) : minValue(0), ditherValue(0),
-    maxValue(maxValue) {
+Pixel::Pixel(unsigned short maxValue) : minValue(0), maxValue(maxValue), ditherValue(0) {
     ;
+}
+
+const unsigned short Pixel::getMinValue() const {
+    return minValue;
 }
 
 const unsigned short Pixel::getMaxValue() const {
     return maxValue;
+}
+
+const double Pixel::getDitherValue() const {
+    return ditherValue;
 }
 
 void Pixel::incrementDitherValue(const double incr) {
@@ -22,11 +28,35 @@ void Pixel::resetDitherValue() {
     ditherValue = 0.0;
 }
 
-const double Pixel::getDitherValue() const {
-    return ditherValue;
+std::ostream& operator<<(std::ostream& os, const Pixel* pixel)  {
+    os << pixel->toString() << " ";
+    return os;
 }
 
-std::ostream& operator<<(std::ostream& os, const Pixel& pixel)  {
-    os << pixel.toString() << " ";
-    return os;
+Pixel::~Pixel() {
+    ;
+}
+
+const double Pixel::getValue() const {
+    return 0.0;
+}
+
+const bool Pixel::isBlack() const {
+    return true;
+}
+
+const bool Pixel::isWhite() const {
+    return true;
+}
+
+void Pixel::setToMaxValue() {
+    ;
+}
+
+void Pixel::setToMinValue() {
+    ;
+}
+
+const std::string Pixel::toString() const {
+    return "";
 }
