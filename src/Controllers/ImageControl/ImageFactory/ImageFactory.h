@@ -11,7 +11,7 @@ class ImageFactory {
     public:
         ImageFactory();
 
-        Image* getPPMFromSizeColor(std::size_t rows, std::size_t cols, std::string hexColor) const;
+        PPMImage* getPPMFromSizeColor(std::size_t rows, std::size_t cols, std::string hexColor) const;
 };
 
 #endif

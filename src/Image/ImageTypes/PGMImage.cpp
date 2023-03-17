@@ -4,6 +4,12 @@ PGMImage::PGMImage() {
     ;
 }
 
+PGMImage::PGMImage(std::size_t rows, std::size_t cols, Pixel*** pixels) :
+    Image(rows, cols, pixels) {
+    ;
+}
+
+
 const std::string PGMImage::getTypeID() const {
     return "P2";
 }

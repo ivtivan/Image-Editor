@@ -4,6 +4,11 @@ PBMImage::PBMImage() {
     ;
 }
 
+PBMImage::PBMImage(std::size_t rows, std::size_t cols, Pixel*** pixels) :
+    Image(rows, cols, pixels) {
+    ;
+}
+
 const std::string PBMImage::getTypeID() const {
     return "P1";
 }

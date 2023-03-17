@@ -16,7 +16,7 @@ void DiffusionDither::setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS
 
 
 void DiffusionDither::setUpDither(Image* image) {
-    pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
+    pixelsMaxValue = image->getPixelAt(0, 0)->getMaxValue();
     threshold = (double) pixelsMaxValue / 2.0;
 }
 
@@ -29,7 +29,7 @@ void DiffusionDither::distributeError(Image* image, double error, std::size_t x,
         for (std::size_t j = beginningColIndex; j < endingColIndex; ++j) {
             distributionCoefficient = dMatrix[i - x][j - ((std::size_t)y - (std::size_t)pos)];
             if (distributionCoefficient != 0) {
-                image->getPixels()[i][j].incrementDitherValue(error * (double)distributionCoefficient / distributionDivisor);
+                image->getPixelAt(i, j)->incrementDitherValue(error * (double)distributionCoefficient / distributionDivisor);
             }
         }
     }
@@ -46,18 +46,18 @@ void DiffusionDither::ditherImage(Image* image) {
 
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {
-            pixelValue = image->getPixels()[i][j].getValue();
-            difference = pixelValue + image->getPixels()[i][j].getDitherValue() - threshold;
+            pixelValue = image->getPixelAt(i, j)->getValue();
+            difference = pixelValue + image->getPixelAt(i, j)->getDitherValue() - threshold;
 
             if (difference > EPS) {
-                image->getPixels()[i][j].setToMaxValue();
+                image->getPixelAt(i, j)->setToMaxValue();
                 difference = -(pixelsMaxValue - threshold - difference);
             }
             else {
-                image->getPixels()[i][j].setToMinValue();
+                image->getPixelAt(i, j)->setToMinValue();
                 difference = threshold + difference - pixelsMinValue;
             }
-            image->getPixels()[i][j].resetDitherValue();
+            image->getPixelAt(i, j)->resetDitherValue();
             distributeError(image, difference, i, j);
         }
     }

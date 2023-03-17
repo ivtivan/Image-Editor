@@ -22,7 +22,7 @@ void OrderedDither::calculateMatrixthresholds() {
 }
 
 void OrderedDither::setUpDither(Image* image) {
-    pixelsMaxValue = image->getPixels()[0][0].getMaxValue();
+    pixelsMaxValue = image->getPixelAt(0, 0)->getMaxValue();
     threshold = (double) pixelsMaxValue / 2.0;
     precisionValue = (double) pixelsMaxValue / 2.0;
     calculateMatrixthresholds();
@@ -39,16 +39,16 @@ void OrderedDither::ditherImage(Image* image) {
 
     for (std::size_t i = 0; i < imageRows; ++i) {
         for (std::size_t j = 0; j < imageCols; ++j) {
-            pixelValue = image->getPixels()[i][j].getValue();
+            pixelValue = image->getPixelAt(i, j)->getValue();
             factor = tMatrix[i % matrixRows][j % matrixCols];
 
             alteredValue = pixelValue + precisionValue * factor;
 
             if (alteredValue - threshold > EPS) {
-                image->getPixels()[i][j].setToMaxValue();
+                image->getPixelAt(i, j)->setToMaxValue();
             }
             else {
-                image->getPixels()[i][j].setToMinValue();
+                image->getPixelAt(i, j)->setToMinValue();
             }
         }
     }
