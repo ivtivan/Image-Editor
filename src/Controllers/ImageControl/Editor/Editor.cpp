@@ -55,7 +55,7 @@ const bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
     for (std::size_t xOffset = 0; xOffset < xDownRight - xUpLeft; ++xOffset) {
         for (std::size_t yOffset = 0; yOffset < yDownRight - yUpLeft; ++yOffset) {
             pixelHolder[xOffset][yOffset] = 
-                targetImage->getPixels()[xUpLeft + xOffset][yUpLeft + yOffset];
+                *targetImage->getPixelAt(xUpLeft + xOffset, yUpLeft + yOffset);
         }
     }
 
@@ -82,7 +82,7 @@ const bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const
             srcY = (std::size_t)((double) srcCols * (double) destY / (double)destCols);
             srcY = (std::size_t)(std::min((double)srcY, (double)(srcCols - 1)));
 
-            destPixels[destX][destY] = targetImage->getPixels()[srcX][srcY];
+            destPixels[destX][destY] = *targetImage->getPixelAt(srcX, srcY);
         }
     }
 
