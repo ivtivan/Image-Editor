@@ -2,14 +2,15 @@ GXX_FLAGS = -Wall -Werror
 
 RUN_SOURCES = $(shell find src -name "*.cpp")
 
-TEST_SOURCES = src/CommandLogic/Command/Command.cpp \
+TEST_SOURCES = src/CommandLogic/Command/Command.cpp
 #	src/FileController/FileController.cpp
 
-TEST_FILES = test/testCommand.cpp \ 
+TEST_FILES = tests/testIncludes.cpp \
+	tests/testCommand.cpp
 #	tests\testFileController.cpp
 
 EXECUTABLE_RUN = imageEditor
-EXECUTABLE_TEST = tests
+EXECUTABLE_TEST = test
 
 
 compile_main:
@@ -20,10 +21,10 @@ compile_main:
 run: compile
 	@./$(EXECUTABLE_RUN)
 
-run_test:
-	@g++ -o $(TEST_RUN) $(GXX_FLAGS) \
-	$(TEST_SOURCES) \
-	$(TEST_FILEES)
+run_tests:
+	@g++ -o $(EXECUTABLE_TEST) $(GXX_FLAGS) \
+	$(TEST_FILES) \
+	$(TEST_SOURCES)
 
 	@./$(EXECUTABLE_TEST)
 
