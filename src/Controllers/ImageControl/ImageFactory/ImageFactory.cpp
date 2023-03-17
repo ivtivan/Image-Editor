@@ -4,6 +4,18 @@ ImageFactory::ImageFactory() {
     ;
 }
 
+PBMImage* ImageFactory::getPBMFromIstream(std::istream src) const {
+    ;
+}
+
+PGMImage* ImageFactory::getPGMFromIstream(std::istream src) const {
+    ;
+}
+
+PPMImage* ImageFactory::getPPMFromIstream(std::istream src) const {
+    ;
+}
+
 PPMImage* ImageFactory::getPPMFromSizeColor(std::size_t  rows, std::size_t  cols,
     std::string hexColor) const {
     //  TODO: handle bad_alloc

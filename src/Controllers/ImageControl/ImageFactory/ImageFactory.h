@@ -11,6 +11,10 @@ class ImageFactory {
     public:
         ImageFactory();
 
+
+        PBMImage* getPBMFromIstream(std::istream src) const;
+        PGMImage* getPGMFromIstream(std::istream src) const;
+        PPMImage* getPPMFromIstream(std::istream src) const;
         PPMImage* getPPMFromSizeColor(std::size_t rows, std::size_t cols, std::string hexColor) const;
 };
 
