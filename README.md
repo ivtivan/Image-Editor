@@ -21,7 +21,6 @@ The programm compiles but doesn't work properly. Only basic tests exist. There a
 
 ## Future goals:
 - Test the parts of the code which are testable by simple unit tests that don't require mocking/stub.
-- Look into mocking and add it to the tests.
+- Create tests using by making use of mocking.
 - Get the program with some of its basic functionalities runnning.
 - Create a better and more usable Makefile.
-- After learning more about design pattern and refactoring, come back to this code and try to make it better.
