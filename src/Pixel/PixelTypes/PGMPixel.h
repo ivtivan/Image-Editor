@@ -7,14 +7,14 @@ class PGMPixel : public Pixel {
     private:
         unsigned short value;
 
-        const bool isBlack() const;
-        const bool isWhite() const;
+        bool isBlack() const;
+        bool isWhite() const;
 
         const std::string toString() const;
     public:
         PGMPixel(unsigned short value, unsigned short maxValue);
 
-        const double getValue() const;
+        double getValue() const;
 
         void setToMaxValue();
         void setToMinValue();      

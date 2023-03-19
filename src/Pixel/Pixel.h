@@ -16,16 +16,16 @@ class Pixel {
         unsigned short maxValue;
         double ditherValue;
     protected:
-        virtual const bool isBlack() const;
-        virtual const bool isWhite() const;
+        virtual bool isBlack() const;
+        virtual bool isWhite() const;
     public:
         Pixel();
         Pixel(unsigned short maxValue);
 
-        const unsigned short getMinValue() const;
-        const unsigned short getMaxValue() const;
-        const double getDitherValue() const;
-        virtual const double getValue() const;
+        unsigned short getMinValue() const;
+        unsigned short getMaxValue() const;
+        double getDitherValue() const;
+        virtual double getValue() const;
         virtual void setToMaxValue();
         virtual void setToMinValue();
 

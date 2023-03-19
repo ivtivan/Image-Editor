@@ -11,15 +11,15 @@ class ControllerFacade {
         FileController fileController;
     public:
         ControllerFacade();
-        const bool create(const std::vector<std::string> param);
-        const bool open(const std::vector<std::string> param);
-        const bool close();
-        const bool save();
-        const bool saveAs(const std::vector<std::string> param);
-        const bool crop(const std::vector<std::string> param) const;
-        const bool resize(const std::vector<std::string> param) const;
-        const bool dither(const std::vector<std::string> param) const;
-        const bool exit() const;
+        bool create(const std::vector<std::string> param);
+        bool open(const std::vector<std::string> param);
+        bool close();
+        bool save();
+        bool saveAs(const std::vector<std::string> param);
+        bool crop(const std::vector<std::string> param) const;
+        bool resize(const std::vector<std::string> param) const;
+        bool dither(const std::vector<std::string> param) const;
+        bool exit() const;
 };
 
 #endif

@@ -11,15 +11,15 @@ Image::Image(std::size_t rows, std::size_t cols, Pixel*** pixels) :
 }
 
 
-const std::size_t Image::getRows() const {
+std::size_t Image::getRows() const {
     return this->rows;
 }
 
-Pixel* const Image::getPixelAt(std::size_t row, std::size_t col) const {
+Pixel* Image::getPixelAt(std::size_t row, std::size_t col) const {
     return pixels[row][col];
 }
 
-const std::size_t Image::getCols() const {
+std::size_t Image::getCols() const {
     return this->cols;
 }
 
@@ -58,8 +58,8 @@ const std::string Image::getTypeID() const {
 }
 
 Image::~Image() {
-    for (std::size_t i = rows - 1; i >= 0; --i) {
-        for (std::size_t j = cols - 1; j >= 0; --j) {
+    for (std::size_t i = 0; i < rows; ++i) {
+        for (std::size_t j = 0; j < cols; ++j) {
             delete pixels[i][j];
         }
         delete pixels[i];

@@ -7,15 +7,15 @@ class PPMPixel : public Pixel {
     private:
         unsigned short value[3];
 
-        const bool isBlack() const;
-        const bool isWhite() const;
+        bool isBlack() const;
+        bool isWhite() const;
 
         const std::string toString() const;
     public:
         PPMPixel(unsigned short value[3], unsigned short maxValue);
         PPMPixel(std::string hex);
 
-        const double getValue() const;
+        double getValue() const;
 
         void setToMaxValue();
         void setToMinValue();

@@ -33,9 +33,9 @@ class Image {
 
 
         virtual void updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols);
-        Pixel* const getPixelAt(std::size_t row, std::size_t col) const;
-        const std::size_t getRows() const;
-        const std::size_t getCols() const;
+        Pixel* getPixelAt(std::size_t row, std::size_t col) const;
+        std::size_t getRows() const;
+        std::size_t getCols() const;
 
         virtual const std::string getTypeID() const;
         virtual ~Image();

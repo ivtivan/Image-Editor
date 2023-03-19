@@ -1,4 +1,4 @@
-GXX_FLAGS = -Wall -Werror
+GXX_FLAGS = -Wall  -Wextra -Wpedantic
 
 RUN_SOURCES = $(shell find src -name "*.cpp")
 

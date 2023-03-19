@@ -8,13 +8,17 @@
 
 class ImageFactory {
     private:
+        std::size_t getCommentIndex(const std::string& line);
+        std::string removeComment(const std::string& src);
+
     public:
         ImageFactory();
 
 
-        PBMImage* getPBMFromIstream(std::istream src) const;
-        PGMImage* getPGMFromIstream(std::istream src) const;
-        PPMImage* getPPMFromIstream(std::istream src) const;
+        Image* loadImageFrom(std::ifstream& src) const;
+        PBMImage* loadPBMImageFrom(std::ifstream& src) const;
+        PGMImage* loadPGMImageFrom(std::ifstream& src) const;
+        PPMImage* loadPPMImageFrom(std::ifstream& src) const;
         PPMImage* getPPMFromSizeColor(std::size_t rows, std::size_t cols, std::string hexColor) const;
 };
 

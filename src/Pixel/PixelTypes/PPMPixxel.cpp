@@ -12,7 +12,7 @@ PPMPixel::PPMPixel(std::string hex) : Pixel(255) {
     }
 }
 
-const bool PPMPixel::isBlack() const {
+bool PPMPixel::isBlack() const {
     bool isBlack;
     for (unsigned short i = 0; i < 3; ++i) {
         isBlack = isBlack && (value[i] == getMinValue());
@@ -20,7 +20,7 @@ const bool PPMPixel::isBlack() const {
     return isBlack;
 }
 
-const bool PPMPixel::isWhite() const {
+bool PPMPixel::isWhite() const {
     bool isWhite;
     for (unsigned short i = 0; i < 3; ++i) {
         isWhite = isWhite && (value[i] == getMaxValue());
@@ -33,7 +33,7 @@ const std::string PPMPixel::toString() const {
         + " " + std::to_string(value[2]) + " ";
 }
 
-const double PPMPixel::getValue() const {
+double PPMPixel::getValue() const {
     // Formula from https://tannerhelland.com/2011/10/01/grayscale-image-algorithm-vb6.html
     return (double)this->value[0] * 0.3 + (double)this->value[1] * 0.59 +
         (double)this->value[2] * 0.11;

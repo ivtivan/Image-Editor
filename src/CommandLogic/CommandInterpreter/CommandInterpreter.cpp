@@ -5,7 +5,7 @@ CommandInterpreter::CommandInterpreter() {
     ;
 }
 
-const bool CommandInterpreter::execute(const Command& command) {
+bool CommandInterpreter::execute(const Command& command) {
     bool result;
     if (command.getCommand() == "new") {
         result = controllerFacade.create(command.getParams());

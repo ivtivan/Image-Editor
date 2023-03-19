@@ -4,18 +4,6 @@ ImageFactory::ImageFactory() {
     ;
 }
 
-PBMImage* ImageFactory::getPBMFromIstream(std::istream src) const {
-    ;
-}
-
-PGMImage* ImageFactory::getPGMFromIstream(std::istream src) const {
-    ;
-}
-
-PPMImage* ImageFactory::getPPMFromIstream(std::istream src) const {
-    ;
-}
-
 PPMImage* ImageFactory::getPPMFromSizeColor(std::size_t  rows, std::size_t  cols,
     std::string hexColor) const {
     //  TODO: handle bad_alloc
@@ -28,4 +16,31 @@ PPMImage* ImageFactory::getPPMFromSizeColor(std::size_t  rows, std::size_t  cols
     }
 
     return new PPMImage(rows, cols, pixels);
+}
+
+Image* ImageFactory::loadImageFrom(std::ifstream& src) const {
+    return nullptr;
+}
+
+PBMImage* ImageFactory::loadPBMImageFrom(std::ifstream& src) const {
+        return nullptr;
+
+}
+
+
+std::string ImageFactory::removeComment(const std::string& src) {
+    return src.substr(0, getCommentIndex(src));
+}
+
+std::size_t ImageFactory::getCommentIndex(const std::string& line) {
+    return line.find('#');
+}
+
+PGMImage* ImageFactory::loadPGMImageFrom(std::ifstream& src) const {
+    return nullptr;
+}
+
+PPMImage* ImageFactory::loadPPMImageFrom(std::ifstream& src) const {
+    return nullptr;
+
 }

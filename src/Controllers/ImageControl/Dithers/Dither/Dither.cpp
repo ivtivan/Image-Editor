@@ -5,10 +5,10 @@ Dither::Dither(const std::size_t& matrixRows, const std::size_t& matrixCols) :
         ;
 }
 
-void Dither::setUpDither(Image* image) {
+void Dither::setUpDither(Image*) {
     ;
 }
 
-void Dither::ditherImage(Image* image) {
+void Dither::ditherImage(Image*) {
     ;
 }

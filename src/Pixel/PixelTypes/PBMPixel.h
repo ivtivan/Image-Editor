@@ -7,14 +7,14 @@ class PBMPixel : public Pixel {
     private:
         unsigned char value;
 
-        const bool isBlack() const;
-        const bool isWhite() const;
+        bool isBlack() const;
+        bool isWhite() const;
 
         const std::string toString() const;
     public:
         PBMPixel(unsigned char value);
 
-        const double getValue() const;
+        double getValue() const;
 
         void setToMaxValue();
         void setToMinValue();      

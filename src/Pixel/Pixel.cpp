@@ -8,15 +8,15 @@ Pixel::Pixel(unsigned short maxValue) : minValue(0), maxValue(maxValue), ditherV
     ;
 }
 
-const unsigned short Pixel::getMinValue() const {
+unsigned short Pixel::getMinValue() const {
     return minValue;
 }
 
-const unsigned short Pixel::getMaxValue() const {
+unsigned short Pixel::getMaxValue() const {
     return maxValue;
 }
 
-const double Pixel::getDitherValue() const {
+double Pixel::getDitherValue() const {
     return ditherValue;
 }
 
@@ -37,15 +37,15 @@ Pixel::~Pixel() {
     ;
 }
 
-const double Pixel::getValue() const {
+double Pixel::getValue() const {
     return 0.0;
 }
 
-const bool Pixel::isBlack() const {
+bool Pixel::isBlack() const {
     return true;
 }
 
-const bool Pixel::isWhite() const {
+bool Pixel::isWhite() const {
     return true;
 }
 

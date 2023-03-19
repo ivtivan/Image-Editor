@@ -13,7 +13,7 @@ class CommandInterpreter {
         ControllerFacade controllerFacade;
     public:
         CommandInterpreter();
-        const bool execute(const Command& command);
+        bool execute(const Command& command);
 };
 
 #endif

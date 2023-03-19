@@ -30,11 +30,11 @@ class Dither {
         /**
          *  Sets parameters, which depend on the image, being dithered.
          */
-        virtual void setUpDither(Image* image);
+        virtual void setUpDither(Image*);
     public:
         Dither(const std::size_t& matrixRows, const std::size_t& matrixCols);
 
-        virtual void ditherImage(Image* image);
+        virtual void ditherImage(Image*);
 };
 
 #endif

@@ -15,22 +15,22 @@ class FileController {
         std::string filePath;
         Image* targetImage;
 
-        const bool fileExists(std::string filePath) const;
+        bool fileExists(std::string filePath) const;
 
-        const bool write() const;
-        const bool writeTo(const std::string& filePath) const;
+        bool write() const;
+        bool writeTo(const std::string& filePath) const;
 
-        const bool canBeOpened(const std::string& filePath) const;
-        const bool canBeCreated(const std::string& filePath) const;
+        bool canBeOpened(const std::string& filePath) const;
+        bool canBeCreated(const std::string& filePath) const;
     public:
         FileController();
 
         void setTargetImage(Image* targetImage);
-        const bool save();
-        const bool saveAs(const std::string& filePath);
-        const bool open(const std::string& filePath);
-        const bool create(const std::string& filePath);
-        const bool close();
+        bool save();
+        bool saveAs(const std::string& filePath);
+        bool open(const std::string& filePath);
+        bool create(const std::string& filePath);
+        bool close();
 };
 
 #endif

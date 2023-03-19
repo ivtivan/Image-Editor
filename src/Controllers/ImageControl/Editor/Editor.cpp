@@ -37,7 +37,7 @@ Pixel** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
     return pixels;
 }
 
-const bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
+bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
             std::size_t xDownRight, std::size_t yDownRight) const {
     if (xUpLeft > xDownRight || yUpLeft > yDownRight) {
         return false;
@@ -64,7 +64,7 @@ const bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
 }
 
 // Algorithm from https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
-const bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
+bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
     std::size_t srcRows = targetImage->getRows();
     std::size_t srcCols = targetImage->getCols();
     std::size_t srcX, srcY; // coordinates of the source pixel
@@ -91,7 +91,7 @@ const bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const
 }
 
 // TODO: move to DitherController
-const bool Editor::ditherImage(std::string algorithmName) const {
+bool Editor::ditherImage(std::string algorithmName) const {
     if (algorithmName == "Linear") {
         DitherLinear dither;
         dither.ditherImage(targetImage);
