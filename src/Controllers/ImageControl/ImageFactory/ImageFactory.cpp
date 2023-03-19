@@ -15,7 +15,7 @@ PPMImage* ImageFactory::getPPMFromSizeColor(std::size_t  rows, std::size_t  cols
         }
     }
 
-    return new PPMImage(rows, cols, pixels);
+    return new PPMImage(Dimension(rows, cols), pixels);
 }
 
 Image* ImageFactory::loadImageFrom(std::ifstream& src) const {

@@ -6,7 +6,7 @@
 
 class PPMImage : public Image {
     public:
-        PPMImage(std::size_t rows, std::size_t cols, Pixel*** pixels);
+        PPMImage(Dimension dimension, Pixel*** pixels);
 
         const std::string getTypeID() const;
 

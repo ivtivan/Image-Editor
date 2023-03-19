@@ -8,7 +8,7 @@ class PGMImage : public Image {
         void allocatePixels();
     public:
         PGMImage();
-        PGMImage(std::size_t rows, std::size_t cols, Pixel*** pixels);
+        PGMImage(Dimension dimension, Pixel*** pixels);
 
         const std::string getTypeID() const;
 

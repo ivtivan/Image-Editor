@@ -3,6 +3,8 @@
 
 #include <string>
 #include "../Pixel/Pixel.h"
+#include "ImageHelpers/Dimension/Dimension.h"
+#include "ImageHelpers/Point/Point.h"
 
 enum fileType {
     PBM,
@@ -17,8 +19,7 @@ enum fileType {
  */
 class Image {
     private:
-        std::size_t rows;
-        std::size_t cols;
+        Dimension dimension;
         Pixel*** pixels; // not an efficient way of doing this
 
     protected:
@@ -29,11 +30,11 @@ class Image {
         void setPixels(Pixel*** pixels);
     public:
         Image();
-        Image(std::size_t rows, std::size_t cols, Pixel*** pixels);
+        Image(Dimension dimension, Pixel*** pixels);
 
 
-        virtual void updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols);
-        Pixel* getPixelAt(std::size_t row, std::size_t col) const;
+        virtual void updatePixels(Pixel** srcPixels, const Dimension srcDimension);
+        Pixel* getPixelAt(const Point& point) const;
         std::size_t getRows() const;
         std::size_t getCols() const;
 

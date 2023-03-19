@@ -10,8 +10,8 @@ class Dimension {
     public:
         Dimension(std::size_t rows, std::size_t cols);
 
-        std::size_t getRows();
-        std::size_t getCols();
+        std::size_t getRows() const;
+        std::size_t getCols() const;
 };
 
 #endif

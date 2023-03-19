@@ -1,7 +1,7 @@
 #include "PPMImage.h"
 
-PPMImage::PPMImage(std::size_t rows, std::size_t cols, Pixel*** pixels) :
-    Image(rows, cols, pixels) {
+PPMImage::PPMImage(Dimension dimension, Pixel*** pixels) :
+    Image(dimension, pixels) {
     ;
 }
 

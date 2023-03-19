@@ -8,7 +8,7 @@ class PBMImage : public Image {
         void allocatePixels();
     public:
         PBMImage();
-        PBMImage(std::size_t rows, std::size_t cols, Pixel*** pixels);
+        PBMImage(Dimension dimension, Pixel*** pixels);
 
         const std::string getTypeID() const;
 

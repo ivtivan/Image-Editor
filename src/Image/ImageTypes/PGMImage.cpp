@@ -4,8 +4,8 @@ PGMImage::PGMImage() {
     ;
 }
 
-PGMImage::PGMImage(std::size_t rows, std::size_t cols, Pixel*** pixels) :
-    Image(rows, cols, pixels) {
+PGMImage::PGMImage(Dimension dimension, Pixel*** pixels) :
+    Image(dimension, pixels) {
     ;
 }
 

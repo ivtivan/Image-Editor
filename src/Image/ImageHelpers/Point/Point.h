@@ -10,8 +10,8 @@ class Point {
     public:
         Point(std::size_t x, std::size_t y);
 
-        std::size_t getX();
-        std::size_t getY();
+        std::size_t getX() const;
+        std::size_t getY() const;
 };
 
 #endif

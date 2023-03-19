@@ -1,26 +1,25 @@
 #include "Image.h"
 #include <fstream>
 
-Image::Image() : rows(0) , cols(0), pixels(nullptr) {
+Image::Image() : dimension(0, 0), pixels(nullptr) {
     ;
 }
 
-Image::Image(std::size_t rows, std::size_t cols, Pixel*** pixels) :
-    rows(rows), cols(cols), pixels(pixels) {
+Image::Image(Dimension dimension, Pixel*** pixels) :
+    dimension(dimension), pixels(pixels) {
     ;
 }
 
+Pixel* Image::getPixelAt(const Point& point) const {
+    return pixels[point.getX()][point.getY()];
+}
 
 std::size_t Image::getRows() const {
-    return this->rows;
-}
-
-Pixel* Image::getPixelAt(std::size_t row, std::size_t col) const {
-    return pixels[row][col];
+    return dimension.getRows();
 }
 
 std::size_t Image::getCols() const {
-    return this->cols;
+    return dimension.getCols();
 }
 
 void Image::setPixels(Pixel*** pixels) {
@@ -34,7 +33,7 @@ std::ostream& operator<<(std::ostream& os, const Image* image) {
 
     for (std::size_t i = 0; i < image->getRows(); ++i) {
         for (std::size_t j = 0; j < image->getCols(); ++j) {
-            os << image->getPixelAt(i, j);
+            os << image->getPixelAt(Point(i, j));
 
             if (j != image->getCols()- 1) {
                 os << " ";
@@ -49,7 +48,7 @@ void Image::allocatePixels() {
     ;
 }
 
-void Image::updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols) {
+void Image::updatePixels(Pixel** srcPixels, const Dimension srcDimension) {
     ;
 }
 
@@ -58,8 +57,8 @@ const std::string Image::getTypeID() const {
 }
 
 Image::~Image() {
-    for (std::size_t i = 0; i < rows; ++i) {
-        for (std::size_t j = 0; j < cols; ++j) {
+    for (std::size_t i = 0; i < dimension.getRows(); ++i) {
+        for (std::size_t j = 0; j < dimension.getCols(); ++j) {
             delete pixels[i][j];
         }
         delete pixels[i];
