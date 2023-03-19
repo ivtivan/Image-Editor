@@ -24,3 +24,4 @@ The programm compiles but doesn't work properly. Only basic tests exist. There a
 - Create tests using by making use of mocking.
 - Get the program with some of its basic functionalities runnning.
 - Create a better and more usable Makefile.
+- Make use of smart pointers.
