@@ -21,11 +21,9 @@ class Image {
     private:
         Dimension dimension;
         Pixel*** pixels; // not an efficient way of doing this
-
+        void freePixels();
     protected:
-        unsigned int pixelMaxValue;
-
-        virtual void allocatePixels();
+        unsigned int pixelMaxValue; // TODO private or removed
 
         void setPixels(Pixel*** pixels);
     public:
@@ -33,7 +31,7 @@ class Image {
         Image(Dimension dimension, Pixel*** pixels);
 
 
-        virtual void updatePixels(Pixel** srcPixels, const Dimension srcDimension);
+        virtual void updatePixels(Pixel*** srcPixels, const Dimension srcDimension);
         Pixel* getPixelAt(const Point& point) const;
         std::size_t getRows() const;
         std::size_t getCols() const;

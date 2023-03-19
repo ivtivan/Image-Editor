@@ -44,19 +44,14 @@ std::ostream& operator<<(std::ostream& os, const Image* image) {
     return os;
 }
 
-void Image::allocatePixels() {
-    ;
+void Image::updatePixels(Pixel*** srcPixels, const Dimension srcDimension) {
+    freePixels();
+    
+    pixels = srcPixels;
+    dimension = srcDimension;
 }
 
-void Image::updatePixels(Pixel** srcPixels, const Dimension srcDimension) {
-    ;
-}
-
-const std::string Image::getTypeID() const {
-    return "";
-}
-
-Image::~Image() {
+void Image::freePixels() {
     for (std::size_t i = 0; i < dimension.getRows(); ++i) {
         for (std::size_t j = 0; j < dimension.getCols(); ++j) {
             delete pixels[i][j];
@@ -64,4 +59,12 @@ Image::~Image() {
         delete pixels[i];
     }
     delete pixels;
+}
+
+const std::string Image::getTypeID() const {
+    return "";
+}
+
+Image::~Image() {
+    freePixels();
 }

@@ -10,7 +10,7 @@
 class Editor {
     private:
         Image* targetImage;
-        Pixel** allocatePixelMatrix(std::size_t rows, std::size_t cols) const;
+        Pixel*** allocatePixelMatrix(std::size_t rows, std::size_t cols) const;
     public:
         Editor();
 

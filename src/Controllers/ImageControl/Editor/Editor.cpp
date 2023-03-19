@@ -13,17 +13,17 @@ void Editor::setTargetImage(Image* targetImage) {
 
 
 // TODO: move to a helepr file if beneficial
-Pixel** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
-    Pixel** pixels;
+Pixel*** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
+    Pixel*** pixels;
     try {
-        pixels = new Pixel*[rows];
+        pixels = new Pixel**[rows];
     }
     catch (const std::bad_alloc&) {
         return nullptr;
     }
     for (std::size_t i = 0; i < rows; ++i) {
         try {
-            pixels[i] = new Pixel[cols];
+            pixels[i] = new Pixel*[cols];
         }
         catch (const std::bad_alloc&) {
             for (std::size_t j = 0; j < i; ++j) {
@@ -46,7 +46,7 @@ bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
     xDownRight = (std::size_t)(std::min((double)xDownRight, (double)targetImage->getRows()));
     yDownRight = (std::size_t)(std::min((double)yDownRight, (double)targetImage->getCols()));
  
-    Pixel** pixelHolder = allocatePixelMatrix(xDownRight - xUpLeft, yDownRight - yUpLeft);
+    Pixel*** pixelHolder = allocatePixelMatrix(xDownRight - xUpLeft, yDownRight - yUpLeft);
     if (!pixelHolder) {
         return false;
     }
@@ -54,8 +54,8 @@ bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
     // TODO: function
     for (std::size_t xOffset = 0; xOffset < xDownRight - xUpLeft; ++xOffset) {
         for (std::size_t yOffset = 0; yOffset < yDownRight - yUpLeft; ++yOffset) {
-            pixelHolder[xOffset][yOffset] = 
-                *targetImage->getPixelAt(Point(xUpLeft + xOffset, yUpLeft + yOffset));
+            pixelHolder[xOffset][yOffset] = new Pixel(*
+                targetImage->getPixelAt(Point(xUpLeft + xOffset, yUpLeft + yOffset)));
         }
     }
 
@@ -69,7 +69,7 @@ bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
     std::size_t srcCols = targetImage->getCols();
     std::size_t srcX, srcY; // coordinates of the source pixel
 
-    Pixel** destPixels = allocatePixelMatrix(destRows, destCols);
+    Pixel*** destPixels = allocatePixelMatrix(destRows, destCols);
     if (!destPixels) {
         return false;
     }
@@ -82,7 +82,7 @@ bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
             srcY = (std::size_t)((double) srcCols * (double) destY / (double)destCols);
             srcY = (std::size_t)(std::min((double)srcY, (double)(srcCols - 1)));
 
-            destPixels[destX][destY] = *targetImage->getPixelAt(Point(srcX, srcY));
+            destPixels[destX][destY] = new Pixel(*targetImage->getPixelAt(Point(srcX, srcY)));
         }
     }
 

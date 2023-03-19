@@ -10,8 +10,6 @@ class PPMImage : public Image {
 
         const std::string getTypeID() const;
 
-        void updatePixels(Pixel** srcPixels, std::size_t srcRows, std::size_t srcCols);
-
         ~PPMImage();
 };
 
