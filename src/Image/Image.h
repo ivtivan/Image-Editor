@@ -6,12 +6,6 @@
 #include "ImageHelpers/Dimension/Dimension.h"
 #include "ImageHelpers/Point/Point.h"
 
-enum fileType {
-    PBM,
-    PGM,
-    PPM
-};
-
 /**
  * @brief Supports working with images.
  * 
@@ -23,8 +17,6 @@ class Image {
         Pixel*** pixels; // not an efficient way of doing this
         void freePixels();
     protected:
-        unsigned int pixelMaxValue; // TODO private or removed
-
         void setPixels(Pixel*** pixels);
     public:
         Image();

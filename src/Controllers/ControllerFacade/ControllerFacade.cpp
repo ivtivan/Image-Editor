@@ -6,16 +6,19 @@ ControllerFacade::ControllerFacade() : editor(),
 }
 
 bool ControllerFacade::create(const std::vector<std::string> params) {
-    const ImageFactory factory;
+    ImageFactory factory;
     std::size_t rows = stoi(params.at(0));
     std::size_t cols = stoi(params.at(1));
+    const Dimension dimension(rows, cols);
     std::string hexColor = params.at(2);
-    Image* targetImage = factory.getPPMFromSizeColor(rows, cols, hexColor);
+    Image* targetImage = factory.getPPMFromSizeColor(dimension, hexColor);
     editor.setTargetImage(targetImage);
     fileController.setTargetImage(targetImage);
+
     return fileController.create("tempTODO.ppm");
 }
 
+// TODO:  implement the following
 bool ControllerFacade::open(const std::vector<std::string> params) {
     return fileController.open(params.at(0));
 }
