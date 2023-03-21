@@ -1,13 +1,11 @@
-GXX_FLAGS = -Wall  -Wextra -Wpedantic
+GXX_FLAGS = -Wall  -Wextra -Wpedantic -Werror
 
 RUN_SOURCES = $(shell find src -name "*.cpp")
 
 TEST_SOURCES = src/CommandLogic/Command/Command.cpp
-#	src/FileController/FileController.cpp
 
 TEST_FILES = tests/testIncludes.cpp \
 	tests/testCommand.cpp
-#	tests\testFileController.cpp
 
 EXECUTABLE_RUN = imageEditor
 EXECUTABLE_TEST = test

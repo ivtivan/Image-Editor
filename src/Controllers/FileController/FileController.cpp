@@ -33,6 +33,7 @@ bool FileController::writeTo(const std::string& filePath) const {
     try {
         std::ofstream file(filePath);
         file << srcImage;
+        file.close();
     }
     catch (...) {
         return false;

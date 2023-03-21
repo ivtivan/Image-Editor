@@ -23,6 +23,7 @@ bool ControllerFacade::open(const std::vector<std::string> params) {
     std::string imageFile = params.at(0);
     std::ifstream readFrom = fileController.open(imageFile);
     Image* openedImage = factory.loadImageFrom(readFrom);
+    readFrom.close();
     editor.setTargetImage(openedImage);
     fileController.setSrcImage(openedImage);
     return true;
