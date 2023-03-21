@@ -1,73 +1,28 @@
 #include "FileController.h"
 #include <fstream>
 
-FileController::FileController() : isOpened(false), isSetFilePath(false) {
+FileController::FileController() {
     ;
 }
 
-void FileController::setTargetImage(Image* targetImage) {
-    this->targetImage = targetImage;
+void FileController::setSrcImage(Image* srcImage) {
+    this->srcImage = srcImage;
 }
 
-bool FileController::fileExists(std::string filePath) const {
-    bool exists;
-    std::ifstream testExists;
-    testExists.open(filePath);
-    
-    // Checks if a file was opened.
-    if (testExists) {
-        exists = true;
-    }
-    else {
-        exists = false;
-    }
-    
-    testExists.close();
-    return exists;
+std::ifstream FileController::open(const std::string& filePath) {
+    this->filePath = filePath;
+    std::ifstream readFrom;
+    readFrom.open(filePath);
+    return readFrom;
 }
 
-
-bool FileController::open(const std::string& filePath) {
-    if (canBeOpened(filePath)) {
-        isOpened = true;
-        isSetFilePath = true;
-        this->filePath = filePath;
-
-        return true;
-    }
-
-    return false;
-}
-
-bool FileController::canBeOpened(const std::string& filePath) const {
-     return !isOpened && fileExists(filePath);
-}
-
-
-bool FileController::create(const std::string& filePath) {
-    if (canBeCreated(filePath)) {
-        isOpened = true;
-        // TODO create and open
-        return true;
-    }
-    return false;
-}
-
-bool FileController::canBeCreated(const std::string& filePath) const {
-    return !isOpened && !fileExists(filePath);
-}
-
-
-bool FileController::save() {
-    write();
-    close();
-    return true;
+bool FileController::save() const{
+    return write() && close();
 }
 
 bool FileController::saveAs(const std::string& filePath) {
-    writeTo(filePath);
-    close();
-    return true;
+    
+    return writeTo(filePath) && close();
 }
 
 bool FileController::write() const {
@@ -77,7 +32,7 @@ bool FileController::write() const {
 bool FileController::writeTo(const std::string& filePath) const {
     try {
         std::ofstream file(filePath);
-        file << targetImage;
+        file << srcImage;
     }
     catch (...) {
         return false;
@@ -85,12 +40,7 @@ bool FileController::writeTo(const std::string& filePath) const {
     return true;
 }
 
-bool FileController::close() {
-    if (!isOpened) {
-        return false;
-    }
-
-    isOpened = false;
-    isSetFilePath = false;
+bool FileController::close() const {
+    delete srcImage;
     return true;
 }

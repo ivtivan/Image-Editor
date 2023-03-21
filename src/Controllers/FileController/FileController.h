@@ -9,28 +9,19 @@
  */
 class FileController {
     private:
-        bool isOpened;
-        bool isSetFilePath;
-
         std::string filePath;
-        Image* targetImage;
-
-        bool fileExists(std::string filePath) const;
+        Image* srcImage;
 
         bool write() const;
         bool writeTo(const std::string& filePath) const;
-
-        bool canBeOpened(const std::string& filePath) const;
-        bool canBeCreated(const std::string& filePath) const;
     public:
         FileController();
 
-        void setTargetImage(Image* targetImage);
-        bool save();
+        void setSrcImage(Image* srcImage);
+        bool save() const;
         bool saveAs(const std::string& filePath);
-        bool open(const std::string& filePath);
-        bool create(const std::string& filePath);
-        bool close();
+        std::ifstream open(const std::string& filePath);
+        bool close() const;
 };
 
 #endif

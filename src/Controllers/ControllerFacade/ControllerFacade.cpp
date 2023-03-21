@@ -1,4 +1,5 @@
 #include "ControllerFacade.h"
+#include <fstream>
 
 ControllerFacade::ControllerFacade() : editor(),
     fileController() {
@@ -11,16 +12,20 @@ bool ControllerFacade::create(const std::vector<std::string> params) {
     std::size_t cols = stoi(params.at(1));
     const Dimension dimension(rows, cols);
     std::string hexColor = params.at(2);
-    Image* targetImage = factory.getPPMFromSizeColor(dimension, hexColor);
-    editor.setTargetImage(targetImage);
-    fileController.setTargetImage(targetImage);
-
-    return fileController.create("tempTODO.ppm");
+    Image* generatedImage = factory.getPPMFromSizeColor(dimension, hexColor);
+    editor.setTargetImage(generatedImage);
+    fileController.setSrcImage(generatedImage);
+    return true;
 }
 
-// TODO:  implement the following
 bool ControllerFacade::open(const std::vector<std::string> params) {
-    return fileController.open(params.at(0));
+    ImageFactory factory;
+    std::string imageFile = params.at(0);
+    std::ifstream readFrom = fileController.open(imageFile);
+    Image* openedImage = factory.loadImageFrom(readFrom);
+    editor.setTargetImage(openedImage);
+    fileController.setSrcImage(openedImage);
+    return true;
 }
 
 bool ControllerFacade::close() {
