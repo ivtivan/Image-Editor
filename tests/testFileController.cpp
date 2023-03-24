@@ -11,10 +11,10 @@ void assertionsSuccessfulClose(FileController SUT);
 /*
 //  Tests
 */
-SCENARIO("Closing", "[wrong_usage]") {
+SCENARIO("Closing", "[right_usage]") {
     GIVEN("A FileController without set path") {
         FileController SUT;
-        THEN("saving returns false") {
+        THEN("closing returns true") {
             assertionsSuccessfulClose(SUT);
         }
     }

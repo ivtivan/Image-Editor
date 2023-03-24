@@ -1,10 +1,7 @@
 GXX_FLAGS = -Wall  -Wextra -Wpedantic -Werror
 
 RUN_SOURCES = $(shell find src -name "*.cpp")
-
-TEST_FILES = tests/testIncludes.cpp \
-	tests/testCommand.cpp \
-	tests/testFileController.cpp
+TEST_SOURCES = $(shell find tests -name "*.cpp")
 
 EXECUTABLE_RUN = imageEditor
 EXECUTABLE_TEST = test
@@ -20,19 +17,19 @@ run: compile
 
 run_tests:
 	@g++ -o $(EXECUTABLE_TEST) $(GXX_FLAGS) \
-	$(TEST_FILES) \
-	$(RUN_SOURCES)
+	$(RUN_SOURCES) \
+	$(TEST_SOURCES)
 
 	@./$(EXECUTABLE_TEST)
 
 run_test_coverage:
 	@g++ -o $(TEST_RUN) $(GXX_FLAGS) --coverage \
-	$(TEST_SOURCES) \
-	$(TEST_FILEES)
+	$(RUN_SOURCES) \
+	$(TEST_SOURCES)
 
 	@./$(EXECUTABLE_TEST)
 
-	gcovr
+	@gcovr
 
 clear:
 	@rm -rf $(EXECUTABLE_RUN) $(EXECUTABLE_TEST)
