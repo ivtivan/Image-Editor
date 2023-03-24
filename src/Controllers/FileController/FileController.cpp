@@ -1,7 +1,8 @@
 #include "FileController.h"
 #include <fstream>
 
-FileController::FileController() {
+FileController::FileController() : filePath(""),
+    srcImage(nullptr) {
     ;
 }
 
@@ -16,8 +17,24 @@ std::ifstream FileController::open(const std::string& filePath) {
     return readFrom;
 }
 
-bool FileController::save() const{
-    return write() && close();
+bool FileController::save() const {
+    if (isSetFilePath()) {
+        return write();
+    }
+
+    close();
+    return false;
+}
+
+bool FileController::close() const {
+    if (srcImage) {
+        delete srcImage;
+    }
+    return true;
+}
+
+bool FileController::isSetFilePath() const {
+    return filePath != "";
 }
 
 bool FileController::saveAs(const std::string& filePath) {
@@ -26,7 +43,11 @@ bool FileController::saveAs(const std::string& filePath) {
 }
 
 bool FileController::write() const {
-    return writeTo(filePath);
+    if (isSetFilePath()) {
+        return writeTo(filePath);
+    }
+
+    return false;
 }
 
 bool FileController::writeTo(const std::string& filePath) const {
@@ -38,10 +59,5 @@ bool FileController::writeTo(const std::string& filePath) const {
     catch (...) {
         return false;
     }
-    return true;
-}
-
-bool FileController::close() const {
-    delete srcImage;
     return true;
 }

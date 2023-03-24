@@ -14,14 +14,15 @@ class FileController {
 
         bool write() const;
         bool writeTo(const std::string& filePath) const;
+        bool isSetFilePath() const;
     public:
         FileController();
 
         void setSrcImage(Image* srcImage);
         bool save() const;
         bool saveAs(const std::string& filePath);
-        std::ifstream open(const std::string& filePath);
         bool close() const;
+        std::ifstream open(const std::string& filePath);
 };
 
 #endif
