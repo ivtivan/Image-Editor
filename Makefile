@@ -12,7 +12,7 @@ compile_main:
 	$(RUN_SOURCES) \
 	main.cpp
 
-run: compile
+run: compile_main
 	@./$(EXECUTABLE_RUN)
 
 run_tests:
