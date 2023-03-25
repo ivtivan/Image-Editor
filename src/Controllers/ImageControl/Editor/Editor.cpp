@@ -37,14 +37,18 @@ Pixel*** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
     return pixels;
 }
 
-bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
-            std::size_t xDownRight, std::size_t yDownRight) const {
-    if (xUpLeft > xDownRight || yUpLeft > yDownRight) {
+bool Editor::cropImage(const Point& upLeft, const Point& downRight) const {
+    if (upLeft.getX() > downRight.getX() ||
+        upLeft.getY() > downRight.getY()) {
         return false;
     }
 
-    xDownRight = (std::size_t)(std::min((double)xDownRight, (double)targetImage->getRows()));
-    yDownRight = (std::size_t)(std::min((double)yDownRight, (double)targetImage->getCols()));
+    std::size_t xUpLeft = upLeft.getX();
+    std::size_t yUpLeft = upLeft.getY();
+    std::size_t xDownRight = (std::size_t)
+        (std::min((double)downRight.getX(), (double)targetImage->getRows()));
+    std::size_t yDownRight = (std::size_t)
+        (std::min((double)downRight.getY(), (double)targetImage->getCols()));
  
     Pixel*** pixelHolder = allocatePixelMatrix(xDownRight - xUpLeft, yDownRight - yUpLeft);
     if (!pixelHolder) {
@@ -64,10 +68,12 @@ bool Editor::cropImage(std::size_t xUpLeft, std::size_t yUpLeft,
 }
 
 // Algorithm from https://courses.cs.vt.edu/~masc1044/L17-Rotation/ScalingNN.html
-bool Editor::resizeImage(std::size_t destRows, std::size_t destCols) const {
+bool Editor::resizeImage(const Dimension& dst) const {
     std::size_t srcRows = targetImage->getRows();
     std::size_t srcCols = targetImage->getCols();
     std::size_t srcX, srcY; // coordinates of the source pixel
+    std::size_t destRows = dst.getRows();
+    std::size_t destCols = dst.getCols();
 
     Pixel*** destPixels = allocatePixelMatrix(destRows, destCols);
     if (!destPixels) {

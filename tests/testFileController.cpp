@@ -11,7 +11,7 @@ void assertionsSuccessfulClose(FileController SUT);
 /*
 //  Tests
 */
-SCENARIO("Closing", "[right_usage]") {
+SCENARIO("Closing FileController", "[right_usage]") {
     GIVEN("A FileController without set path") {
         FileController SUT;
         THEN("closing returns true") {
@@ -20,7 +20,7 @@ SCENARIO("Closing", "[right_usage]") {
     }
 }
 
-SCENARIO("Saving without setting filepath", "[wrong_usage]") {
+SCENARIO("Saving FileController without setting filepath", "[wrong_usage]") {
     GIVEN("A FileController without set path") {
         FileController SUT;
         THEN("saving returns false") {
@@ -30,7 +30,7 @@ SCENARIO("Saving without setting filepath", "[wrong_usage]") {
 }
 
 
-SCENARIO("Saving by specigfying file path", "[right_usage]") {
+SCENARIO("Saving FileController by specigfying file path", "[right_usage]") {
     //  TODO with Image mock
 }
 
