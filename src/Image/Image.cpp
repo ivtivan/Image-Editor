@@ -11,9 +11,6 @@ Image::Image(Dimension dimension, Pixel*** pixels) :
 }
 
 Pixel* Image::getPixelAt(const Point& point) const {
-    if (pixels) {
-        std::cout << "ALERT\n";
-    }
     return pixels[point.getX()][point.getY()];
 }
 
@@ -28,7 +25,6 @@ std::size_t Image::getCols() const {
 void Image::setPixels(Pixel*** pixels) {
     this->pixels = pixels;
 }
-
 
 std::ostream& operator<<(std::ostream& os, const Image* image) {
     os << image->getTypeID() << std::endl;

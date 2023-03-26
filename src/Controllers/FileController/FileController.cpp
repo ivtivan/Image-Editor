@@ -17,7 +17,7 @@ std::ifstream FileController::open(const std::string& filePath) {
     return readFrom;
 }
 
-bool FileController::save() const {
+bool FileController::save() {
     if (isSetFilePath()) {
         return write();
     }
@@ -26,9 +26,10 @@ bool FileController::save() const {
     return false;
 }
 
-bool FileController::close() const {
+bool FileController::close() {
     if (srcImage) {
         delete srcImage;
+        srcImage = nullptr;
     }
     return true;
 }

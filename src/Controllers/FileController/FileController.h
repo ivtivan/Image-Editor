@@ -19,9 +19,9 @@ class FileController {
         FileController();
 
         void setSrcImage(Image* srcImage);
-        bool save() const;
+        bool save();
         bool saveAs(const std::string& filePath);
-        bool close() const;
+        bool close();
         std::ifstream open(const std::string& filePath);
 };
 
