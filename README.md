@@ -27,3 +27,4 @@ Some of the basic functionalities are functioning correctly. Only basic tests ex
 - Create tests using by making use of mocking.
 - Create a better and more usable Makefile.
 - Use address/leak sanitizers.
+- Use static analyzer(cppcheck).
