@@ -12,7 +12,7 @@ bool ControllerFacade::create(const std::vector<std::string> params) {
     std::size_t cols = stoi(params.at(1));
     const Dimension dimension(rows, cols);
     std::string hexColor = params.at(2);
-    Image* generatedImage = factory.getPPMFromSizeColor(dimension, hexColor);
+    std::shared_ptr<Image> generatedImage = factory.getPPMFromSizeColor(dimension, hexColor);
     editor.setTargetImage(generatedImage);
     fileController.setSrcImage(generatedImage);
     return true;
@@ -22,7 +22,7 @@ bool ControllerFacade::open(const std::vector<std::string> params) {
     ImageFactory factory;
     std::string imageFile = params.at(0);
     std::ifstream readFrom = fileController.open(imageFile);
-    Image* openedImage = factory.loadImageFrom(readFrom);
+    std::shared_ptr<Image> openedImage = factory.loadImageFrom(readFrom);
     readFrom.close();
     editor.setTargetImage(openedImage);
     fileController.setSrcImage(openedImage);
@@ -30,6 +30,7 @@ bool ControllerFacade::open(const std::vector<std::string> params) {
 }
 
 bool ControllerFacade::close() {
+    editor.closeTargetImage();
     return fileController.close();
 }
 
@@ -56,7 +57,6 @@ bool ControllerFacade::dither(const std::vector<std::string> params) const {
     return editor.ditherImage(params.at(0));
 }
 
-bool ControllerFacade::exit() const {
-    // TODO
-    return false;
+bool ControllerFacade::exit() {
+    return close();
 }

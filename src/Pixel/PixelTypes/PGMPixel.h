@@ -17,7 +17,9 @@ class PGMPixel : public Pixel {
         double getValue() const;
 
         void setToMaxValue();
-        void setToMinValue();      
+        void setToMinValue();
+
+        ~PGMPixel() = default;
 };
 
 #endif

@@ -25,11 +25,11 @@ class OrderedDither : public Dither {
         
         void calculateMatrixthresholds();
 
-        void setUpDither(Image* image);
+        void setUpDither(std::shared_ptr<Image> image);
     public:
         OrderedDither(const std::size_t& dimension);
 
-        void ditherImage(Image* image);
+        void ditherImage(std::shared_ptr<Image> image);
 };
 
 #endif

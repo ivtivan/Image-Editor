@@ -10,7 +10,7 @@
 class FileController {
     private:
         std::string filePath;
-        Image* srcImage;
+        std::shared_ptr<Image> srcImage;
 
         bool write() const;
         bool writeTo(const std::string& filePath) const;
@@ -18,7 +18,7 @@ class FileController {
     public:
         FileController();
 
-        void setSrcImage(Image* srcImage);
+        void setSrcImage(std::shared_ptr<Image> srcImage);
         bool save();
         bool saveAs(const std::string& filePath);
         bool close();

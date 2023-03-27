@@ -1,12 +1,11 @@
 #include "FileController.h"
 #include <fstream>
 
-FileController::FileController() : filePath(""),
-    srcImage(nullptr) {
+FileController::FileController() : filePath("") {
     ;
 }
 
-void FileController::setSrcImage(Image* srcImage) {
+void FileController::setSrcImage(std::shared_ptr<Image> srcImage) {
     this->srcImage = srcImage;
 }
 
@@ -28,8 +27,7 @@ bool FileController::save() {
 
 bool FileController::close() {
     if (srcImage) {
-        delete srcImage;
-        srcImage = nullptr;
+        srcImage.reset();
     }
     return true;
 }

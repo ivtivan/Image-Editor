@@ -19,7 +19,7 @@ class ControllerFacade {
         bool crop(const std::vector<std::string> param) const;
         bool resize(const std::vector<std::string> param) const;
         bool dither(const std::vector<std::string> param) const;
-        bool exit() const;
+        bool exit();
 };
 
 #endif

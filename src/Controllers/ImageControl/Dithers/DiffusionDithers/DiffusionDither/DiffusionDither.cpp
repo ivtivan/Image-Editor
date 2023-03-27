@@ -15,12 +15,12 @@ void DiffusionDither::setDMatrix(unsigned int src[][MAX_DISTRIBUTION_MATRIX_COLS
 }
 
 
-void DiffusionDither::setUpDither(Image* image) {
+void DiffusionDither::setUpDither(std::shared_ptr<Image> image) {
     pixelsMaxValue = image->getPixelAt(Point(0, 0))->getMaxValue();
     threshold = (double) pixelsMaxValue / 2.0;
 }
 
-void DiffusionDither::distributeError(Image* image, double error, std::size_t x, std::size_t y) {
+void DiffusionDither::distributeError(std::shared_ptr<Image> image, double error, std::size_t x, std::size_t y) {
     std::size_t endingRowIndex = std::min(x + matrixRows, image->getRows());
     std::size_t beginningColIndex = std::max((std::size_t)0, (std::size_t)y - (std::size_t)pos);
     std::size_t endingColIndex = std::min((std::size_t)y - (std::size_t)pos + matrixCols, image->getCols());
@@ -35,7 +35,7 @@ void DiffusionDither::distributeError(Image* image, double error, std::size_t x,
     }
 }
 
-void DiffusionDither::ditherImage(Image* image) {
+void DiffusionDither::ditherImage(std::shared_ptr<Image> image) {
     setUpDither(image);
 
     double pixelValue;

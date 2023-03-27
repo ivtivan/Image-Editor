@@ -1,11 +1,12 @@
 #include "PGMImage.h"
+#include "../../Pixel/PixelTypes/PGMPixel.h"
 
 PGMImage::PGMImage() {
     ;
 }
 
-PGMImage::PGMImage(Dimension dimension, Pixel*** pixels) :
-    Image(dimension, pixels) {
+PGMImage::PGMImage(Dimension dimension, pixel_ptr_vector&& pixels) :
+    Image(dimension, std::move(pixels)) {
     ;
 }
 

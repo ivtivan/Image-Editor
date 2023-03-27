@@ -40,13 +40,13 @@ class DiffusionDither : public Dither {
         /**
          *  Distributes error to the other pixels.
          */
-        void distributeError(Image* image, double error, std::size_t x, std::size_t y);
+        void distributeError(std::shared_ptr<Image> image, double error, std::size_t x, std::size_t y);
 
-        void setUpDither(Image* image);
+        void setUpDither(std::shared_ptr<Image> image);
     public:
         DiffusionDither(const std::size_t& matrixRows, const std::size_t& matrixCols, const std::size_t& pos);
         
-        void ditherImage(Image* image);
+        void ditherImage(std::shared_ptr<Image> image);
 };
 
 #endif

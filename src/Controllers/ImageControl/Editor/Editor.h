@@ -9,12 +9,13 @@
  */
 class Editor {
     private:
-        Image* targetImage;
+        std::shared_ptr<Image> targetImage;
         Pixel*** allocatePixelMatrix(std::size_t rows, std::size_t cols) const;
     public:
         Editor();
 
-        void setTargetImage(Image* targetImage);
+        void setTargetImage(std::shared_ptr<Image> targetImage);
+        void closeTargetImage();
 
         bool cropImage(const Point& upLeft, const Point& downRight) const;
         bool resizeImage(const Dimension& dst) const;

@@ -7,34 +7,12 @@ Editor::Editor() {
     ;
 }
 
-void Editor::setTargetImage(Image* targetImage) {
+void Editor::setTargetImage(std::shared_ptr<Image> targetImage) {
     this->targetImage = targetImage;
 }
 
-
-// TODO: move to a helepr file if beneficial
-Pixel*** Editor::allocatePixelMatrix(std::size_t rows, std::size_t cols) const {
-    Pixel*** pixels;
-    try {
-        pixels = new Pixel**[rows];
-    }
-    catch (const std::bad_alloc&) {
-        return nullptr;
-    }
-    for (std::size_t i = 0; i < rows; ++i) {
-        try {
-            pixels[i] = new Pixel*[cols];
-        }
-        catch (const std::bad_alloc&) {
-            for (std::size_t j = 0; j < i; ++j) {
-                delete[] pixels[j];
-            }
-            delete[] pixels;
-
-            return nullptr;
-        }
-    }
-    return pixels;
+void Editor::closeTargetImage() {
+    targetImage = nullptr;
 }
 
 bool Editor::cropImage(const Point& upLeft, const Point& downRight) const {
@@ -50,20 +28,18 @@ bool Editor::cropImage(const Point& upLeft, const Point& downRight) const {
     std::size_t yDownRight = (std::size_t)
         (std::min((double)downRight.getY(), (double)targetImage->getCols()));
  
-    Pixel*** pixelHolder = allocatePixelMatrix(xDownRight - xUpLeft, yDownRight - yUpLeft);
-    if (!pixelHolder) {
-        return false;
-    }
+    pixel_ptr_vector pixelHolder;
 
+    const Dimension targetDimension(xDownRight - xUpLeft, yDownRight - yUpLeft);
     // TODO: function
-    for (std::size_t xOffset = 0; xOffset < xDownRight - xUpLeft; ++xOffset) {
-        for (std::size_t yOffset = 0; yOffset < yDownRight - yUpLeft; ++yOffset) {
-            pixelHolder[xOffset][yOffset] = new Pixel(*
-                targetImage->getPixelAt(Point(xUpLeft + xOffset, yUpLeft + yOffset)));
+    for (std::size_t xOffset = 0; xOffset < targetDimension.getRows(); ++xOffset) {
+        for (std::size_t yOffset = 0; yOffset < targetDimension.getCols(); ++yOffset) {
+            pixelHolder.push_back(std::move
+                (targetImage->getPixelAt(Point(xUpLeft + xOffset, yUpLeft + yOffset))));
         }
     }
 
-    targetImage->updatePixels(pixelHolder, Dimension(xDownRight - xUpLeft, yDownRight - yUpLeft));
+    targetImage->movePixelsFromWith(std::move(pixelHolder), targetDimension);
     return true;
 }
 
@@ -75,10 +51,7 @@ bool Editor::resizeImage(const Dimension& dst) const {
     std::size_t destRows = dst.getRows();
     std::size_t destCols = dst.getCols();
 
-    Pixel*** destPixels = allocatePixelMatrix(destRows, destCols);
-    if (!destPixels) {
-        return false;
-    }
+    pixel_ptr_vector destPixels;
 
     // TODO: function
     for (std::size_t destX = 0; destX < destRows; ++destX) {
@@ -88,11 +61,12 @@ bool Editor::resizeImage(const Dimension& dst) const {
             srcY = (std::size_t)((double) srcCols * (double) destY / (double)destCols);
             srcY = (std::size_t)(std::min((double)srcY, (double)(srcCols - 1)));
 
-            destPixels[destX][destY] = new Pixel(*targetImage->getPixelAt(Point(srcX, srcY)));
+            destPixels.push_back(
+                targetImage->getPixelAt(Point(srcX, srcY)));
         }
     }
 
-    targetImage->updatePixels(destPixels, Dimension(destRows, destCols));
+    targetImage->movePixelsFromWith(std::move(destPixels), dst);
     return true;
 }
 

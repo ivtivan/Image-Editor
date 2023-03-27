@@ -12,15 +12,13 @@
 class ImageFactory {
     private:
         std::ifstream* src;
-        const Dimension* dimension;
+        Dimension dimension;
         unsigned short maxValue;
-        Pixel*** pixels;
+        pixel_ptr_vector pixels;
 
         std::string readImageTypeIdentificator();
-        void saveDimension();
+        Dimension readDimension();
         void saveMaxValue();
-
-        void allocatePixelMatrix();
 
         void readIntoPBMPixelMatrix();
         void readIntoPGMPixelMatrix();
@@ -31,11 +29,11 @@ class ImageFactory {
         ImageFactory();
 
 
-        Image* loadImageFrom(std::ifstream& src);
-        PBMImage* loadPBMImageFrom();
-        PGMImage* loadPGMImageFrom();
-        PPMImage* loadPPMImageFrom();
-        PPMImage* getPPMFromSizeColor(const Dimension& dimension, const std::string& hexColor);
+        std::shared_ptr<Image> loadImageFrom(std::ifstream& src);
+        std::shared_ptr<PBMImage> loadPBMImageFrom();
+        std::shared_ptr<PGMImage> loadPGMImageFrom();
+        std::shared_ptr<PPMImage> loadPPMImageFrom();
+        std::shared_ptr<PPMImage> getPPMFromSizeColor(const Dimension& dimension, const std::string& hexColor);
 };
 
 #endif

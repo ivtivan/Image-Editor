@@ -17,7 +17,9 @@ class PBMPixel : public Pixel {
         double getValue() const;
 
         void setToMaxValue();
-        void setToMinValue();      
+        void setToMinValue();
+
+        ~PBMPixel() = default;
 };
 
 #endif

@@ -1,17 +1,18 @@
 #include "Image.h"
 #include <fstream>
-#include <iostream>
-Image::Image() : dimension(0, 0), pixels(nullptr) {
+
+Image::Image() : dimension(0, 0) {
     ;
 }
 
-Image::Image(Dimension dimension, Pixel*** pixels) :
-    dimension(dimension), pixels(pixels) {
+Image::Image(Dimension dimension, pixel_ptr_vector&& pixels) :
+    dimension(dimension), pixels(std::move(pixels)) {
     ;
 }
 
-Pixel* Image::getPixelAt(const Point& point) const {
-    return pixels[point.getX()][point.getY()];
+std::shared_ptr<Pixel>& Image::getPixelAt(const Point& point) {
+    std::size_t index = dimension.getCols() * point.getX() + point.getY();
+    return pixels.at(index);
 }
 
 std::size_t Image::getRows() const {
@@ -22,14 +23,13 @@ std::size_t Image::getCols() const {
     return dimension.getCols();
 }
 
-void Image::setPixels(Pixel*** pixels) {
-    this->pixels = pixels;
+void Image::setPixels(pixel_ptr_vector&& pixels) {
+    this->pixels = std::move(pixels);
 }
 
-std::ostream& operator<<(std::ostream& os, const Image* image) {
+std::ostream& operator<<(std::ostream& os, const std::unique_ptr<Image> image) {
     os << image->getTypeID() << std::endl;
-    os << image->getRows() << " " << image->getCols() << std::endl;
-    os << image->getPixelAt(Point(0, 0))->toString();
+    os << image->getCols() << " " << image->getRows() << std::endl;
     for (std::size_t i = 0; i < image->getRows(); ++i) {
         for (std::size_t j = 0; j < image->getCols(); ++j) {
             os << image->getPixelAt(Point(i, j))->toString();
@@ -43,21 +43,31 @@ std::ostream& operator<<(std::ostream& os, const Image* image) {
     return os;
 }
 
-void Image::updatePixels(Pixel*** srcPixels, const Dimension srcDimension) {
+std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Image> image) {
+    // TODO: return image.toString and add max value
+    os << image->getTypeID() << std::endl;
+    os << image->getCols() << " " << image->getRows() << std::endl;
+    for (std::size_t i = 0; i < image->getRows(); ++i) {
+        for (std::size_t j = 0; j < image->getCols(); ++j) {
+            os << image->getPixelAt(Point(i, j))->toString();
+
+            if (j != image->getCols()- 1) {
+                os << " ";
+            }
+        }
+        os << '\n';
+    }
+    return os;
+}
+
+void Image::movePixelsFromWith(pixel_ptr_vector&& srcPixels, const Dimension& srcDimension) {
     freePixels();
-    
-    pixels = srcPixels;
+    pixels = std::move(srcPixels);
     dimension = srcDimension;
 }
 
 void Image::freePixels() {
-    for (std::size_t i = 0; i < dimension.getRows(); ++i) {
-        for (std::size_t j = 0; j < dimension.getCols(); ++j) {
-            delete pixels[i][j];
-        }
-        delete pixels[i];
-    }
-    delete pixels;
+    pixels.clear();
 }
 
 const std::string Image::getTypeID() const {

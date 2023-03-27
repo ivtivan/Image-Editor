@@ -19,6 +19,8 @@ class PPMPixel : public Pixel {
 
         void setToMaxValue();
         void setToMinValue();
+
+        ~PPMPixel() = default;
 };
 
 #endif

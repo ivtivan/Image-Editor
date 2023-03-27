@@ -21,14 +21,14 @@ void OrderedDither::calculateMatrixthresholds() {
     }
 }
 
-void OrderedDither::setUpDither(Image* image) {
+void OrderedDither::setUpDither(std::shared_ptr<Image> image) {
     pixelsMaxValue = image->getPixelAt(Point(0, 0))->getMaxValue();
     threshold = (double) pixelsMaxValue / 2.0;
     precisionValue = (double) pixelsMaxValue / 2.0;
     calculateMatrixthresholds();
 }
 
-void OrderedDither::ditherImage(Image* image) {
+void OrderedDither::ditherImage(std::shared_ptr<Image> image) {
     setUpDither(image);
 
     double pixelValue, alteredValue;

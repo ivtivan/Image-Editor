@@ -1,10 +1,14 @@
 #ifndef IMAGE_H
 #define IMAGE_H
 
+#include <memory>
 #include <string>
+#include <vector>
 #include "../Pixel/Pixel.h"
 #include "ImageHelpers/Dimension/Dimension.h"
 #include "ImageHelpers/Point/Point.h"
+
+using pixel_ptr_vector = std::vector<std::shared_ptr<Pixel>>;
 
 /**
  * @brief Supports working with images.
@@ -14,24 +18,25 @@
 class Image {
     private:
         Dimension dimension;
-        Pixel*** pixels; // not an efficient way of doing this
+        pixel_ptr_vector pixels; // not an efficient way of doing this
         void freePixels();
     protected:
-        void setPixels(Pixel*** pixels);
+        void setPixels(pixel_ptr_vector&& pixels);
     public:
         Image();
-        Image(Dimension dimension, Pixel*** pixels);
+        Image(Dimension dimension, pixel_ptr_vector&& pixels);
 
 
-        virtual void updatePixels(Pixel*** srcPixels, const Dimension srcDimension);
-        Pixel* getPixelAt(const Point& point) const;
+        void movePixelsFromWith(pixel_ptr_vector&& src, const Dimension& srcDimension);
+        std::shared_ptr<Pixel>& getPixelAt(const Point& point);
         std::size_t getRows() const;
         std::size_t getCols() const;
 
         virtual const std::string getTypeID() const;
         virtual ~Image();
 
-        friend std::ostream& operator<<(std::ostream& os, const Image* image);
+        friend std::ostream& operator<<(std::ostream& os, const std::unique_ptr<Image> image);
+        friend std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Image> image);
 };
 
 #endif

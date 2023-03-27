@@ -6,9 +6,9 @@
 class PBMImage : public Image {
     public:
         PBMImage();
-        PBMImage(Dimension dimension, Pixel*** pixels);
+        PBMImage(Dimension dimension, pixel_ptr_vector&& pixels);
 
-        const std::string getTypeID() const;
+        const std::string getTypeID() const override;
 
         ~PBMImage();
 

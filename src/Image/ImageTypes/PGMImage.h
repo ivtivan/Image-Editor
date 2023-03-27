@@ -6,9 +6,9 @@
 class PGMImage : public Image {
     public:
         PGMImage();
-        PGMImage(Dimension dimension, Pixel*** pixels);
+        PGMImage(Dimension dimension, pixel_ptr_vector&& pixels);
 
-        const std::string getTypeID() const;
+        const std::string getTypeID() const override;
         
         ~PGMImage();
 };

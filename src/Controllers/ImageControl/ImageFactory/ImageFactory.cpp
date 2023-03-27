@@ -2,32 +2,30 @@
 #include <fstream>
 #include <string>
 
-ImageFactory::ImageFactory() {
+ImageFactory::ImageFactory() : dimension(0, 0) {
     ;
 }
 
-PPMImage* ImageFactory::getPPMFromSizeColor(const Dimension& dimension,
+std::shared_ptr<PPMImage> ImageFactory::getPPMFromSizeColor(const Dimension& dimension,
     const std::string& hexColor) {
-    this->dimension = &dimension;
-    allocatePixelMatrix();
+    this->dimension = dimension;
     fillPPMPixelMatrixColor(hexColor);
-    return new PPMImage(dimension, pixels);
+    return std::make_shared<PPMImage>(dimension, std::move(pixels));
 }
 
 void ImageFactory::fillPPMPixelMatrixColor(const std::string& hexColor) {
-    for (std::size_t row = 0; row < dimension->getRows(); ++row) {
-        for (std::size_t col = 0; col < dimension->getCols(); ++col) {
-            pixels[row][col] = new PPMPixel(hexColor);
+    for (std::size_t row = 0; row < dimension.getRows(); ++row) {
+        for (std::size_t col = 0; col < dimension.getCols(); ++col) {
+            pixels.push_back(std::make_shared<PPMPixel>(hexColor));
         }
     }
 }
 
-Image* ImageFactory::loadImageFrom(std::ifstream& src) {
+std::shared_ptr<Image> ImageFactory::loadImageFrom(std::ifstream& src) {
     this->src = &src;
     
     std::string type = readImageTypeIdentificator();
-    saveDimension();
-    allocatePixelMatrix();
+    dimension = readDimension();
 
     if (type == "P1") {
         return loadPBMImageFrom();
@@ -47,55 +45,41 @@ std::string ImageFactory::readImageTypeIdentificator() {
     return type;
 }
 
-void ImageFactory::saveDimension() {
+Dimension ImageFactory::readDimension() {
     size_t rows, cols;
-    *src >> rows >> cols;
-    dimension = new Dimension(rows, cols);
+    *src >> cols >> rows;
+    return Dimension(rows, cols);
 }
 
-void ImageFactory::allocatePixelMatrix() {
-    const std::size_t rows = dimension->getRows();
-    const std::size_t cols = dimension->getRows();
-    
-    pixels = new Pixel**[rows];
-    for (std::size_t row = 0; row < rows; ++row) {
-        pixels[row] = new Pixel*[cols];
-    }
-}
-
-PBMImage* ImageFactory::loadPBMImageFrom() {
+std::shared_ptr<PBMImage> ImageFactory::loadPBMImageFrom() {
     readIntoPBMPixelMatrix();
-    return new PBMImage(*dimension, pixels);
+    return std::make_shared<PBMImage>(dimension, std::move(pixels));
 }
 
 void ImageFactory::readIntoPBMPixelMatrix() {
-    const std::size_t rows = dimension->getRows();
-    const std::size_t cols = dimension->getRows();
+    const std::size_t rows = dimension.getRows();
+    const std::size_t cols = dimension.getCols();
 
-    std::size_t curr = 0;
     unsigned short val;
-    while (curr < rows * cols) {
+    for (std::size_t i =0; i < rows * cols; ++i) {
         *src >> val;
-        pixels[curr / cols][curr % cols] = new PBMPixel(val);
-        ++curr;
+        pixels.push_back(std::make_shared<PBMPixel>(val));
     }
 }
 
-PGMImage* ImageFactory::loadPGMImageFrom() {
+std::shared_ptr<PGMImage> ImageFactory::loadPGMImageFrom() {
     readIntoPGMPixelMatrix();
-    return new PGMImage(*dimension, pixels);
+    return std::make_shared<PGMImage>(dimension, std::move(pixels));
 }
 
 void ImageFactory::readIntoPGMPixelMatrix() {
-    const std::size_t rows = dimension->getRows();
-    const std::size_t cols = dimension->getRows();
+    const std::size_t rows = dimension.getRows();
+    const std::size_t cols = dimension.getCols();
 
-    std::size_t curr = 0;
     unsigned short val;
-    while (curr < rows * cols) {
+    for (std::size_t i =0; i < rows * cols; ++i) {
         *src >> val;
-        pixels[curr / cols][curr % cols] = new PGMPixel(val, maxValue);
-        ++curr;
+        pixels.push_back(std::make_shared<PGMPixel>(val, maxValue));
     }
 }
 
@@ -103,23 +87,21 @@ void ImageFactory::saveMaxValue() {
     *src >> maxValue;
 }
 
-PPMImage* ImageFactory::loadPPMImageFrom() {
+std::shared_ptr<PPMImage> ImageFactory::loadPPMImageFrom() {
     readIntoPPMPixelMatrix();
-    return new PPMImage(*dimension, pixels);
+    return std::make_shared<PPMImage>(dimension, std::move(pixels));
 }
 
 
 void ImageFactory::readIntoPPMPixelMatrix() {
-    const std::size_t rows = dimension->getRows();
-    const std::size_t cols = dimension->getRows();
+    const std::size_t rows = dimension.getRows();
+    const std::size_t cols = dimension.getCols();
 
-    std::size_t curr = 0;
     unsigned short val[3];
-    while (curr < rows * cols) {
+    for (std::size_t i =0; i < rows * cols; ++i) {
         for (unsigned short pixelIndex= 0; pixelIndex < 3; ++pixelIndex) {
             *src >> val[pixelIndex];
         }
-        pixels[curr / cols][curr % cols] = new PPMPixel(val, maxValue);
-        ++curr;
+        pixels.push_back(std::make_shared<PPMPixel>(val, maxValue));
     }
 }
