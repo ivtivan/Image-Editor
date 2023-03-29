@@ -7,18 +7,15 @@ class PPMPixel : public Pixel {
     private:
         unsigned short value[3];
 
-        bool isBlack() const;
-        bool isWhite() const;
-
-        const std::string toString() const;
+        const std::string toString() const override;
     public:
         PPMPixel(unsigned short value[3], unsigned short maxValue);
         PPMPixel(std::string hex);
 
-        double getValue() const;
+        double getValue() const override;
 
-        void setToMaxValue();
-        void setToMinValue();
+        void setToMaxValue() override;
+        void setToMinValue() override;
 
         ~PPMPixel() = default;
 };

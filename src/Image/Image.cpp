@@ -10,7 +10,7 @@ Image::Image(Dimension dimension, pixel_ptr_vector&& pixels) :
     ;
 }
 
-std::shared_ptr<Pixel>& Image::getPixelAt(const Point& point) {
+const std::shared_ptr<Pixel>& Image::getPixelAt(const Point& point) const{
     std::size_t index = dimension.getCols() * point.getX() + point.getY();
     return pixels.at(index);
 }
@@ -27,36 +27,37 @@ void Image::setPixels(pixel_ptr_vector&& pixels) {
     this->pixels = std::move(pixels);
 }
 
-std::ostream& operator<<(std::ostream& os, const std::unique_ptr<Image> image) {
-    os << image->getTypeID() << std::endl;
-    os << image->getCols() << " " << image->getRows() << std::endl;
-    for (std::size_t i = 0; i < image->getRows(); ++i) {
-        for (std::size_t j = 0; j < image->getCols(); ++j) {
-            os << image->getPixelAt(Point(i, j))->toString();
-
-            if (j != image->getCols()- 1) {
-                os << " ";
-            }
-        }
-        os << '\n';
-    }
-    return os;
+void Image::outputImage(std::ostream&) const {
+    ;
 }
 
-std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Image> image) {
-    // TODO: return image.toString and add max value
-    os << image->getTypeID() << std::endl;
-    os << image->getCols() << " " << image->getRows() << std::endl;
-    for (std::size_t i = 0; i < image->getRows(); ++i) {
-        for (std::size_t j = 0; j < image->getCols(); ++j) {
-            os << image->getPixelAt(Point(i, j))->toString();
+void Image::outputType(std::ostream& os) const {
+    os << getTypeID() << std::endl;
+}
 
-            if (j != image->getCols()- 1) {
+void Image::outputDimension(std::ostream& os) const {
+    os << getCols() << " " << getRows() << std::endl;
+}
+
+void Image::outputMaxValue(std::ostream& os) const {
+    os << getPixelAt(Point(0, 0))->getMaxValue() << std::endl;
+}
+
+void Image::outputPixels(std::ostream& os) const {
+    for (std::size_t i = 0; i < getRows(); ++i) {
+        for (std::size_t j = 0; j < getCols(); ++j) {
+            os << getPixelAt(Point(i, j))->toString();
+
+            if (j != getCols()- 1) {
                 os << " ";
             }
         }
         os << '\n';
     }
+}
+
+std::ostream& operator<<(std::ostream& os, Image* image) {
+    image->outputImage(os);
     return os;
 }
 

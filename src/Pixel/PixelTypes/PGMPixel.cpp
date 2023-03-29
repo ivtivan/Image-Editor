@@ -5,14 +5,6 @@ PGMPixel::PGMPixel(unsigned short value, unsigned short maxValue) :
     ;
 }
 
-bool PGMPixel::isBlack() const {
-    return value == getMinValue();
-}
-
-bool PGMPixel::isWhite() const {
-    return value == getMaxValue();
-}
-
 const std::string PGMPixel::toString() const {
     return std::to_string(value);
 }

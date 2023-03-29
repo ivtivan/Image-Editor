@@ -41,14 +41,6 @@ double Pixel::getValue() const {
     return 0.0;
 }
 
-bool Pixel::isBlack() const {
-    return true;
-}
-
-bool Pixel::isWhite() const {
-    return true;
-}
-
 void Pixel::setToMaxValue() {
     ;
 }

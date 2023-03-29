@@ -15,6 +15,12 @@ const std::string PBMImage::getTypeID() const {
     return "P1";
 }
 
+void PBMImage::outputImage(std::ostream& os) const {
+    outputType(os);
+    outputDimension(os);
+    outputPixels(os);
+}
+
 
 PBMImage::~PBMImage() {
     ;

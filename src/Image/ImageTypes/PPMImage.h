@@ -9,6 +9,7 @@ class PPMImage : public Image {
         PPMImage(Dimension dimension, pixel_ptr_vector&& pixels);
 
         const std::string getTypeID() const override;
+        void outputImage(std::ostream& os) const override;
 
         ~PPMImage();
 };

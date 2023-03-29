@@ -50,9 +50,12 @@ bool FileController::write() const {
 }
 
 bool FileController::writeTo(const std::string& filePath) const {
+    if (!srcImage) {
+        return false;
+    }
     try {
         std::ofstream file(filePath);
-        file << srcImage;
+        file << srcImage.get();
         file.close();
     }
     catch (...) {

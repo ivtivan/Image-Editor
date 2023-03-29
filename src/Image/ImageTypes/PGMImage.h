@@ -10,6 +10,8 @@ class PGMImage : public Image {
 
         const std::string getTypeID() const override;
         
+        void outputImage(std::ostream& os) const override;
+
         ~PGMImage();
 };
 

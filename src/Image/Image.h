@@ -26,17 +26,21 @@ class Image {
         Image();
         Image(Dimension dimension, pixel_ptr_vector&& pixels);
 
-
         void movePixelsFromWith(pixel_ptr_vector&& src, const Dimension& srcDimension);
-        std::shared_ptr<Pixel>& getPixelAt(const Point& point);
+        const std::shared_ptr<Pixel>& getPixelAt(const Point& point) const;
         std::size_t getRows() const;
         std::size_t getCols() const;
 
         virtual const std::string getTypeID() const;
         virtual ~Image();
 
-        friend std::ostream& operator<<(std::ostream& os, const std::unique_ptr<Image> image);
-        friend std::ostream& operator<<(std::ostream& os, const std::shared_ptr<Image> image);
+        virtual void outputImage(std::ostream& os) const;
+        void outputType(std::ostream& os) const;
+        void outputDimension(std::ostream& os) const;
+        void outputMaxValue(std::ostream& os) const;
+        void outputPixels(std::ostream& os) const;
+
+        friend std::ostream& operator<<(std::ostream& os, Image*image);
 };
 
 #endif

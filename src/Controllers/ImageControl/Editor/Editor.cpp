@@ -31,7 +31,7 @@ bool Editor::cropImage(const Point& upLeft, const Point& downRight) const {
     pixel_ptr_vector pixelHolder;
 
     const Dimension targetDimension(xDownRight - xUpLeft, yDownRight - yUpLeft);
-    // TODO: function
+
     for (std::size_t xOffset = 0; xOffset < targetDimension.getRows(); ++xOffset) {
         for (std::size_t yOffset = 0; yOffset < targetDimension.getCols(); ++yOffset) {
             pixelHolder.push_back(std::move
@@ -53,7 +53,6 @@ bool Editor::resizeImage(const Dimension& dst) const {
 
     pixel_ptr_vector destPixels;
 
-    // TODO: function
     for (std::size_t destX = 0; destX < destRows; ++destX) {
         srcX = (std::size_t)((double) srcRows * (double) destX / (double)destRows); 
         srcX = (std::size_t)(std::min((double)srcX, (double)(srcRows - 1)));
@@ -70,7 +69,6 @@ bool Editor::resizeImage(const Dimension& dst) const {
     return true;
 }
 
-// TODO: move to DitherController
 bool Editor::ditherImage(std::string algorithmName) const {
     if (algorithmName == "Linear") {
         DitherLinear dither;

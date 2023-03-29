@@ -7,17 +7,14 @@ class PGMPixel : public Pixel {
     private:
         unsigned short value;
 
-        bool isBlack() const;
-        bool isWhite() const;
-
-        const std::string toString() const;
+        const std::string toString() const override;
     public:
         PGMPixel(unsigned short value, unsigned short maxValue);
 
-        double getValue() const;
+        double getValue() const override;
 
-        void setToMaxValue();
-        void setToMinValue();
+        void setToMaxValue() override;
+        void setToMinValue() override;
 
         ~PGMPixel() = default;
 };

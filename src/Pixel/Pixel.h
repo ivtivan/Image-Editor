@@ -15,9 +15,6 @@ class Pixel {
         unsigned short minValue;
         unsigned short maxValue;
         double ditherValue;
-    protected:
-        virtual bool isBlack() const;
-        virtual bool isWhite() const;
     public:
         Pixel();
         Pixel(unsigned short maxValue);

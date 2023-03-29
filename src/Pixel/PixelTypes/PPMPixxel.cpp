@@ -12,22 +12,6 @@ PPMPixel::PPMPixel(std::string hex) : Pixel(255) {
     }
 }
 
-bool PPMPixel::isBlack() const {
-    bool isBlack;
-    for (unsigned short i = 0; i < 3; ++i) {
-        isBlack = isBlack && (value[i] == getMinValue());
-    }
-    return isBlack;
-}
-
-bool PPMPixel::isWhite() const {
-    bool isWhite;
-    for (unsigned short i = 0; i < 3; ++i) {
-        isWhite = isWhite && (value[i] == getMaxValue());
-    }
-    return isWhite;
-}
-
 const std::string PPMPixel::toString() const {
     return std::to_string(value[0]) + " " + std::to_string(value[1])
         + " " + std::to_string(value[2]) + " ";

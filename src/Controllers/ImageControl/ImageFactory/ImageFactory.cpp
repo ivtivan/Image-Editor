@@ -68,6 +68,7 @@ void ImageFactory::readIntoPBMPixelMatrix() {
 }
 
 std::shared_ptr<PGMImage> ImageFactory::loadPGMImageFrom() {
+    saveMaxValue();
     readIntoPGMPixelMatrix();
     return std::make_shared<PGMImage>(dimension, std::move(pixels));
 }
@@ -88,6 +89,7 @@ void ImageFactory::saveMaxValue() {
 }
 
 std::shared_ptr<PPMImage> ImageFactory::loadPPMImageFrom() {
+    saveMaxValue();
     readIntoPPMPixelMatrix();
     return std::make_shared<PPMImage>(dimension, std::move(pixels));
 }
