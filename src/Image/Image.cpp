@@ -56,7 +56,7 @@ void Image::outputPixels(std::ostream& os) const {
     }
 }
 
-std::ostream& operator<<(std::ostream& os, Image* image) {
+std::ostream& operator<<(std::ostream& os, const Image* image) {
     image->outputImage(os);
     return os;
 }
